@@ -4,91 +4,106 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>趁手工具推荐榜 × Skills Watch</title>
-<style>
-  :root {
-    --bg: #0d1117;
-    --surface: #161b22;
-    --border: #30363d;
-    --text: #c9d1d9;
-    --text-muted: #8b949e;
-    --accent: #58a6ff;
-    --accent-dim: #1f6feb;
-    --fire: #f78166;
-    --bolt: #d29922;
-    --snow: #8b949e;
-    --green: #3fb950;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-  }
-  header {
-    text-align: center;
-    padding: 3rem 0 2rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2rem;
-  }
-  header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
-  header p { color: var(--text-muted); font-size: 0.95rem; }
-  .briefing-list { list-style: none; }
-  .briefing-item {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 1rem 1.2rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 0.8rem;
-    background: var(--surface);
-    transition: border-color 0.2s;
-    text-decoration: none;
-    color: inherit;
-  }
-  .briefing-item:hover { border-color: var(--accent); }
-  .briefing-item .num { color: var(--accent); font-weight: 700; font-size: 1.1rem; min-width: 3.5rem; }
-  .briefing-item .date { color: var(--text-muted); font-size: 0.85rem; min-width: 6rem; text-align: right; }
-  .briefing-item .title { flex: 1; }
-  .tag {
-    display: inline-block;
-    padding: 0.15rem 0.5rem;
-    border-radius: 10px;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-  .tag-fire { background: rgba(247,129,102,0.15); color: var(--fire); }
-  .tag-bolt { background: rgba(210,153,34,0.15); color: var(--bolt); }
-  footer {
-    text-align: center;
-    padding: 2rem 0;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    border-top: 1px solid var(--border);
-    margin-top: 3rem;
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header>
-  <h1>🔥 趁手工具推荐榜 × Skills Watch</h1>
-  <p>每周一三五更新 · AI 开发者工具 + Agent Skills 生态追踪</p>
-</header>
 
-<ul class="briefing-list">
-  <a href="2026-06-08.html" class="briefing-item">
-    <span class="num">#24</span>
-    <span class="title">sandboxd · Lexa · Goose · JoyAI-Echo · TripoSplat · Burrow · MCP 生态质量跃升</span>
-    <span class="date">2026.06.08</span>
-  </a>
-</ul>
+<div class="container">
+  <!-- === Main Content === -->
+  <main class="main">
+    <header class="site-header">
+      <div class="logo"><span class="icon">🔧</span> 趁手工具推荐榜</div>
+      <p class="tagline">AI 开发者工具 &amp; Agent Skills 生态追踪 · 每周一三五更新</p>
+    </header>
 
-<footer>
-  <p>由 Hermes Agent 自动生成 · <a href="https://github.com/andy-zokelink/tools-briefing" style="color:var(--accent)">GitHub</a></p>
+    <article class="article-card" style="cursor:pointer" onclick="location.href='2026-06-08.html'">
+      <div class="meta">
+        <span class="issue">#24</span>
+        <span>2026.06.08</span>
+        <span class="badge badge-fire">🔥 重点</span>
+      </div>
+      <h2>sandboxd · Lexa · MCP 生态质量跃升</h2>
+      <p class="excerpt">
+        AI agent 基础设施正从「推理」转向「执行环境」—— sandboxd 一行命令启动隔离沙箱，Lexa 把代码库变成结构图。MCP server 从「能用」进化到 Rust 原生亚毫秒级实现 + 硬件接入。
+      </p>
+    </article>
+
+    <!-- Placeholder for future issues -->
+    <div style="text-align:center; padding:3rem 0; color:var(--text-dim)">
+      <p style="font-size:1.2rem; margin-bottom:0.5rem">📭</p>
+      <p style="font-size:0.9rem">下期简报将于周一三五自动发布</p>
+    </div>
+  </main>
+
+  <!-- === Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <h3>关于</h3>
+      <p class="about">
+        追踪 AI 开发者工具与 Agent Skills 生态的最新动态。每周一三五由 <strong>Hermes Agent</strong> 自动采集、研判、生成。
+      </p>
+      <a href="https://github.com/andy-zokelink/tools-briefing" class="repo-link" target="_blank">
+        → GitHub 仓库
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>标签</h3>
+      <div class="tag-cloud">
+        <span class="tag">沙箱</span>
+        <span class="tag">代码理解</span>
+        <span class="tag">MCP</span>
+        <span class="tag">Agent Skills</span>
+        <span class="tag">3D AIGC</span>
+        <span class="tag">健康数据</span>
+        <span class="tag">macOS</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>往期简报</h3>
+      <ul class="archive-list">
+        <li><a href="2026-06-08.html"><span>#24 sandboxd · Lexa · MCP</span> <span>06-08</span></a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>数据源</h3>
+      <p class="about" style="font-size:0.82rem">
+        · GitHub Trending<br>
+        · GitHub Search API<br>
+        · Metaso 搜索<br>
+        · 工具兵器库数据库
+      </p>
+    </div>
+  </aside>
+</div>
+
+<footer class="site-footer">
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源 · <a href="https://github.com/andy-zokelink/tools-briefing">GitHub</a></p>
 </footer>
+
+<!-- AI Chat Widget -->
+<div class="ai-chat-widget">
+  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="title">🤖 工具推荐 AI 助理</span>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+      <div class="ai-chat-msg assistant">
+        <div class="label">AI 助理</div>
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势、或者帮你找适合你场景的开发工具。
+      </div>
+    </div>
+    <div class="ai-chat-input-row">
+      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
 </body>
 </html>

@@ -1,0 +1,3 @@
+name = "tools-briefing-ai"
+main = "worker.js"
+compatibility_date = "2025-06-08"
