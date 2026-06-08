@@ -16,7 +16,6 @@
   <!-- === Left Sidebar === -->
   <aside class="sidebar">
     <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
-
     <nav class="sidebar-nav">
       <div class="sidebar-section">
         <div class="sidebar-section-title">浏览</div>
@@ -24,21 +23,16 @@
         <a href="#">🔥 值得马上试 <span class="count">1</span></a>
         <a href="#">⚡ 值得关注 <span class="count">1</span></a>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-section-title">往期</div>
         <a href="2026-06-08.html" class="active">第24期<span class="count">06-08</span></a>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-section-title">关于</div>
         <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
       </div>
     </nav>
-
-    <div class="sidebar-footer">
-      由 Hermes Agent 驱动<br>每周一三五更新
-    </div>
+    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
   </aside>
 
   <!-- === Article === -->
@@ -56,46 +50,35 @@
         <span>4 min read</span>
       </div>
 
-      <!-- ===== 核心观点 ===== -->
-      <div class="viewpoint">
-        <div class="vp-label">核心观点</div>
-        <div class="vp-core">Agent 基础设施的瓶颈正在从「工具调用」转移到「执行环境」。MCP 让 agent 能调用各种工具，但接下来要解决的问题是——这些工具在哪里安全地跑？</div>
-        <p>本期信号密集：sandboxd 一行命令起沙箱，Lexa 结构化理解代码库，MCP server 从玩具级进化到 Rust 亚毫秒级。三个信号指向同一个趋势——Agent 生态在从「能跑起来」进化到「跑得好」。</p>
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Agent 基础设施的瓶颈正在从「能调用什么工具」转移到「在哪里安全地执行」。sandboxd 和 Lexa 分属执行层和理解层，但指向同一个趋势——Agent 生态的基建重心在下沉。</div>
+        <p>本期信号密集且方向一致：sandboxd 解决安全隔离，Lexa 解决代码理解，MCP server 从玩具级进化到 Rust 亚毫秒级。三条线合在一起看，Agent 正在从「能跑」变成「跑得好」，这是基建成熟的标志。</p>
       </div>
 
       <!-- ===== 本期数字 ===== -->
       <div class="bignums">
-        <div class="bignum">
-          <div class="bn-val">503 ⭐</div>
-          <div class="bn-desc">sandboxd — AI agent 沙箱，npx 一行启动</div>
-        </div>
-        <div class="bignum">
-          <div class="bn-val">83 ⭐</div>
-          <div class="bn-desc">Lexa — Rust 代码图谱引擎</div>
-        </div>
-        <div class="bignum">
-          <div class="bn-val">2,277 ⭐</div>
-          <div class="bn-desc">本期最高星项目 goose (Swift AI agent)</div>
-        </div>
-        <div class="bignum">
-          <div class="bn-val">6 个</div>
-          <div class="bn-desc">新 MCP server 进入视野</div>
-        </div>
-        <div class="bignum">
-          <div class="bn-val">2 条</div>
-          <div class="bn-desc">趋势洞察 — 执行环境 + MCP 质量跃升</div>
-        </div>
+        <div class="bignum"><div class="bn-val">503 ⭐</div><div class="bn-desc">sandboxd — AI agent 沙箱，npx 一行启动</div></div>
+        <div class="bignum"><div class="bn-val">83 ⭐</div><div class="bn-desc">Lexa — Rust 代码图谱引擎</div></div>
+        <div class="bignum"><div class="bn-val">2,277 ⭐</div><div class="bn-desc">本期最高星项目 goose</div></div>
+        <div class="bignum"><div class="bn-val">6 个</div><div class="bn-desc">新 MCP server 进入视野</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
       </div>
 
       <div class="article-content">
-
-        <h2>本期重点推荐</h2>
 
         <!-- ===== 要点提炼 ===== -->
         <div class="takeaways">
           <div class="takeaway"><p><strong>sandboxd</strong> — AI coding agent 的即时隔离沙箱。一行命令搞定执行环境，预览 URL 自动生成，比 Docker 轻量一个数量级。</p></div>
           <div class="takeaway"><p><strong>Lexa</strong> — 给 agent 装上代码库的「眼睛」。不靠 grep，用 AST + 依赖图结构化理解代码。</p></div>
           <div class="takeaway"><p><strong>MCP 质量跃升</strong> — 从 JSON-RPC 玩具到 Rust 亚毫秒级实现，从软件工具到硬件接入（Whoop 手环），生态在成熟。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：推荐 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <h2>本期重点推荐</h2>
         </div>
 
         <div class="card">
@@ -118,12 +101,14 @@
           </ul>
         </div>
 
-        <h2>GitHub Trending 本周看点</h2>
+        <!-- ===== 深度阅读 02：Trending ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <h2>GitHub Trending 本周看点</h2>
+        </div>
 
         <table>
-          <thead>
-            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
-          </thead>
+          <thead><tr><th>项目</th><th>Stars</th><th>亮点</th></tr></thead>
           <tbody>
             <tr><td><a href="https://github.com/b-nnett/goose">b-nnett/goose</a></td><td>⭐2,277</td><td>Swift 写的 AI agent PoC</td></tr>
             <tr><td><a href="https://github.com/jd-opensource/JoyAI-Echo">jd-opensource/JoyAI-Echo</a></td><td>⭐922</td><td>京东开源的长音频+视频生成模型</td></tr>
@@ -133,12 +118,14 @@
           </tbody>
         </table>
 
-        <h2>Skills Watch — MCP 生态动态</h2>
+        <!-- ===== 深度阅读 03：MCP ===== -->
+        <div class="dr-section">
+          <div class="dr-num">03</div>
+          <h2>Skills Watch — MCP 生态动态</h2>
+        </div>
 
         <table>
-          <thead>
-            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
-          </thead>
+          <thead><tr><th>项目</th><th>Stars</th><th>亮点</th></tr></thead>
           <tbody>
             <tr><td><a href="https://github.com/caezium/Burrow">caezium/Burrow</a></td><td>⭐186</td><td>Mole CLI 的原生 macOS GUI，磁盘清理</td></tr>
             <tr><td><a href="https://github.com/Aimino-Tech/opendocswork-mcp">Aimino-Tech/opendocswork-mcp</a></td><td>⭐135</td><td>Rust 原生 MCP server，Office 文档处理</td></tr>
@@ -148,7 +135,11 @@
           </tbody>
         </table>
 
-        <h2>趋势洞察</h2>
+        <!-- ===== 深度阅读 04：趋势 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">04</div>
+          <h2>趋势洞察</h2>
+        </div>
 
         <div class="insight">
           <div class="label">趋势一</div>
@@ -162,45 +153,28 @@
           <p>从 JSON-RPC 包装器到 Rust 原生亚毫秒级实现、专有硬件接入、GUI 工具链，MCP 生态质量在显著提升。Rust MCP → 性能差异化；硬件接入 MCP → 生态扩展到 IoT/健康。</p>
         </div>
 
-        <h2>本周最值得试</h2>
-
-        <div class="card">
+        <div class="card" style="margin-top:2rem">
+          <h3>💎 本周最值得试</h3>
           <p>装个 <code>sandboxd</code> 给 Hermes 当沙箱——一行命令启动隔离环境，agent 在里面随便折腾不影响主机。</p>
           <pre><code>npx sandboxd</code></pre>
         </div>
 
-        <hr>
-
         <!-- ===== 数据统计 ===== -->
-        <h2>本期数据统计</h2>
+        <div class="dr-section">
+          <div class="dr-num">05</div>
+          <h2>本期数据统计</h2>
+        </div>
 
         <div class="bignums">
-          <div class="bignum">
-            <div class="bn-val">11</div>
-            <div class="bn-desc">收录工具/项目</div>
-          </div>
-          <div class="bignum">
-            <div class="bn-val">2</div>
-            <div class="bn-desc">趋势洞察</div>
-          </div>
-          <div class="bignum">
-            <div class="bn-val">3</div>
-            <div class="bn-desc">数据源</div>
-          </div>
-          <div class="bignum">
-            <div class="bn-val">🔥 1</div>
-            <div class="bn-desc">值得马上试</div>
-          </div>
-          <div class="bignum">
-            <div class="bn-val">⚡ 6</div>
-            <div class="bn-desc">值得关注进度</div>
-          </div>
+          <div class="bignum"><div class="bn-val">11</div><div class="bn-desc">收录工具/项目</div></div>
+          <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">趋势洞察</div></div>
+          <div class="bignum"><div class="bn-val">3</div><div class="bn-desc">数据源</div></div>
+          <div class="bignum"><div class="bn-val">🔥 1</div><div class="bn-desc">值得马上试</div></div>
+          <div class="bignum"><div class="bn-val">⚡ 6</div><div class="bn-desc">值得关注进度</div></div>
         </div>
 
         <table>
-          <thead>
-            <tr><th>数据源</th><th>方式</th><th>时间</th><th>有效条目</th></tr>
-          </thead>
+          <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>有效条目</th></tr></thead>
           <tbody>
             <tr><td>GitHub Trending</td><td>GitHub API</td><td>06-08</td><td>5</td></tr>
             <tr><td>GitHub Search (MCP)</td><td>GitHub API</td><td>06-08</td><td>6</td></tr>
@@ -209,9 +183,27 @@
           </tbody>
         </table>
 
-        <p style="color:var(--text-tertiary); font-size:0.85rem; margin-top:2.5rem">
-          完整版也存于 <a href="https://github.com/andy-zokelink/tools-briefing">GitHub 仓库</a>
-        </p>
+        <!-- ===== Sources ===== -->
+        <div class="sources">
+          <strong>数据来源：</strong>
+          <a href="https://github.com/trending?since=weekly">GitHub Trending</a> ·
+          <a href="https://api.github.com/search/repositories">GitHub Search API</a> ·
+          Metaso 搜索（本期不可用，切换兜底方案） ·
+          Hermes Agent 综合研判
+        </div>
+
+        <!-- ===== Prev/Next Nav ===== -->
+        <div class="post-nav">
+          <span class="disabled">
+            <span class="nav-label">← 上一期</span>
+            <span class="nav-title">等待更多期数</span>
+          </span>
+          <span class="disabled next">
+            <span class="nav-label">下一期 →</span>
+            <span class="nav-title">周一三五更新</span>
+          </span>
+        </div>
+
       </div>
     </article>
   </main>
@@ -225,15 +217,9 @@
 <div class="ai-chat-widget">
   <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
   <div class="ai-chat-panel" id="chatPanel">
-    <div class="ai-chat-header">
-      <span class="title">AI 助理</span>
-      <button class="close-btn" onclick="toggleChat()">✕</button>
-    </div>
+    <div class="ai-chat-header"><span class="title">AI 助理</span><button class="close-btn" onclick="toggleChat()">✕</button></div>
     <div class="ai-chat-messages" id="chatMessages">
-      <div class="ai-chat-msg assistant">
-        <div class="label">AI 助理</div>
-        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。
-      </div>
+      <div class="ai-chat-msg assistant"><div class="label">AI 助理</div>你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。</div>
     </div>
     <div class="ai-chat-input-row">
       <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">

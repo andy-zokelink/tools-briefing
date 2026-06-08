@@ -625,6 +625,133 @@ a:hover { color: var(--text-secondary); }
 
 .card h3 { margin-top: 0; }
 
+/* === Deep Read Numbered Sections === */
+.dr-section {
+  position: relative;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.dr-section .dr-num {
+  position: absolute;
+  top: -0.6rem;
+  left: -0.1rem;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ececec;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.dr-section h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 1.2rem;
+  padding: 0;
+  border-bottom: none;
+}
+
+/* === Judgment / Core Call Block === */
+.judgment {
+  background: var(--bg-warm);
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.judgment .j-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--warm);
+  margin-bottom: 0.5rem;
+}
+
+.judgment .j-core {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.judgment p, .judgment li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* === Sources Footer === */
+.sources {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  line-height: 1.8;
+}
+
+.sources a { color: var(--text-tertiary); }
+.sources a:hover { color: var(--text-secondary); }
+
+/* === Prev/Next Navigation === */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-nav a {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.post-nav a:hover {
+  border-color: var(--warm-border);
+  background: var(--bg-warm);
+  color: var(--text);
+}
+
+.post-nav a .nav-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+
+.post-nav a .nav-title {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.post-nav a.next { text-align: right; }
+
+.post-nav span.disabled {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  font-size: 0.8rem;
+  opacity: 0.25;
+}
+
 /* === Tags === */
 .tag {
   display: inline-block;
