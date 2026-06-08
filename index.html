@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>趁手工具推荐榜 × Skills Watch</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-dim: #1f6feb;
+    --fire: #f78166;
+    --bolt: #d29922;
+    --snow: #8b949e;
+    --green: #3fb950;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  header {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem; }
+  header p { color: var(--text-muted); font-size: 0.95rem; }
+  .briefing-list { list-style: none; }
+  .briefing-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    background: var(--surface);
+    transition: border-color 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .briefing-item:hover { border-color: var(--accent); }
+  .briefing-item .num { color: var(--accent); font-weight: 700; font-size: 1.1rem; min-width: 3.5rem; }
+  .briefing-item .date { color: var(--text-muted); font-size: 0.85rem; min-width: 6rem; text-align: right; }
+  .briefing-item .title { flex: 1; }
+  .tag {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .tag-fire { background: rgba(247,129,102,0.15); color: var(--fire); }
+  .tag-bolt { background: rgba(210,153,34,0.15); color: var(--bolt); }
+  footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>🔥 趁手工具推荐榜 × Skills Watch</h1>
+  <p>每周一三五更新 · AI 开发者工具 + Agent Skills 生态追踪</p>
+</header>
+
+<ul class="briefing-list">
+  <a href="2026-06-08.html" class="briefing-item">
+    <span class="num">#24</span>
+    <span class="title">sandboxd · Lexa · Goose · JoyAI-Echo · TripoSplat · Burrow · MCP 生态质量跃升</span>
+    <span class="date">2026.06.08</span>
+  </a>
+</ul>
+
+<footer>
+  <p>由 Hermes Agent 自动生成 · <a href="https://github.com/andy-zokelink/tools-briefing" style="color:var(--accent)">GitHub</a></p>
+</footer>
+</body>
+</html>
