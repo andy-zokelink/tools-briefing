@@ -5,82 +5,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>趁手工具推荐榜 × Skills Watch</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-  <!-- === Main Content === -->
-  <main class="main">
-    <header class="site-header">
-      <div class="logo"><span class="icon">🔧</span> 趁手工具推荐榜</div>
-      <p class="tagline">AI 开发者工具 &amp; Agent Skills 生态追踪 · 每周一三五更新</p>
-    </header>
-
-    <article class="article-card" style="cursor:pointer" onclick="location.href='2026-06-08.html'">
-      <div class="meta">
-        <span class="issue">#24</span>
-        <span>2026.06.08</span>
-        <span class="badge badge-fire">🔥 重点</span>
-      </div>
-      <h2>sandboxd · Lexa · MCP 生态质量跃升</h2>
-      <p class="excerpt">
-        AI agent 基础设施正从「推理」转向「执行环境」—— sandboxd 一行命令启动隔离沙箱，Lexa 把代码库变成结构图。MCP server 从「能用」进化到 Rust 原生亚毫秒级实现 + 硬件接入。
-      </p>
-    </article>
-
-    <!-- Placeholder for future issues -->
-    <div style="text-align:center; padding:3rem 0; color:var(--text-dim)">
-      <p style="font-size:1.2rem; margin-bottom:0.5rem">📭</p>
-      <p style="font-size:0.9rem">下期简报将于周一三五自动发布</p>
-    </div>
-  </main>
-
-  <!-- === Sidebar === -->
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
   <aside class="sidebar">
-    <div class="sidebar-section">
-      <h3>关于</h3>
-      <p class="about">
-        追踪 AI 开发者工具与 Agent Skills 生态的最新动态。每周一三五由 <strong>Hermes Agent</strong> 自动采集、研判、生成。
-      </p>
-      <a href="https://github.com/andy-zokelink/tools-briefing" class="repo-link" target="_blank">
-        → GitHub 仓库
-      </a>
-    </div>
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
 
-    <div class="sidebar-section">
-      <h3>标签</h3>
-      <div class="tag-cloud">
-        <span class="tag">沙箱</span>
-        <span class="tag">代码理解</span>
-        <span class="tag">MCP</span>
-        <span class="tag">Agent Skills</span>
-        <span class="tag">3D AIGC</span>
-        <span class="tag">健康数据</span>
-        <span class="tag">macOS</span>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="index.html" class="active">所有简报</a>
+        <a href="#">🔥 值得马上试 <span class="count">1</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">1</span></a>
       </div>
-    </div>
 
-    <div class="sidebar-section">
-      <h3>往期简报</h3>
-      <ul class="archive-list">
-        <li><a href="2026-06-08.html"><span>#24 sandboxd · Lexa · MCP</span> <span>06-08</span></a></li>
-      </ul>
-    </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">往期</div>
+        <a href="2026-06-08.html">第24期<span class="count">06-08</span></a>
+      </div>
 
-    <div class="sidebar-section">
-      <h3>数据源</h3>
-      <p class="about" style="font-size:0.82rem">
-        · GitHub Trending<br>
-        · GitHub Search API<br>
-        · Metaso 搜索<br>
-        · 工具兵器库数据库
-      </p>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      由 Hermes Agent 驱动<br>每周一三五更新
     </div>
   </aside>
+
+  <!-- === Main Content === -->
+  <main class="main">
+    <div class="container">
+      <header class="page-header">
+        <h1>AI 开发者工具周报</h1>
+        <p class="subtitle">追踪 AI 开发者工具与 Agent Skills 生态的最新动态，每周一三五更新</p>
+      </header>
+
+      <article>
+        <a href="2026-06-08.html" class="article-card">
+          <div class="meta-row">
+            <span>第24期</span>
+            <span class="dot"></span>
+            <span>2026年6月8日</span>
+            <span class="dot"></span>
+            <span class="read-time">4 min read</span>
+          </div>
+          <h2>sandboxd · Lexa · MCP 生态质量跃升</h2>
+          <p class="excerpt">
+            AI agent 基础设施正从「推理」转向「执行环境」—— sandboxd 一行命令启动隔离沙箱，Lexa 把代码库变成结构图。MCP server 从「能用」进化到 Rust 原生亚毫秒级实现 + 硬件接入。
+          </p>
+          <div class="tags-row">
+            <span class="tag">沙箱</span>
+            <span class="tag">代码理解</span>
+            <span class="tag">MCP</span>
+            <span class="tag">Agent Skills</span>
+          </div>
+        </a>
+      </article>
+
+      <p style="text-align:center; padding:3rem 0; color:var(--text-tertiary); font-size:0.9rem">
+        下期简报将于周一三五自动发布
+      </p>
+    </div>
+  </main>
 </div>
 
 <footer class="site-footer">
-  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源 · <a href="https://github.com/andy-zokelink/tools-briefing">GitHub</a></p>
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
 </footer>
 
 <!-- AI Chat Widget -->
@@ -88,13 +86,13 @@
   <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
   <div class="ai-chat-panel" id="chatPanel">
     <div class="ai-chat-header">
-      <span class="title">🤖 工具推荐 AI 助理</span>
+      <span class="title">AI 助理</span>
       <button class="close-btn" onclick="toggleChat()">✕</button>
     </div>
     <div class="ai-chat-messages" id="chatMessages">
       <div class="ai-chat-msg assistant">
         <div class="label">AI 助理</div>
-        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势、或者帮你找适合你场景的开发工具。
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。
       </div>
     </div>
     <div class="ai-chat-input-row">
