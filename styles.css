@@ -313,6 +313,139 @@ a:hover { color: var(--text-secondary); }
   margin: 2rem 0;
 }
 
+/* === Hero Section (index page) === */
+.hero {
+  padding: 2.5rem 0 2rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.hero h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.3rem;
+}
+
+.hero .sub {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.hero .stats-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.hero .stat-item b {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+  line-height: 1.3;
+}
+
+.hero .stat-item span {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* === Big Numbers Grid (article page) === */
+.bignums {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin: 1.2rem 0;
+}
+
+.bignum {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  transition: border-color 0.15s;
+}
+
+.bignum:hover { border-color: var(--text-tertiary); }
+
+.bignum .bn-val {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 0.2rem;
+}
+
+.bignum .bn-desc {
+  font-size: 0.72rem;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* === Core Viewpoint (核心观点) === */
+.viewpoint {
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--text);
+  padding: 1rem 1.4rem;
+  margin: 1.2rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.viewpoint .vp-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: 0.5rem;
+}
+
+.viewpoint .vp-core {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+.viewpoint p, .viewpoint li {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* === Takeaways (numbered key points) === */
+.takeaways {
+  counter-reset: takeaway;
+  margin: 1rem 0;
+}
+
+.takeaway {
+  counter-increment: takeaway;
+  display: flex;
+  gap: 12px;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.takeaway::before {
+  content: '0' counter(takeaway);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  min-width: 24px;
+  line-height: 1.55;
+}
+
+.takeaway p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
 /* === Card (inside article) === */
 .card {
   background: var(--bg-secondary);

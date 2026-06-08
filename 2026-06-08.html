@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>第24期 · sandboxd、Lexa、MCP 生态 — 趁手工具推荐榜</title>
+<meta name="description" content="AI agent 基础设施正从推理转向执行环境。sandboxd 一行命令启动隔离沙箱，Lexa 把代码库变成结构图。MCP 生态从能用进化到好用。">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,7 @@
 <body>
 
 <div class="app-layout">
-  <!-- === Left Sidebar (compact for article page) === -->
+  <!-- === Left Sidebar === -->
   <aside class="sidebar">
     <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
 
@@ -55,9 +56,47 @@
         <span>4 min read</span>
       </div>
 
+      <!-- ===== 核心观点 ===== -->
+      <div class="viewpoint">
+        <div class="vp-label">核心观点</div>
+        <div class="vp-core">Agent 基础设施的瓶颈正在从「工具调用」转移到「执行环境」。MCP 让 agent 能调用各种工具，但接下来要解决的问题是——这些工具在哪里安全地跑？</div>
+        <p>本期信号密集：sandboxd 一行命令起沙箱，Lexa 结构化理解代码库，MCP server 从玩具级进化到 Rust 亚毫秒级。三个信号指向同一个趋势——Agent 生态在从「能跑起来」进化到「跑得好」。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum">
+          <div class="bn-val">503 ⭐</div>
+          <div class="bn-desc">sandboxd — AI agent 沙箱，npx 一行启动</div>
+        </div>
+        <div class="bignum">
+          <div class="bn-val">83 ⭐</div>
+          <div class="bn-desc">Lexa — Rust 代码图谱引擎</div>
+        </div>
+        <div class="bignum">
+          <div class="bn-val">2,277 ⭐</div>
+          <div class="bn-desc">本期最高星项目 goose (Swift AI agent)</div>
+        </div>
+        <div class="bignum">
+          <div class="bn-val">6 个</div>
+          <div class="bn-desc">新 MCP server 进入视野</div>
+        </div>
+        <div class="bignum">
+          <div class="bn-val">2 条</div>
+          <div class="bn-desc">趋势洞察 — 执行环境 + MCP 质量跃升</div>
+        </div>
+      </div>
+
       <div class="article-content">
 
         <h2>本期重点推荐</h2>
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>sandboxd</strong> — AI coding agent 的即时隔离沙箱。一行命令搞定执行环境，预览 URL 自动生成，比 Docker 轻量一个数量级。</p></div>
+          <div class="takeaway"><p><strong>Lexa</strong> — 给 agent 装上代码库的「眼睛」。不靠 grep，用 AST + 依赖图结构化理解代码。</p></div>
+          <div class="takeaway"><p><strong>MCP 质量跃升</strong> — 从 JSON-RPC 玩具到 Rust 亚毫秒级实现，从软件工具到硬件接入（Whoop 手环），生态在成熟。</p></div>
+        </div>
 
         <div class="card">
           <h3>sandboxd — AI Agent 的即时沙箱环境</h3>
@@ -132,7 +171,31 @@
 
         <hr>
 
-        <h2>数据源</h2>
+        <!-- ===== 数据统计 ===== -->
+        <h2>本期数据统计</h2>
+
+        <div class="bignums">
+          <div class="bignum">
+            <div class="bn-val">11</div>
+            <div class="bn-desc">收录工具/项目</div>
+          </div>
+          <div class="bignum">
+            <div class="bn-val">2</div>
+            <div class="bn-desc">趋势洞察</div>
+          </div>
+          <div class="bignum">
+            <div class="bn-val">3</div>
+            <div class="bn-desc">数据源</div>
+          </div>
+          <div class="bignum">
+            <div class="bn-val">🔥 1</div>
+            <div class="bn-desc">值得马上试</div>
+          </div>
+          <div class="bignum">
+            <div class="bn-val">⚡ 6</div>
+            <div class="bn-desc">值得关注进度</div>
+          </div>
+        </div>
 
         <table>
           <thead>
