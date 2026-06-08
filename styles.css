@@ -138,7 +138,7 @@ a:hover { color: var(--text-secondary); }
 /* === Article Card === */
 .article-card {
   display: block;
-  padding: 1.2rem 0;
+  padding: 1.4rem 0;
   border-bottom: 1px solid var(--border);
   transition: opacity 0.15s;
 }
@@ -149,7 +149,7 @@ a:hover { color: var(--text-secondary); }
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
   font-size: 0.8rem;
   color: var(--text-tertiary);
 }
@@ -181,8 +181,74 @@ a:hover { color: var(--text-secondary); }
   line-height: 1.55;
 }
 
-.article-card .tags-row {
+/* Card-level mini numbers row */
+.article-card .card-nums {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.article-card .card-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.75rem;
+}
+
+.article-card .card-num .cn-val {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.article-card .card-num .cn-label {
+  color: var(--text-tertiary);
+}
+
+/* Card-level core viewpoint */
+.article-card .card-viewpoint {
+  background: var(--bg-secondary);
+  border-left: 2px solid var(--text);
+  padding: 0.5rem 0.8rem;
+  margin-top: 0.6rem;
+  border-radius: 0 3px 3px 0;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.article-card .card-viewpoint strong {
+  color: var(--text);
+}
+
+/* Card-level takeaways strip */
+.article-card .card-takeaways {
+  display: flex;
+  gap: 0.5rem;
   margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.article-card .card-takeaway {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.article-card .card-takeaway .ct-num {
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.article-card .tags-row {
+  margin-top: 0.6rem;
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
