@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第24期 · sandboxd、Lexa、MCP 生态 — 趁手工具推荐榜</title>
-<meta name="description" content="AI agent 基础设施正从推理转向执行环境。sandboxd 一行命令启动隔离沙箱，Lexa 把代码库变成结构图。MCP 生态从能用进化到好用。">
+<title>第24期 · headroom、harness、Agent Skills 元技能时代 — 趁手工具推荐榜</title>
+<meta name="description" content="LLM 上下文压缩 headroom 省 60-95% token，#1 Trending。harness 元技能自动生成 agent 团队与 skills。GitHub 正被 AI Agent 压垮——Claude Code 占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +20,8 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">浏览</div>
         <a href="index.html">所有简报</a>
-        <a href="#">🔥 值得马上试 <span class="count">1</span></a>
-        <a href="#">⚡ 值得关注 <span class="count">1</span></a>
+        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">6</span></a>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-section-title">往期</div>
@@ -40,39 +40,39 @@
     <article class="article-page">
       <a href="index.html" class="article-back">← 所有简报</a>
 
-      <h1>sandboxd · Lexa · MCP 生态质量跃升</h1>
+      <h1>headroom · harness · Agent Skills 元技能时代</h1>
 
       <div class="article-meta">
         <span>第24期</span>
         <span class="dot"></span>
         <span>2026年6月8日</span>
         <span class="dot"></span>
-        <span>4 min read</span>
+        <span>5 min read</span>
       </div>
 
       <!-- ===== 核心判断 ===== -->
       <div class="judgment">
         <div class="j-label">核心判断</div>
-        <div class="j-core">Agent 基础设施的瓶颈正在从「能调用什么工具」转移到「在哪里安全地执行」。sandboxd 和 Lexa 分属执行层和理解层，但指向同一个趋势——Agent 生态的基建重心在下沉。</div>
-        <p>本期信号密集且方向一致：sandboxd 解决安全隔离，Lexa 解决代码理解，MCP server 从玩具级进化到 Rust 亚毫秒级。三条线合在一起看，Agent 正在从「能跑」变成「跑得好」，这是基建成熟的标志。</p>
+        <div class="j-core">Agent Skills 正在从「手工创作」进入「工业化生成」。headroom 解决上下文窗口瓶颈，harness 让 agent 为自己生成技能——两个工具指向同一个转折点：Skills 生态的供给侧正在从人到机器迁移。</div>
+        <p>本期三大信号：① 上下文压缩方案集中爆发（headroom、codegraph、claude-mem），说明 token 经济已成 Agent 核心瓶颈；② harness 的 meta-skill 模式标志着技能生产自动化；③ GitHub 被 AI Agent 提交量压垮——Claude Code 单工具占全平台 4.5% 公开提交，agentic coding 已不是趋势而是现实。</p>
       </div>
 
       <!-- ===== 本期数字 ===== -->
       <div class="bignums">
-        <div class="bignum"><div class="bn-val">503 ⭐</div><div class="bn-desc">sandboxd — AI agent 沙箱，npx 一行启动</div></div>
-        <div class="bignum"><div class="bn-val">83 ⭐</div><div class="bn-desc">Lexa — Rust 代码图谱引擎</div></div>
-        <div class="bignum"><div class="bn-val">2,277 ⭐</div><div class="bn-desc">本期最高星项目 goose</div></div>
-        <div class="bignum"><div class="bn-val">6 个</div><div class="bn-desc">新 MCP server 进入视野</div></div>
-        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+        <div class="bignum"><div class="bn-val">14,148 ⭐</div><div class="bn-desc">headroom — 本周 #1 Trending，省 60-95% token</div></div>
+        <div class="bignum"><div class="bn-val">6,096 ⭐</div><div class="bn-desc">harness — 元技能，自动生成 agent 团队+skills</div></div>
+        <div class="bignum"><div class="bn-val">10,000+</div><div class="bn-desc">MCP 服务器注册量破万</div></div>
+        <div class="bignum"><div class="bn-val">2.75 亿</div><div class="bn-desc">GitHub 单周 AI Agent 提交量</div></div>
+        <div class="bignum"><div class="bn-val">3 条</div><div class="bn-desc">趋势洞察</div></div>
       </div>
 
       <div class="article-content">
 
         <!-- ===== 要点提炼 ===== -->
         <div class="takeaways">
-          <div class="takeaway"><p><strong>sandboxd</strong> — AI coding agent 的即时隔离沙箱。一行命令搞定执行环境，预览 URL 自动生成，比 Docker 轻量一个数量级。</p></div>
-          <div class="takeaway"><p><strong>Lexa</strong> — 给 agent 装上代码库的「眼睛」。不靠 grep，用 AST + 依赖图结构化理解代码。</p></div>
-          <div class="takeaway"><p><strong>MCP 质量跃升</strong> — 从 JSON-RPC 玩具到 Rust 亚毫秒级实现，从软件工具到硬件接入（Whoop 手环），生态在成熟。</p></div>
+          <div class="takeaway"><p><strong>headroom</strong> — LLM 上下文压缩器，工具输出进模型前自动砍掉 60-95% 冗余。library/proxy/MCP server 三种模式，对 coding agent 立竿见影。</p></div>
+          <div class="takeaway"><p><strong>harness</strong> — 元技能引擎。给任务描述，自动设计 agent 团队结构 + 生成各 agent 的 skill 文件。Skills 从手写进入自动化。</p></div>
+          <div class="takeaway"><p><strong>Agent Skills 工业化</strong> — agentskills.io 获 7+ 平台适配，微软 Azure Agent Skills 发布，MCP 破万。生态基建在下沉，标准在固化。</p></div>
         </div>
 
         <!-- ===== 深度阅读 01：推荐 ===== -->
@@ -82,22 +82,24 @@
         </div>
 
         <div class="card">
-          <h3>sandboxd — AI Agent 的即时沙箱环境</h3>
-          <blockquote>一个命令启动隔离开发环境，带预览 URL，专为 coding agent 设计。无需 Kubernetes。</blockquote>
+          <h3>headroom — LLM 上下文压缩，省 60-95% token</h3>
+          <blockquote>把工具输出/日志/RAG 片段在送进 LLM 前先压缩 60-95%，支持 library / proxy / MCP server 三种模式。</blockquote>
           <ul>
-            <li>仓库：<a href="https://github.com/tastyeffectco/sandboxd">tastyeffectco/sandboxd</a> ⭐503</li>
-            <li>定位：为 AI coding agent 提供开箱即用的隔离执行环境。<code>npx sandboxd</code> 一条命令即可获得沙箱+预览 URL。</li>
-            <li>为什么重要：对 Hermes Agent / Claude Code 这类 agent 来说，最头疼的就是「安全隔离执行环境」。sandboxd 把这个成本降到一行命令，比 Docker 轻量得多。</li>
+            <li>仓库：<a href="https://github.com/chopratejas/headroom">chopratejas/headroom</a> ⭐14,148</li>
+            <li>定位：LLM 上下文压缩器。在工具输出进入模型前自动压缩，砍掉冗余日志、空行、重复结构，保留语义。</li>
+            <li>为什么重要：Agent 调用工具越多 → 输出数据越多 → 上下文窗口越贵。headroom 直接砍掉 60-95%，对 Hermes、Claude Code、Codex 这类频繁调用工具的 coding agent 效果立竿见影。</li>
+            <li>判标：🔥 值得马上试 — #1 Trending，MCP server 模式一个 yaml 配置即可接入</li>
           </ul>
         </div>
 
         <div class="card">
-          <h3>Lexa — 把代码库变成 AI 可查询的图</h3>
-          <blockquote>Rust 写的本地代码智能引擎，将整个代码库转换为可移植、可查询的图结构。</blockquote>
+          <h3>harness — 元技能：自动设计 Agent 团队并生成技能</h3>
+          <blockquote>给一个任务描述，harness 自动分析需要哪些专业 agent、每个 agent 用什么技能、skill 文件该写什么——然后直接生成。</blockquote>
           <ul>
-            <li>仓库：<a href="https://github.com/anvia-hq/lexa">anvia-hq/lexa</a> ⭐83</li>
-            <li>定位：给 AI agent 当「代码库眼睛」。把代码库静态分析为图结构（AST、调用关系、依赖图）。</li>
-            <li>为什么重要：目前的 agent 读代码靠 grep + 文件读取，Lexa 提供结构化理解。跟 Hermes 的代码理解能力天然互补。</li>
+            <li>仓库：<a href="https://github.com/revfactory/harness">revfactory/harness</a> ⭐6,096</li>
+            <li>定位：Meta-skill——生成 skills 的 skill。从任务描述出发，自动拆解为 agent 团队结构 + 各 agent 的技能清单 + skill 文件内容。</li>
+            <li>为什么重要：对 Skills Watch 来说是革命性的。skills 不再靠人手写，而是由 meta-skill 自动生成。Agent 技能生态即将从「手工时代」进入「工业化时代」。</li>
+            <li>判标：🔥 值得马上试 — 试着让它分析你的日常工作，自动生成一套 Hermes skill</li>
           </ul>
         </div>
 
@@ -110,28 +112,48 @@
         <table>
           <thead><tr><th>项目</th><th>Stars</th><th>亮点</th></tr></thead>
           <tbody>
-            <tr><td><a href="https://github.com/b-nnett/goose">b-nnett/goose</a></td><td>⭐2,277</td><td>Swift 写的 AI agent PoC</td></tr>
-            <tr><td><a href="https://github.com/jd-opensource/JoyAI-Echo">jd-opensource/JoyAI-Echo</a></td><td>⭐922</td><td>京东开源的长音频+视频生成模型</td></tr>
-            <tr><td><a href="https://github.com/VAST-AI-Research/TripoSplat">VAST-AI-Research/TripoSplat</a></td><td>⭐540</td><td>单张 2D 图→3D 高斯泼溅</td></tr>
-            <tr><td><a href="https://github.com/S-Sigdel/vimhjkl">S-Sigdel/vimhjkl</a></td><td>⭐410</td><td>终端里用间隔重复法学 Vim</td></tr>
-            <tr><td><a href="https://github.com/zenhosta/9drive">zenhosta/9drive</a></td><td>⭐426</td><td>多 Google Drive 账号统一网关</td></tr>
+            <tr><td><a href="https://github.com/chopratejas/headroom">chopratejas/headroom</a></td><td>⭐14,148</td><td>🔥 #1 Trending，压缩工具输出 60-95%</td></tr>
+            <tr><td><a href="https://github.com/affaan-m/ECC">affaan-m/ECC</a></td><td>⭐210,685</td><td>Agent 全栈 harness：skills+instincts+memory+security</td></tr>
+            <tr><td><a href="https://github.com/msitarzewski/agency-agents">msitarzewski/agency-agents</a></td><td>⭐108,492</td><td>完整 AI agency：前端向导+社区+创意+agent</td></tr>
+            <tr><td><a href="https://github.com/thedotmack/claude-mem">thedotmack/claude-mem</a></td><td>⭐81,272</td><td>Agent 持久化记忆引擎（ChromaDB）</td></tr>
+            <tr><td><a href="https://github.com/bytedance/deer-flow">bytedance/deer-flow</a></td><td>⭐70,743</td><td>字节开源长周期 SuperAgent，含沙箱+记忆</td></tr>
+            <tr><td><a href="https://github.com/Leonxlnx/taste-skill">Leonxlnx/taste-skill</a></td><td>⭐33,679</td><td>给 AI 装上「品味」，消除无聊输出</td></tr>
+            <tr><td><a href="https://github.com/microsoft/markitdown">microsoft/markitdown</a></td><td>⭐145,078</td><td>文件/Office 文档一键转 Markdown</td></tr>
+            <tr><td><a href="https://github.com/colbymchenry/codegraph">colbymchenry/codegraph</a></td><td>⭐42,094</td><td>预索引代码知识图谱，100% 本地</td></tr>
+            <tr><td><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills">mukul975/Anthropic-Cybersecurity-Skills</a></td><td>⭐14,338</td><td>754 个安全技能，覆盖 5 大框架</td></tr>
+            <tr><td><a href="https://github.com/can1357/oh-my-pi">can1357/oh-my-pi</a></td><td>⭐10,686</td><td>终端 AI coding agent，hash-anchor+LSP</td></tr>
+            <tr><td><a href="https://github.com/run-llama/liteparse">run-llama/liteparse</a></td><td>⭐9,183</td><td>LlamaIndex Rust 文档解析器</td></tr>
+            <tr><td><a href="https://github.com/hardikpandya/stop-slop">hardikpandya/stop-slop</a></td><td>⭐8,805</td><td>消除 AI 文本「机器味」</td></tr>
           </tbody>
         </table>
 
-        <!-- ===== 深度阅读 03：MCP ===== -->
+        <!-- ===== 深度阅读 03：MCP/Skills ===== -->
         <div class="dr-section">
           <div class="dr-num">03</div>
-          <h2>Skills Watch — MCP 生态动态</h2>
+          <h2>Skills Watch — Agent Skills / MCP 生态动态</h2>
         </div>
 
+        <h3>MCP 协议生态</h3>
         <table>
-          <thead><tr><th>项目</th><th>Stars</th><th>亮点</th></tr></thead>
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
           <tbody>
-            <tr><td><a href="https://github.com/caezium/Burrow">caezium/Burrow</a></td><td>⭐186</td><td>Mole CLI 的原生 macOS GUI，磁盘清理</td></tr>
-            <tr><td><a href="https://github.com/Aimino-Tech/opendocswork-mcp">Aimino-Tech/opendocswork-mcp</a></td><td>⭐135</td><td>Rust 原生 MCP server，Office 文档处理</td></tr>
-            <tr><td><a href="https://github.com/nextdev-labs/mcp">nextdev-labs/mcp</a></td><td>⭐57</td><td>Agent Usability Index — API 适配度评分</td></tr>
-            <tr><td><a href="https://github.com/Moh4696/50-essential-mcp-servers">Moh4696/50-essential-mcp-servers</a></td><td>⭐49</td><td>精选 50 个 MCP server 清单</td></tr>
-            <tr><td><a href="https://github.com/briangaoo/totem">briangaoo/totem</a></td><td>⭐63</td><td>Whoop 健身手环数据接入 MCP</td></tr>
+            <tr><td>MCP 服务器破万</td><td>mcp.so 注册量破万，PulseMCP 8,600+，awesome 社区 5,000+，97M 月 SDK 下载</td><td>🔥</td></tr>
+            <tr><td>@modelcontextprotocol/ext-apps v1.0.1</td><td>官方支持 Agent Skills 新模块、MCP 应用测试、OpenAI 应用迁移</td><td>🔥</td></tr>
+            <tr><td>Linux Foundation 托管</td><td>2025.12 捐赠，2026.03 企业路线图：OAuth 2.1+PKCE+审计日志</td><td>⚡</td></tr>
+            <tr><td>Cisco Cloud Control MCP</td><td>50+ 第三方工具通过 MCP 接入 Cisco 安全平台</td><td>⚡</td></tr>
+            <tr><td>SEON MCP Server</td><td>欺诈预防与 AML 合规平台发布 MCP server（2026.06）</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:1.5rem">Agent Skills 生态</h3>
+        <table>
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>agentskills.io 开放标准</td><td>Claude Code、Copilot、Codex CLI、Cursor、Gemini CLI 等 7+ 平台适配</td><td>⚡</td></tr>
+            <tr><td>harness 元技能</td><td>自动设计 agent 团队 + 生成 skills，技能生产自动化</td><td>🔥</td></tr>
+            <tr><td>Anthropic-Cybersecurity-Skills</td><td>754 个安全技能，MITRE ATT&CK/NIST/OWASP 等 5 框架，20+ 平台</td><td>⚡</td></tr>
+            <tr><td>Microsoft Azure Agent Skills</td><td>微软发布 Azure 开发结构化 Agent Skills，大厂正式入局</td><td>⚡</td></tr>
+            <tr><td>headroom MCP Server</td><td>首个 Agent 上下文效率优化 MCP server，开启工具输出压缩新品类</td><td>⚡</td></tr>
           </tbody>
         </table>
 
@@ -143,20 +165,33 @@
 
         <div class="insight">
           <div class="label">趋势一</div>
-          <strong>「Agent 基础设施」从推理转向执行环境</strong>
-          <p>今年上半年 MCP 协议让 agent 能「看到」更多工具，但现在瓶颈转移到「在哪跑」。sandboxd、Daytona、Modal 这些隔离执行方案密集出现——工具调用问题基本解决，执行安全问题成为新瓶颈。</p>
+          <strong>上下文窗口成为 Agent 新瓶颈，压缩方案集中爆发</strong>
+          <p>headroom（#1 Trending）、codegraph（预索引减 token）、claude-mem（记忆引擎）、stop-slop（消除冗余输出）本周齐头并进。工具调用生态越丰富，输出数据越多，上下文越贵。行业共识：2026 年 Agent 的核心瓶颈已从「能调用多少工具」转移到「调用后能塞进多少上下文」。<br>→ 传导链：MCP 标准化 → 工具数爆发 → 单次输出量暴增 → 上下文压力 → 压缩/摘要/记忆成为刚需</p>
         </div>
 
         <div class="insight">
           <div class="label">趋势二</div>
-          <strong>MCP server 从「能用」转向「好用」</strong>
-          <p>从 JSON-RPC 包装器到 Rust 原生亚毫秒级实现、专有硬件接入、GUI 工具链，MCP 生态质量在显著提升。Rust MCP → 性能差异化；硬件接入 MCP → 生态扩展到 IoT/健康。</p>
+          <strong>GitHub 正被 AI Agent 压垮</strong>
+          <p>2026 年单周提交量 2.75 亿次，是 2025 全年 10 亿次的 14 倍年化率。GitHub Actions 从每周 5 亿分钟（2023）飙升至 21 亿分钟（2026 初）。Claude Code 单一工具贡献全平台公开仓库提交量的 4.5%——每周 260 万次，较半年前增长 25 倍。AI Agent 正在成为 GitHub 上最活跃的「用户」，既证明了 agentic coding 的爆发，也暴露了软件基础设施应对 AI 规模化的深层压力。</p>
         </div>
 
+        <div class="insight">
+          <div class="label">趋势三</div>
+          <strong>Agent Skills 进入「元技能」+「大厂入局」双轮驱动</strong>
+          <p>harness 的出现标志着 Skills 从手工创作进入自动生成时代。同时 Microsoft Azure Agent Skills 发布、agentskills.io 获 7+ 平台适配，说明大厂正在将 Skills 视为 Agent 生态的入口标准。结合 MCP 的 Linux Foundation 托管，整个 Agent 互联的基础协议层正在快速固化。下半年预期：出现「技能市场/技能商店」，像 App Store 之于手机。</p>
+        </div>
+
+        <!-- ===== 深度阅读 05：试 ===== -->
         <div class="card" style="margin-top:2rem">
           <h3>💎 本周最值得试</h3>
-          <p>装个 <code>sandboxd</code> 给 Hermes 当沙箱——一行命令启动隔离环境，agent 在里面随便折腾不影响主机。</p>
-          <pre><code>npx sandboxd</code></pre>
+          <p>在 Hermes 上装 <code>headroom</code> 的 MCP server 模式——挂到 MCP 配置里，所有工具输出自动压缩后再进 LLM。token 钱省多少不说，上下文窗口腾出来给真正重要的内容。</p>
+          <pre><code>pip install headroom
+# 或 MCP server 模式（添加到 Hermes MCP config）:
+# servers:
+#   headroom:
+#     command: headroom
+#     args: ["serve"]</code></pre>
+          <p style="margin-top:1em">替代方案：试试 <code>harness</code> 让它分析你的日常工作流，自动生成一套 Hermes skill。</p>
         </div>
 
         <!-- ===== 数据统计 ===== -->
@@ -166,29 +201,32 @@
         </div>
 
         <div class="bignums">
-          <div class="bignum"><div class="bn-val">11</div><div class="bn-desc">收录工具/项目</div></div>
-          <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">趋势洞察</div></div>
-          <div class="bignum"><div class="bn-val">3</div><div class="bn-desc">数据源</div></div>
-          <div class="bignum"><div class="bn-val">🔥 1</div><div class="bn-desc">值得马上试</div></div>
-          <div class="bignum"><div class="bn-val">⚡ 6</div><div class="bn-desc">值得关注进度</div></div>
+          <div class="bignum"><div class="bn-val">16</div><div class="bn-desc">收录工具/项目</div></div>
+          <div class="bignum"><div class="bn-val">3</div><div class="bn-desc">趋势洞察</div></div>
+          <div class="bignum"><div class="bn-val">4</div><div class="bn-desc">数据源</div></div>
+          <div class="bignum"><div class="bn-val">🔥 2</div><div class="bn-desc">值得马上试</div></div>
+          <div class="bignum"><div class="bn-val">⚡ 8</div><div class="bn-desc">值得关注进度</div></div>
         </div>
 
         <table>
           <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>有效条目</th></tr></thead>
           <tbody>
-            <tr><td>GitHub Trending</td><td>GitHub API</td><td>06-08</td><td>5</td></tr>
-            <tr><td>GitHub Search (MCP)</td><td>GitHub API</td><td>06-08</td><td>6</td></tr>
-            <tr><td>Metaso 搜索</td><td>MCP</td><td>06-08</td><td>0 (兜底)</td></tr>
-            <tr><td>综合研判</td><td>LLM</td><td>06-08</td><td>2 趋势</td></tr>
+            <tr><td>GitHub Search API</td><td>5 queries × 15 results</td><td>06-08</td><td>65 repos (去重)</td></tr>
+            <tr><td>tool_warehouse.db</td><td>SQLite 本地查询</td><td>06-08</td><td>crawl 06-07 数据</td></tr>
+            <tr><td>Metaso Web Search</td><td>4 queries</td><td>06-08</td><td>部分可用</td></tr>
+            <tr><td>CSDN GitHub 日榜</td><td>Metaso → CSDN</td><td>06-04/06</td><td>3 篇日榜文章</td></tr>
+            <tr><td>综合研判</td><td>LLM 聚合</td><td>06-08</td><td>3 趋势</td></tr>
           </tbody>
         </table>
 
         <!-- ===== Sources ===== -->
         <div class="sources">
           <strong>数据来源：</strong>
-          <a href="https://github.com/trending?since=weekly">GitHub Trending</a> ·
           <a href="https://api.github.com/search/repositories">GitHub Search API</a> ·
-          Metaso 搜索（本期不可用，切换兜底方案） ·
+          <a href="https://github.com/trending?since=weekly">GitHub Trending</a> ·
+          tool_warehouse.db (SQLite) ·
+          Metaso Web Search ·
+          <a href="https://www.sohu.com/a/1033165288_122861684">搜狐：GitHub 被 AI Agent 压垮</a> ·
           Hermes Agent 综合研判
         </div>
 
@@ -200,7 +238,7 @@
           </span>
           <span class="disabled next">
             <span class="nav-label">下一期 →</span>
-            <span class="nav-title">周一三五更新</span>
+            <span class="nav-title">周三更新</span>
           </span>
         </div>
 
