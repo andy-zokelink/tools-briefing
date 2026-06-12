@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第26期 · Apple Xcode Skills · MCP 安全军备竞赛 — 趁手工具推荐榜</title>
+<meta name="description" content="Apple 从 Xcode 27 导出官方 Agent Skills，标志平台级 Skills 有了第二个锚点。MCP 安全一周内涌入腾讯、NVIDIA、Snyk 三大厂商，从扫描到运行时防护全链补齐。agent-gate + Spanly 开创运行时防护和可观测新品类。">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="index.html">所有简报</a>
+        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">往期</div>
+        <a href="2026-06-12.html" class="active">第26期<span class="count">06-12</span></a>
+        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
+        <a href="2026-06-08.html">第24期<span class="count">06-08</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
+  </aside>
+
+  <!-- === Article === -->
+  <main class="main">
+    <article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Apple Xcode Skills · MCP 安全军备竞赛</h1>
+
+      <div class="article-meta">
+        <span>第26期</span>
+        <span class="dot"></span>
+        <span>2026年6月12日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Apple 入局 Agent Skills + MCP 安全进入军备竞赛——平台级 Skills 有了第二个锚点，MCP 安全从"有人做"变成"正在打"。</div>
+        <p>本期两大信号：① superagents-lab/xcode27-skills 标志 Apple 正式从 IDE 层面导出 Agent Skills——Skills 从"社区附加"走向"工具链内置"；② MCP 安全赛道一周内涌入腾讯 AI-Infra-Guard、NVIDIA SkillSpector、Snyk agent-scan 三大厂商，加上 agent-gate 和 Spanly 填补运行时防护和可观测空白。MCP 安全不再只是理念讨论——军备竞赛已经开始。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">75 ⭐</div><div class="bn-desc">xcode27-skills — Apple 官方 Agent Skills 发布 3 天</div></div>
+        <div class="bignum"><div class="bn-val">225,907 ⭐</div><div class="bn-desc">obra/superpowers — Agent Skills 框架继续领跑</div></div>
+        <div class="bignum"><div class="bn-val">7+</div><div class="bn-desc">MCP 安全工具数量，形成完整产品矩阵</div></div>
+        <div class="bignum"><div class="bn-val">3,882 ⭐</div><div class="bn-desc">Tencent AI-Infra-Guard — 腾讯全栈 AI 红队平台</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Apple Xcode 27 Agent Skills</strong> — 平台厂商第二个 Skills 锚点。Anthropic 定义格式，Apple IDE 原生生成。Skills 从"社区附加"走向"工具链内置"。</p></div>
+          <div class="takeaway"><p><strong>MCP 安全军备竞赛</strong> — 腾讯 AI-Infra-Guard + NVIDIA SkillSpector + Snyk agent-scan 同期涌入。agent-gate 填补运行时防护，Spanly 补上可观测。7+ 产品矩阵成型。</p></div>
+          <div class="takeaway"><p><strong>MCP 2026-07-28 规范大更新</strong> — 迁移指南 mcpmigrate.dev 上线。OAuth 2.1 + PKCE + 审计日志正式落地。MCP 正从"能连上"走向"可信、可管、可看"。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：xcode27-skills ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>superagents-lab/xcode27-skills — Apple 官方 Agent Skills</h2>
+            <p>Apple 从 Xcode 27 导出官方 Agent Skills。不是"发布一个仓库"——而是从 IDE 原生生成。每个 Xcode 项目都可以自带 Agent Skills，让 AI coding agent 理解 Apple 平台特定约束和最佳实践。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/superagents-lab/xcode27-skills">superagents-lab/xcode27-skills</a></td></tr>
+                <tr><td>Stars</td><td>⭐75（3 天）</td></tr>
+                <tr><td>语言</td><td>Python（Skills 格式）</td></tr>
+                <tr><td>覆盖</td><td>SwiftUI、UIKit 现代化、Swift Testing、C 安全、安全加固</td></tr>
+                <tr><td>判标</td><td>🔥 值得马上试（iOS/macOS 开发者）/ ⚡ 值得关注进度</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>这是继 Anthropic Skills 之后第二个"平台级" Skills 发布。关键区别——Apple 不是单独发布一个 skills 仓库，而是从 IDE 原生导出。这意味着 Skills 不再是"第三方社区附加的 prompt 文件"，而是"开发工具链的内置输出"。</p>
+
+            <p><strong>传导效应：</strong></p>
+            <ul>
+              <li>Anthropic 定义格式 → Apple IDE 原生生成 → 每个项目自带 Skills</li>
+              <li>Skills 从"下载安装"变成"项目自描述"——像 .gitignore 一样自然</li>
+              <li>JetBrains Junie 已适配 agentskills.io，下一个里程碑是 VS Code / Copilot</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 如果你在做 iOS/macOS 开发，这是直接可用的；⚡ 对于观察生态的读者，关注 Xcode 27 正式发布后的社区反馈和 Skills 覆盖率。Apple 的入局方式和 Anthropic 不同——这是"IDE 原生"vs"公共仓库"的路线差异。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：MCP 安全军备竞赛 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>MCP 安全军备竞赛 — 从扫描到防护，7+ 产品矩阵</h2>
+            <p>两周前 MCP 安全还是一片真空。上周 MCTS + AgentSploit 打破真空。本周腾讯、NVIDIA、Snyk 三大厂同期涌入，agent-gate 和 Spanly 补上运行时和可观测。</p>
+
+            <div class="card">
+              <h3>产品矩阵（按品类）</h3>
+              <table class="info-table">
+                <tr><td>静态扫描</td><td><a href="https://github.com/MCP-Audit/MCTS">MCTS</a> ⭐21 · <a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a> ⭐3,346 · <a href="https://github.com/snyk/agent-scan">Snyk agent-scan</a> ⭐2,565</td></tr>
+                <tr><td>红队/渗透</td><td><a href="https://github.com/Tencent/AI-Infra-Guard">Tencent AI-Infra-Guard</a> ⭐3,882 · AgentSploit</td></tr>
+                <tr><td>运行时防护</td><td><a href="https://github.com/Jott2121/agent-gate">agent-gate</a> ⭐2 — fail-closed gate + 防篡改收据</td></tr>
+                <tr><td>可观测</td><td><a href="https://spanly.com/">Spanly</a> — MCP 服务器内部行为监控</td></tr>
+                <tr><td>依赖安全</td><td><a href="https://github.com/asamassekou10/ship-safe">ship-safe</a> ⭐729 — DMCA + MCP tool injection</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>两周前我们还在说"MCP 安全是真空"。上周说"两个独立工具打破真空"。这周——腾讯、NVIDIA、Snyk 三大厂同期在推各自的 Agent 安全工具。安全不再只是独立开发者的 side project——大厂已经把 MCP 安全当作产品线在做了。</p>
+
+            <p><strong>agent-gate 的独特价值：</strong></p>
+            <ul>
+              <li>Fail-closed：默认拒绝，只有通过检查的操作才放行——和传统"默认放行+事后审计"相反</li>
+              <li>哈希链防篡改收据：每次 agent 操作都记录在不可篡改的链上，适合合规审计</li>
+              <li>MCP server 形式：任何 agent 都可以通过 MCP 协议接入，不绑定特定平台</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>⚡ 值得关注进度。agent-gate（2 星）和 Spanly（刚上线）都还是极早期，但方向清晰——静态扫描之后必然是运行时防护和可观测。MCP 安全的产品矩阵正在快速补齐。下半年预计出现"企业 MCP 防火墙"和"MCP 安全评分"等独立品类。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/superagents-lab/xcode27-skills">xcode27-skills</a></td><td>⭐75</td><td>Apple 官方 Agent Skills，SwiftUI/UIKit/Swift Testing</td></tr>
+            <tr><td><a href="https://github.com/Tencent/AI-Infra-Guard">Tencent/AI-Infra-Guard</a></td><td>⭐3,882</td><td>腾讯全栈 AI 红队平台，Agent+MCP+Skills 扫描</td></tr>
+            <tr><td><a href="https://github.com/NVIDIA/SkillSpector">NVIDIA/SkillSpector</a></td><td>⭐3,346</td><td>NVIDIA 官方 Agent Skills 安全扫描器</td></tr>
+            <tr><td><a href="https://github.com/snyk/agent-scan">snyk/agent-scan</a></td><td>⭐2,565</td><td>Snyk Agent/MCP/Skills 安全扫描器</td></tr>
+            <tr><td><a href="https://github.com/obra/superpowers">obra/superpowers</a></td><td>⭐225,907</td><td>Agent Skills 框架，生态领跑者</td></tr>
+            <tr><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>⭐148,968</td><td>Anthropic 公共 Agent Skills 仓库</td></tr>
+            <tr><td><a href="https://github.com/can1357/oh-my-pi">can1357/oh-my-pi</a></td><td>⭐12,087</td><td>终端 AI coding agent，hash-anchored edits</td></tr>
+            <tr><td><a href="https://github.com/chopratejas/headroom">headroom</a></td><td>⭐24,475</td><td>工具输出压缩，省 60-95% token</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/registry">MCP registry</a></td><td>⭐6,920</td><td>MCP 官方注册表，持续增长</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/go-sdk">MCP Go SDK</a></td><td>⭐4,680</td><td>Google 合作维护</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/csharp-sdk">MCP C# SDK</a></td><td>⭐4,326</td><td>Microsoft 合作维护</td></tr>
+            <tr><td><a href="https://github.com/Jott2121/agent-gate">agent-gate</a></td><td>⭐2</td><td>MCP fail-closed gate + 防篡改收据链</td></tr>
+            <tr><td><a href="https://github.com/xuanyuanzhifeng/ai-video-agent">ai-video-agent</a></td><td>⭐71</td><td>AI 图片轮播视频 + HTML 动画（6/9 新建）</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Apple Xcode 27 Agent Skills</td><td>superagents-lab 导出 Apple 官方 Skills：SwiftUI/UIKit/Swift Testing/C 安全</td><td>🔥</td></tr>
+            <tr><td>MCP 安全大厂涌入</td><td>腾讯 AI-Infra-Guard + NVIDIA SkillSpector + Snyk agent-scan 同期活跃</td><td>🔥</td></tr>
+            <tr><td>MCP 2026-07-28 规范变更</td><td>mcpmigrate.dev 迁移指南发布，OAuth 2.1 + PKCE + 审计日志</td><td>⚡</td></tr>
+            <tr><td>MCP 运行时防护出现</td><td>agent-gate（fail-closed + 防篡改）+ Spanly（可观测）</td><td>⚡</td></tr>
+            <tr><td>Codacy Agent Skills 发布</td><td>代码质量平台发布 Claude/Codex/Copilot Skills</td><td>⚡</td></tr>
+            <tr><td>Scandit 条码扫描 Skills</td><td>垂直行业 Agent Skills 持续增长</td><td>❄️</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>MCP 注册量持续增长</td><td>mcp.so 10,000+，PulseMCP 8,600+，官方 registry ⭐6,920</td><td>🔥</td></tr>
+            <tr><td>MCP SDK 多语言推进</td><td>Go SDK（Google 合作）+ C# SDK（Microsoft 合作）</td><td>⚡</td></tr>
+            <tr><td>agentskills.io 标准</td><td>20+ 平台适配，全线主流 coding agent 支持</td><td>⚡</td></tr>
+            <tr><td>taste-skill "AI 品味"</td><td>⭐40,501，稳定在 4 万星</td><td>🔥</td></tr>
+            <tr><td>Buildy — Agent PaaS</td><td>让 Agent 部署个人应用</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>Apple 入局 Agent Skills —— 平台原生 Skills 时代开启</h3>
+          <p>Anthropic 定义了 Agent Skills 格式，Apple 是第二个从"平台层"导出 Skills 的厂商——而且方式不同。Anthropic 做的是"发布一个公共仓库让大家下载"，Apple 做的是"IDE 原生生成项目 Skills"。</p>
+          <p><strong>传导链：</strong>Anthropic Skills 标准化格式 → Apple Xcode 原生集成 → 每个项目自带 Skills → Skills 从"可选项"变成"默认项" → JetBrains / VS Code 跟进 → Skills 成为项目标配文件（像 .gitignore 一样自然）。</p>
+          <p><strong>下半年预判：</strong>JetBrains Junie 已经适配 agentskills.io 标准。下一个里程碑是 VS Code / GitHub Copilot 的原生 Skills 支持。届时 Skills 将从"agent 专属"变成"IDE 通用"。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>MCP 安全军备竞赛 —— 7+ 产品，从扫描到防护全链补齐</h3>
+          <p>两周前 MCP 安全还是一片真空。上周 MCTS + AgentSploit 打破真空。本周腾讯、NVIDIA、Snyk 三大厂同期涌入，agent-gate 和 Spanly 补上运行时和可观测。产品矩阵：静态扫描 → 红队渗透 → 运行时防护 → 可观测 → 依赖安全，全链成型。</p>
+          <p><strong>下半年预判：</strong>"MCP 安全评分"和"企业 MCP 防火墙"将成为独立品类。Gartner/Forrester 可能开始把 MCP 安全纳入云安全评估框架。MCP 正从"连得上"的时代进入"信得过"的时代。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>iOS/macOS 开发者：</strong></p>
+          <pre><code>git clone https://github.com/superagents-lab/xcode27-skills.git
+cd xcode27-skills
+# 查看 SwiftUI/UIKit/Swift Testing 的 Agent Skills 设计范式
+ls skills/</code></pre>
+          <p><strong>MCP 运维者：</strong>关注 <a href="https://mcpmigrate.dev">mcpmigrate.dev</a> 了解 MCP 2026-07-28 规范变更，提前规划迁移。</p>
+          <p><strong>Agent 安全关注者：</strong>横向对比 <a href="https://github.com/Tencent/AI-Infra-Guard">腾讯 AI-Infra-Guard</a>、<a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a>、<a href="https://github.com/snyk/agent-scan">Snyk agent-scan</a> 三个扫描器的覆盖范围差异。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">~80</div><div class="bn-desc">GitHub repos collected (7 queries)</div></div>
+          <div class="bignum"><div class="bn-val">32</div><div class="bn-desc">HN stories (5 queries)</div></div>
+          <div class="bignum"><div class="bn-val">0</div><div class="bn-desc">Metaso (MCP 未连接)</div></div>
+          <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">趋势洞察提炼</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>条目</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub Search API</td><td>7 queries × 15</td><td>06-12</td><td>~80 repos</td></tr>
+            <tr><td>HN Algolia API</td><td>5 queries</td><td>06-12</td><td>32 stories</td></tr>
+            <tr><td>Metaso Web Search</td><td>3 queries</td><td>06-12</td><td>0 (not connected)</td></tr>
+            <tr><td>GitHub Repo Detail API</td><td>4 repos</td><td>06-12</td><td>4 verified</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ Metaso MCP 本次完全不可用（not connected / unreachable），3 次查询全部失败。全量切换至 GitHub Search API + HN Algolia API。本期数据覆盖度正常。</blockquote>
+
+      </div>
+
+      <div class="article-footer">
+        <p>🏷️ #工具推荐榜 #SkillsWatch #2026Week24</p>
+        <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+</footer>
+
+<!-- AI Chat Widget -->
+<div class="ai-chat-widget">
+  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="title">AI 助理</span>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+      <div class="ai-chat-msg assistant">
+        <div class="label">AI 助理</div>
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、Agent Skills 生态趋势，或者帮你找适合你场景的开发工具。
+      </div>
+    </div>
+    <div class="ai-chat-input-row">
+      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
