@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第27期 · Agent Skills 病毒传播 · Agent 可靠性护栏时代 — 趁手工具推荐榜</title>
+<meta name="description" content="ponytail 3天15K星证明 Agent Skills 可以病毒式传播，Skills 从"功能附加"进入"行为设计"时代。HN #1 Forge 用 RL 护栏让 8B 模型 agentic 准确率 53%→99%，agent 可靠性不再依赖更大模型。Anthropic-Cybersecurity-Skills 发布 754 结构化安全技能。">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="index.html">所有简报</a>
+        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">往期</div>
+        <a href="2026-06-15.html" class="active">第27期<span class="count">06-15</span></a>
+        <a href="2026-06-12.html">第26期<span class="count">06-12</span></a>
+        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
+        <a href="2026-06-08.html">第24期<span class="count">06-08</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
+  </aside>
+
+  <!-- === Article === -->
+  <main class="main">
+    <article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Agent Skills 病毒传播 · Agent 可靠性护栏时代</h1>
+
+      <div class="article-meta">
+        <span>第27期</span>
+        <span class="dot"></span>
+        <span>2026年6月15日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Agent Skills 正在经历"App Store 时刻"——ponytail 3天15K星是分水岭信号。同时 agent 可靠性进入"护栏时代"：小模型+护栏 > 大模型裸奔。</div>
+        <p>本期三大信号：① ponytail 3天15K星——Agent Skills 首次病毒式传播，Skills 从"功能附加"走向"行为设计"；② Forge（HN #1，687pts）——RL 护栏让 8B 小模型在 agentic 任务上从 53% 拉到 99% 准确率，agent 可靠性瓶颈不在模型大小而在约束设计；③ Anthropic-Cybersecurity-Skills——754 个结构化安全技能对齐 5 大框架，安全成为 Agent Skills 第一个"全栈垂直"。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">15,313 ⭐</div><div class="bn-desc">ponytail — Agent Skills 病毒案例，3 天 15K 星</div></div>
+        <div class="bignum"><div class="bn-val">15,813 ⭐</div><div class="bn-desc">Anthropic-Cybersecurity-Skills — 754 安全技能</div></div>
+        <div class="bignum"><div class="bn-val">53%→99%</div><div class="bn-desc">Forge 护栏：8B 模型 agentic 任务准确率跃升</div></div>
+        <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">本周采集不重复仓库</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Ponytail 病毒传播</strong> — 3天15K星，Agent Skills 首次病毒案例。Skills 从"功能附加"走向"行为设计"——YAGNI 原则被编码成可传播的产品。</p></div>
+          <div class="takeaway"><p><strong>Agent 可靠性"护栏时代"</strong> — Forge（HN #1）证明小模型+护栏=99%准确率。agent 可靠性瓶颈不在模型大小，在约束设计。安全和可靠性是 agent 生产部署的前提。</p></div>
+          <div class="takeaway"><p><strong>安全成为 Skills 第一个"全栈垂直"</strong> — Anthropic-Cybersecurity-Skills 754 技能 × 5 框架 × 20+ 平台。加上上周 7+ 安全工具，安全是 Agent Skills 生态第一个完成"标准化→规模化→平台化"的垂直领域。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：ponytail ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>DietrichGebert/ponytail — Agent Skills 的首次病毒传播</h2>
+            <p>ponytail 是一个 Agent Skills 插件：让 AI coding agent"像公司里最懒的 senior dev 一样思考"——最好的代码是没写的代码。YAGNI 原则被编码成 Skills，创建于 6 月 12 日，3 天破 15,000 星。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/DietrichGebert/ponytail">DietrichGebert/ponytail</a></td></tr>
+                <tr><td>Stars</td><td>⭐15,313（3 天）</td></tr>
+                <tr><td>语言</td><td>JavaScript</td></tr>
+                <tr><td>标签</td><td>agent-skills, claude-code, claude-code-plugin, cursor-rules, yagni</td></tr>
+                <tr><td>判标</td><td>🔥 值得马上试（当前最火的 Agent Skills 案例）</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>这不是 ponytail 这一个工具有多强大——而是它证明了 Agent Skills 可以病毒式传播。之前 Skills 的增长曲线是线性的（大仓库持续涨星，新仓库慢热），但 ponytail 3天15K星打破了这条曲线。关键变量：它解决的不是"agent 能做什么"，而是"agent 怎么做更好"——YAGNI 原则的 agent 化。这标志着 Skills 生态从功能附加阶段进入行为设计阶段。</p>
+
+            <p><strong>生态意义：</strong></p>
+            <ul>
+              <li>Skills 不再是"让 agent 懂某个 API"——那是第一代 Skills</li>
+              <li>Skills 现在可以"改变 agent 的 coding philosophy"——这是第二代</li>
+              <li>病毒式传播需要"引发共鸣"而非"解决技术问题"——ponytail 找到了这个公式</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 立即装到 Claude Code/Cursor 上试效果。这不只是一个工具——这是一个值得研究的 Skills 设计范式。理解 ponytail 为什么火，比直接用 ponytail 更有价值。3 天 15K 星的传播曲线值得每个做 Agent Skills 的人研究。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：Anthropic-Cybersecurity-Skills ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>mukul975/Anthropic-Cybersecurity-Skills — 754 个结构化安全技能</h2>
+            <p>目前最大的垂直 Agent Skills 集合：754 个标准化网络安全技能，使用 agentskills.io 标准格式，对齐 MITRE ATT&CK、NIST CSF 2.0、MITRE ATLAS、D3FEND、NIST AI RMF 五大框架。支持 Claude Code、Codex、Cursor、Gemini CLI 等 20+ 平台，覆盖 26 个安全领域。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills">mukul975/Anthropic-Cybersecurity-Skills</a></td></tr>
+                <tr><td>Stars</td><td>⭐15,813</td></tr>
+                <tr><td>框架对齐</td><td>MITRE ATT&CK · NIST CSF 2.0 · MITRE ATLAS · D3FEND · NIST AI RMF</td></tr>
+                <tr><td>覆盖</td><td>26 个安全领域 · 20+ 平台 · agentskills.io 标准</td></tr>
+                <tr><td>许可</td><td>Apache 2.0</td></tr>
+                <tr><td>判标</td><td>🔥 值得马上试（安全从业者）/ ⚡ 关注其对标准化格式的影响</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>安全正在成为 Agent Skills 生态的第一个"全栈垂直"。上周我们看到了安全工具的军备竞赛（7+ 产品矩阵），本周我们看到安全 Skills 的规模化。754 个标准化技能 + 5 框架对齐 + 20+ 平台支持——这不是一个"项目"而是一个"生态层"。安全从"有没有 Skills"走到了"Skills 够不够标准化、够不够全"。</p>
+
+            <p><strong>对 Skills 标准化的启示：</strong></p>
+            <ul>
+              <li>agentskills.io 格式正在成为事实标准——安全 Skills 选择它是有信号的</li>
+              <li>框架对齐（MITRE/NIST）意味着 Skills 不只是"给 agent 看"——也可以"给审计看"</li>
+              <li>垂直领域的 Skills 竞争将从"谁先做"变成"谁更标准、更全"</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 如果你做安全/渗透测试，这是直接可用的武器库。⚡ 如果你观察生态，关注 agentskills.io 标准的扩散速度——安全是第一个大规模采用该标准的垂直领域，后续医疗、金融、法律可能跟进。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/DietrichGebert/ponytail">ponytail</a></td><td>⭐15,313</td><td>Agent Skills 病毒案例：让 AI agent 学会"懒"（3天15K星）</td></tr>
+            <tr><td><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills">Cybersecurity Skills</a></td><td>⭐15,813</td><td>754 结构化安全技能，对齐 MITRE/NIST 等 5 大框架</td></tr>
+            <tr><td><a href="https://github.com/mcp-use/mcp-use">mcp-use</a></td><td>⭐10,108</td><td>MCP 全栈框架：开发 ChatGPT/Claude 的 MCP App + Server</td></tr>
+            <tr><td><a href="https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep">ARIS</a></td><td>⭐12,143</td><td>自主 ML 研究 agent，Markdown Skills 驱动</td></tr>
+            <tr><td><a href="https://github.com/mksglu/context-mode">context-mode</a></td><td>⭐17,503</td><td>上下文压缩 98%，15 平台支持</td></tr>
+            <tr><td><a href="https://github.com/bytedance/deer-flow">deer-flow</a></td><td>⭐71,235</td><td>字节开源 SuperAgent 框架，沙箱/记忆/工具/Skills</td></tr>
+            <tr><td><a href="https://github.com/HKUDS/nanobot">nanobot</a></td><td>⭐44,228</td><td>港大开源轻量 AI agent</td></tr>
+            <tr><td><a href="https://github.com/omnigent-ai/omnigent">omnigent</a></td><td>⭐1,778</td><td>Meta-harness 统一 Claude Code/Codex/Pi（6/11 新建）</td></tr>
+            <tr><td><a href="https://github.com/hashgraph-online/hol-guard">hol-guard</a></td><td>⭐356</td><td>AI 杀毒软件：保护 agent 的 Skills/MCP/插件</td></tr>
+            <tr><td><a href="https://github.com/orange2ai/renwei-writing">renwei-writing</a></td><td>⭐666</td><td>人味儿写作 Agent Skill（6/12 新建）</td></tr>
+            <tr><td><a href="https://github.com/deanpeters/Product-Manager-Skills">PM Skills</a></td><td>⭐5,142</td><td>产品经理 Agent Skills</td></tr>
+            <tr><td><a href="https://github.com/coze-dev/coze-studio">coze-studio</a></td><td>⭐20,988</td><td>字节 Coze AI agent 开发平台开源</td></tr>
+            <tr><td><a href="https://github.com/getsentry/XcodeBuildMCP">XcodeBuildMCP</a></td><td>⭐5,903</td><td>Sentry 的 iOS/macOS MCP Server</td></tr>
+            <tr><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>⭐148,968</td><td>Anthropic 公共 Agent Skills 仓库</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Ponytail 病毒传播</td><td>3天15K星，Agent Skills 首次病毒案例。Skills 从"功能附加"进入"行为设计"</td><td>🔥</td></tr>
+            <tr><td>Forge：RL 护栏突破</td><td>8B 模型 agentic 准确率 53%→99%（HN #1，687pts）</td><td>🔥</td></tr>
+            <tr><td>Anthropic-Cybersecurity-Skills</td><td>754 安全技能 × 5 框架 × 20+ 平台。安全成为 Skills 第一个全栈垂直</td><td>🔥</td></tr>
+            <tr><td>MCP 全栈化加速</td><td>mcp-use 全栈框架 + skybridge + IBM/mcp-context-forge</td><td>⚡</td></tr>
+            <tr><td>Agent 杀毒软件品类</td><td>hol-guard：AI antivirus for developer agents</td><td>⚡</td></tr>
+            <tr><td>Omnigent 元调度层</td><td>统一 Claude Code/Codex/Pi 的 meta-harness（6/11 新建）</td><td>⚡</td></tr>
+            <tr><td>Microsoft 开源工具遭供应链攻击</td><td>HN #2（561pts）。AI 工具链安全再敲警钟</td><td>⚡</td></tr>
+            <tr><td>Thaw：fork agent 会话</td><td>像 git branch 一样 fork LLM agent 运行状态，跳过 prefill</td><td>❄️</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Anthropic Skills 仓库</td><td>⭐148,968，Agent Skills 生态锚点</td><td>🔥</td></tr>
+            <tr><td>Superpowers 框架</td><td>⭐225,907，Agent Skills 框架继续领跑</td><td>🔥</td></tr>
+            <tr><td>taste-skill</td><td>⭐40,501，持平</td><td>🔥</td></tr>
+            <tr><td>MCP 安全赛道</td><td>hol-guard 加入，7+ 产品矩阵持续扩展</td><td>⚡</td></tr>
+            <tr><td>headroom</td><td>⭐24,475，工具输出压缩方案</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>Agent Skills 的"App Store 时刻"正在到来</h3>
+          <p>ponytail 3天15K星是一个分水岭信号。之前 Skills 的增长曲线是线性的（大仓库持续涨星，新仓库慢热），但 ponytail 打破了这条曲线——它证明了 Skills 可以病毒式传播，因为它解决的不是"能做什么"而是"怎么做更好"。</p>
+          <p><strong>传导链：</strong>Anthropic 定义 Skills 标准格式 → Apple IDE 原生导出 → 独立开发者找到 Viral Loop（YAGNI 原则的 agent 化）→ Skills 从"附加文件"变成"可传播产品" → 更多开发者发现 Skills 不只是 function calling——是 behavior shaping。</p>
+          <p><strong>下半年预判：</strong>ponytail 之后会有更多"行为改变型"Skills 出现——不只是"让 agent 懂某个 API"，而是"让 agent 换一种思维方式"。Skills 市场将从"工具包"逻辑转向"App Store"逻辑——用户不再只按功能选 Skills，也会按 coding philosophy 选。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>Agent 可靠性进入"护栏时代"——小模型+约束 > 大模型裸奔</h3>
+          <p>Forge（HN #1，687pts）的核心洞察：一个 8B 小模型加上精心设计的 RL 护栏，在 agentic 任务上可以把准确率从 53% 拉到 99%。这不是"更大的模型"——是"更聪明的约束"。</p>
+          <p><strong>为什么这个时机很重要：</strong>上周我们看到 MCP 安全从扫描到防护的军备竞赛（7+ 产品），本周我们看到 agent 行为本身的护栏方案。两条线汇聚：安全（防外部攻击）和可靠性（防内在错误）正在合流。agent 能否被信任地部署到生产环境，取决于这两条线能不能同时成熟。</p>
+          <p><strong>下半年预判：</strong>"agent guardrails"将成为独立产品品类——不只是 MCP 的 security scanner，而是对 agent 行为本身的约束系统（输出校验、工具调用审计、任务回退等）。Forge 证明了这个方向的技术可行性，商业产品不会远。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>所有 AI coding agent 用户：</strong></p>
+          <pre><code># Claude Code 安装 ponytail
+claude plugins install DietrichGebert/ponytail
+# 然后让 agent 实现一个功能，看它会不会变得更"懒"更聪明</code></pre>
+
+          <p><strong>安全从业者：</strong></p>
+          <pre><code>git clone https://github.com/mukul975/Anthropic-Cybersecurity-Skills.git
+cd Anthropic-Cybersecurity-Skills
+# 浏览 26 个安全领域的 754 个标准化 Skills
+# 理解 agentskills.io 标准的垂直实践</code></pre>
+
+          <p><strong>Agent 平台开发者：</strong>关注 <a href="https://github.com/omnigent-ai/omnigent">omnigent</a> 的 meta-harness 设计——如何在 Claude Code/Codex/Pi 之上建立一个统一调度层。这是 agent 基础设施的"中间件"方向。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">GitHub repos collected (7 queries)</div></div>
+          <div class="bignum"><div class="bn-val">50</div><div class="bn-desc">HN stories (5 queries)</div></div>
+          <div class="bignum"><div class="bn-val">0</div><div class="bn-desc">Metaso (兜底跳过)</div></div>
+          <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">趋势洞察提炼</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>条目</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub Search API</td><td>7 queries × 15</td><td>06-15</td><td>103 unique repos</td></tr>
+            <tr><td>HN Algolia API</td><td>5 queries</td><td>06-15</td><td>50 stories</td></tr>
+            <tr><td>Metaso Web Search</td><td>0 queries</td><td>N/A</td><td>0 (skipped fallback)</td></tr>
+            <tr><td>GitHub Repo Detail API</td><td>2 repos</td><td>06-15</td><td>2 verified</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ Metaso 本期未调用（历史上经常返回旧数据 + cron 模式不稳定）。全量使用 GitHub Search API + HN Algolia API 作为主数据源。本期数据覆盖度正常，103 repos + 50 HN stories 提供充足的策展素材。</blockquote>
+
+      </div>
+
+      <div class="article-footer">
+        <p>🏷️ #工具推荐榜 #SkillsWatch #2026Week25</p>
+        <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+</footer>
+
+<!-- AI Chat Widget -->
+<div class="ai-chat-widget">
+  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="title">AI 助理</span>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+      <div class="ai-chat-msg assistant">
+        <div class="label">AI 助理</div>
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、Agent Skills 生态趋势，或者帮你找适合你场景的开发工具。
+      </div>
+    </div>
+    <div class="ai-chat-input-row">
+      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
