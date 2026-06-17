@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第28期 · Skills 操作系统化 · Agent 基础设施工业化 — 趁手工具推荐榜</title>
+<meta name="description" content="compass-skills（司南）将 Agent Skills 从单任务能力升级为个人工作流 OS，Skills 正从 function 走向 platform。agent-harness-generator 让创建 agent harness 像脚手架一样简单，Agent 基础设施进入标准化时代。NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全。">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="index.html">所有简报</a>
+        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">往期</div>
+        <a href="2026-06-17.html" class="active">第28期<span class="count">06-17</span></a>
+        <a href="2026-06-15.html">第27期<span class="count">06-15</span></a>
+        <a href="2026-06-12.html">第26期<span class="count">06-12</span></a>
+        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
+        <a href="2026-06-08.html">第24期<span class="count">06-08</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
+  </aside>
+
+  <!-- === Article === -->
+  <main class="main">
+    <article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Skills 操作系统化 · Agent 基础设施工业化</h1>
+
+      <div class="article-meta">
+        <span>第28期</span>
+        <span class="dot"></span>
+        <span>2026年6月17日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Agent Skills 正从"单点能力"走向"操作系统"——compass-skills 把 Skills 升级为个人工作流 OS。同时 Agent 基础设施进入"脚手架时代"——agent-harness-generator 让创建 harness 像 npm create 一样简单。</div>
+        <p>本期三大信号：① compass-skills（司南）——首个中文 Agent Skills 任务总控系统，Skills 从"让 agent 做某件事"升级为"帮人管理所有 agent 任务"，Skills 开始承担 OS 级编排职能；② agent-harness-generator——meta-harness 让创建 agent 平台像脚手架一样简单，Agent 开发进入标准化阶段；③ NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全，加上 HN 热议"agent 会不会让开发者技能退化"，生态正在经历从工具到基础设施的系统性升级。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">260 ⭐</div><div class="bn-desc">compass-skills — 首个中文 Agent Skills 任务总控系统</div></div>
+        <div class="bignum"><div class="bn-val">7,407 ⭐</div><div class="bn-desc">NVIDIA SkillSpector — Agent Skills 安全扫描器</div></div>
+        <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">本周采集不重复仓库</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+        <div class="bignum"><div class="bn-val">16</div><div class="bn-desc">深度验证仓库</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Skills 操作系统化</strong> — compass-skills 将 Agent Skills 从"单任务能力"升级为"个人工作流 OS"。Skills 正从 function-attachment 变成 agent 的"人格+工作流"层，与上周 ponytail "行为范式化"形成呼应。</p></div>
+          <div class="takeaway"><p><strong>Agent 基础设施工业化</strong> — agent-harness-generator 让创建 agent harness 像 npm create 一样简单。Harness 从"手写"变"模板"，说明 agent 开发生态正在快速成熟。</p></div>
+          <div class="takeaway"><p><strong>安全获产业巨头背书</strong> — NVIDIA SkillSpector 以硬件巨头身份进入 Agent Skills 安全赛道。继上周 hol-guard 之后，产业资本正式确认了这个方向的价值。加上 HN 热议"agent 与开发者技能退化"，安全和可靠性讨论正在双向深化。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：compass-skills ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>dongshuyan/compass-skills（司南）— 首个中文 Agent Skills 任务总控系统</h2>
+            <p>司南是一个个性化 AI 任务总控 Skills 系统，自称 "Personal Alignment Skills OS for AI Agents"。它把 Agent Skills 从"让 agent 做某件事"升级为"帮人管理所有 agent 任务"——包括任务管理、知识库、记忆系统，采用 local-first 架构。创建于 6 月 15 日，2 天破 260 星。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/dongshuyan/compass-skills">dongshuyan/compass-skills</a></td></tr>
+                <tr><td>Stars</td><td>⭐260（2 天）</td></tr>
+                <tr><td>语言</td><td>Python</td></tr>
+                <tr><td>标签</td><td>agent-skills, ai-agents, claude-code, task-management, local-first, personal-ai</td></tr>
+                <tr><td>判标</td><td>⚡ 值得关注进度（方向对但刚创建2天，需要更多实践验证）</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>这不是又一个"让 agent 懂某个 API"的 Skills——这是把 Agent Skills 变成"任务操作系统"。上周 ponytail 证明了 Skills 可以改变 agent 的<strong>行为范式</strong>（怎么做），本周 compass 证明了 Skills 可以成为 agent 的<strong>工作流编排层</strong>（做什么+优先级）。两条线汇聚意味着 Skills 正在从 function-attachment 变成 agent 的"人格+工作流"层。</p>
+
+            <p><strong>中文生态的里程碑意义：</strong></p>
+            <ul>
+              <li>这是中文社区首个系统化的 Agent Skills 编排方案——之前 Skills 主要由英文社区推动</li>
+              <li>"任务总控"定位填补了 Skills 生态的空位：之前 Skills 都是"让 agent 做 X"，但没有人做"帮人管理 agent 做哪些 X"</li>
+              <li>local-first 架构意味着数据主权——对于需要本地运行的中文场景特别重要</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>⚡ 方向对但非常早期（2天前创建）。如果它真的能成为"Agent Skills OS"，价值巨大——但目前只有 260 星，需要观察它能否像 ponytail 一样找到 viral loop。中文开发者值得关注。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：agent-harness-generator ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>ruvnet/agent-harness-generator — Agent Harness 的"脚手架生成器"</h2>
+            <p>这不是一个新的 agent harness——而是<strong>生成 harness 的 meta-harness</strong>。输入你的需求，自动 scaffold 出带 npx CLI、MCP server、记忆系统、学习循环和见证签名发布的完整 agent harness。支持 Claude Code、Codex、pi.dev、Hermes、OpenClaw 等 6+ 平台。创建于 6 月 13 日，4 天 156 星。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/ruvnet/agent-harness-generator">ruvnet/agent-harness-generator</a></td></tr>
+                <tr><td>Stars</td><td>⭐156（4 天）</td></tr>
+                <tr><td>语言</td><td>TypeScript</td></tr>
+                <tr><td>标签</td><td>agent-harness, agent-scaffolding, mcp, hermes-agent, multi-agent, autonomous-agents</td></tr>
+                <tr><td>判标</td><td>🔥 值得马上试（做 agent 平台/工具的人）/ ⚡ 关注其对标准化的推动</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>这类似于 Web 开发的历史：从手写 HTML（第一代）→ 出现框架（Rails/Django，第二代）→ 出现脚手架生成器（create-react-app / Rails scaffold，第三代）。agent-harness-generator 标志着 Agent 开发进入了"脚手架时代"——创建 agent harness 不再需要从零搭建，而是可以用模板快速生成。基础设施的抽象层级在迅速上升。</p>
+
+            <p><strong>对生态的影响：</strong></p>
+            <ul>
+              <li>降低 agent 平台创业门槛——理论上一个人用一个下午就能 scaffold 出自己的 agent 平台</li>
+              <li>推动格式标准化——生成的 harness 遵循统一的 CLI/MCP/memory 模式</li>
+              <li>加速垂直 agent 平台涌现——不同行业可以快速生成定制 agent harness</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 如果你在维护任何 agent 工具或想搭建自己的 agent 平台，值得马上试试。它支持 Hermes Agent，理论上可以直接生成 Hermes 兼容的脚手架。⚡ 对于观察者，关注它能否推动 agent 基础设施的格式标准化——这比单个工具更重要。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/NVIDIA/SkillSpector">SkillSpector</a></td><td>⭐7,407</td><td>英伟达出手：Agent Skills 安全扫描器，产业巨头进场</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/registry">MCP registry</a></td><td>⭐6,936</td><td>MCP 社区注册表：服务器发现 + 标准化</td></tr>
+            <tr><td><a href="https://github.com/Adam-CAD/CADAM">CADAM</a></td><td>⭐4,190</td><td>开源 AI CAD（HN 100pts，文本生成3D设计）</td></tr>
+            <tr><td><a href="https://github.com/Plaer1/junction">junction</a></td><td>⭐499</td><td>VS Code 侧边栏聊天：集成本地 AI coding agent（6/17 创建，半天499星）</td></tr>
+            <tr><td><a href="https://github.com/dongshuyan/compass-skills">compass-skills</a></td><td>⭐260</td><td>司南：中文个性化 Agent Skills 任务总控系统</td></tr>
+            <tr><td><a href="https://github.com/majidmanzarpour/threejs-game-skills">threejs-game-skills</a></td><td>⭐231</td><td>Agent Skills 做 Three.js 浏览器游戏开发</td></tr>
+            <tr><td><a href="https://github.com/gykim80/perfectpixel-studio">perfectpixel-studio</a></td><td>⭐225</td><td>AI 动画精灵表生成器</td></tr>
+            <tr><td><a href="https://github.com/ruvnet/agent-harness-generator">agent-harness-gen</a></td><td>⭐156</td><td>Meta-harness：一键 scaffold 自己的 agent 平台</td></tr>
+            <tr><td><a href="https://github.com/shreyashankar/plain-writing-skill">plain-writing-skill</a></td><td>⭐144</td><td>AI 写作平实化 Skill，带修订对比视图</td></tr>
+            <tr><td><a href="https://github.com/dzcmemory-web/bazi-ziwei-skill">bazi-ziwei-skill</a></td><td>⭐129</td><td>AI 八字 + 紫微斗数排盘 Skill（中文命理赛道）</td></tr>
+            <tr><td><a href="https://github.com/renee-jia/scholar-loop">scholar-loop</a></td><td>⭐103</td><td>自主 AI 科学家：文献→实验→写作多 agent 循环</td></tr>
+            <tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td>⭐230,917</td><td>Agent Skills 框架一哥，持续领跑</td></tr>
+            <tr><td><a href="https://github.com/chopratejas/headroom">headroom</a></td><td>⭐31,277</td><td>上下文压缩 60-95%，MCP server 模式</td></tr>
+            <tr><td><a href="https://github.com/googleworkspace/cli">googleworkspace/cli</a></td><td>⭐27,128</td><td>Google Workspace CLI + AI Agent Skills</td></tr>
+            <tr><td><a href="https://github.com/larksuite/cli">larksuite/cli</a></td><td>⭐14,309</td><td>飞书官方 CLI + 20+ AI Agent Skills</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Skills "任务操作系统"定位</td><td>compass-skills 将 Skills 从"单任务能力"升级为"个人工作流 OS"。Skills 正从 function 走向 platform</td><td>⚡</td></tr>
+            <tr><td>Agent Harness 商品化</td><td>agent-harness-generator 让创建 harness 像脚手架一样简单，Agent 开发进入标准化阶段</td><td>⚡</td></tr>
+            <tr><td>NVIDIA 进场 Skills 安全</td><td>SkillSpector 7,407星持续增长。硬件巨头入场验证了 Skills 安全赛道的产业价值</td><td>🔥</td></tr>
+            <tr><td>HN 热议：agent 与技能退化</td><td>32pts 42评论——开发者普遍担心过度依赖 agent 导致自身编程能力下降</td><td>⚡</td></tr>
+            <tr><td>Bad MCP design costs 5x tokens</td><td>HN 17pts。MCP 工具描述字段设计不当会导致 agent 消耗 5 倍以上 token</td><td>⚡</td></tr>
+            <tr><td>AI 科学家自主研究循环</td><td>scholar-loop：文献→实验→自我批评→论文写作完整自主研究 agent 循环</td><td>❄️</td></tr>
+            <tr><td>Skills 向垂直领域渗透</td><td>threejs-game-skills（游戏）+ bazi-ziwei（命理）+ plain-writing（写作）</td><td>❄️</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Anthropic Skills 仓库</td><td>⭐148,968，Agent Skills 生态锚点</td><td>🔥</td></tr>
+            <tr><td>Superpowers 框架</td><td>⭐230,917，Agent Skills 框架继续领跑</td><td>🔥</td></tr>
+            <tr><td>ponytail</td><td>⭐15,313，病毒式 Skills 案例（上周重点推荐）</td><td>🔥</td></tr>
+            <tr><td>MCP 安全赛道</td><td>hol-guard + NVIDIA SkillSpector，安全矩阵持续扩大</td><td>⚡</td></tr>
+            <tr><td>headroom</td><td>⭐31,277，上下文压缩方案</td><td>⚡</td></tr>
+            <tr><td>Agent Harness 生态</td><td>omnigent + agent-harness-generator，基础设施层快速成熟</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>Agent Skills 从"单点能力"走向"操作系统"</h3>
+          <p>上周 ponytail 展示了 Skills 可以改变 agent 的"行为范式"（怎么做），本周 compass-skills 展示了 Skills 可以成为 agent 的"任务操作系统"（做什么+优先级）。两条线汇聚：Skills 正在从 function-attachment 变成 agent 的"人格+工作流"层。</p>
+          <p><strong>传导链：</strong>Anthropic 定义 agentskills.io 标准格式 → 开发者创造功能型 Skills（懂 API、懂框架）→ ponytail 开创行为型 Skills（改变 agent 思考方式）→ compass-skills 开创 OS 型 Skills（编排 agent 任务）。从 Anthropic 定义标准到出现"个人 Skills OS"，只用了不到半年——Skills 的进化速度远超预期。</p>
+          <p><strong>下半年预判：</strong>会看到更多"编排型"Skills 出现——不只是让 agent 做什么或怎么做，而是定义 agent 在什么场景下用哪个 Skills、按什么优先级。Skills 之间的互操作性将成为新战场。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>Agent 基础设施进入"工业化"阶段——安全获产业背书 + 开发工具链标准化</h3>
+          <p>两个信号汇聚：(1) NVIDIA SkillSpector 以硬件巨头身份进入 Agent Skills 安全赛道，产业资本正式确认了这个方向的价值；(2) agent-harness-generator 让创建 agent 平台像脚手架一样简单——从"手写"到"模板"，基础设施的抽象层级在迅速上升。</p>
+          <p><strong>为什么这个时机很重要：</strong>上周的 hol-guard（AI 杀毒软件）+ 本周的 NVIDIA SkillSpector，表明 Agent Skills 安全已从"爱好者项目"升级为"产业赛道"。同时 agent-harness-generator 代表开发工具链的标准化——安全性标准化和开发工具链标准化在同步推进，这是 agent 生态成熟的双引擎。</p>
+          <p><strong>下半年预判：</strong>"Agent Platform-as-a-Service"（APaaS）将成为新品类——不只是单个 agent 的托管，而是 agent 平台自身的生成和运维。agent-harness-generator 是这个方向的先行者。未来可能出现 "Vercel for Agents"——一键部署完整 agent 平台。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>Agent 平台开发者：</strong></p>
+          <pre><code># 用 agent-harness-generator 快速搭建自己的 agent harness
+npx agent-harness-generator
+# 支持 Hermes Agent、Claude Code、Codex、pi.dev 等 6+ 平台
+# 自动生成 CLI + MCP server + memory + 学习循环</code></pre>
+
+          <p><strong>中文 Agent 用户：</strong></p>
+          <pre><code>git clone https://github.com/dongshuyan/compass-skills.git
+# 看看中文首个 Agent Skills 任务总控系统的设计思路
+# 理解"Skills OS"的概念——Skills 不只是工具包，可以是工作流编排层</code></pre>
+
+          <p><strong>所有开发者：</strong>关注 <a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a>——英伟达的 Agent Skills 安全扫描器。如果你的项目用了 Agent Skills，建议跑一遍扫描看有没有安全问题。<a href="https://github.com/ruvnet/agent-harness-generator">agent-harness-generator</a> 也值得关注——它代表了 agent 基础设施的下一个抽象层级。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">GitHub repos collected (7 queries)</div></div>
+          <div class="bignum"><div class="bn-val">50</div><div class="bn-desc">HN stories (5 queries)</div></div>
+          <div class="bignum"><div class="bn-val">16</div><div class="bn-desc">Deep-verified repos</div></div>
+          <div class="bignum"><div class="bn-val">0</div><div class="bn-desc">Metaso (兜底跳过)</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>条目</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub Search API</td><td>7 queries × 15</td><td>06-17</td><td>103 unique repos</td></tr>
+            <tr><td>HN Algolia API</td><td>5 queries</td><td>06-17</td><td>50 stories</td></tr>
+            <tr><td>GitHub Repo Detail API</td><td>16 repos</td><td>06-17</td><td>16 verified</td></tr>
+            <tr><td>Metaso Web Search</td><td>0 queries</td><td>N/A</td><td>0 (skipped fallback)</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ Metaso 本期未调用（历史上经常返回旧数据 + cron 模式不稳定）。全量使用 GitHub Search API + HN Algolia API 作为主数据源。本期数据覆盖度正常，103 repos + 50 HN stories + 16 深度验证提供充足的策展素材。</blockquote>
+
+      </div>
+
+      <div class="article-footer">
+        <p>🏷️ #工具推荐榜 #SkillsWatch #2026Week25</p>
+        <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+</footer>
+
+<!-- AI Chat Widget -->
+<div class="ai-chat-widget">
+  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="title">AI 助理</span>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+      <div class="ai-chat-msg assistant">
+        <div class="label">AI 助理</div>
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、Agent Skills 生态趋势，或者帮你找适合你场景的开发工具。
+      </div>
+    </div>
+    <div class="ai-chat-input-row">
+      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
