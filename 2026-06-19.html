@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第29期 · Token 压缩工业化 · MCP 成为基础设施 — 趁手工具推荐榜</title>
+<meta name="description" content="headroom（38K⭐）和 context-mode（17K⭐）代表上下文优化从 nice-to-have 变成 agent 工程必选项。MCP 获 Google/Microsoft/Unreal 三方官方背书，从社区协议升级为基础设施标准。NVIDIA SkillSpector 代表 agent 安全成为独立赛道。">
+<link rel="stylesheet" href="styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="index.html">所有简报</a>
+        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
+        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">往期</div>
+        <a href="2026-06-19.html" class="active">第29期<span class="count">06-19</span></a>
+        <a href="2026-06-17.html">第28期<span class="count">06-17</span></a>
+        <a href="2026-06-15.html">第27期<span class="count">06-15</span></a>
+        <a href="2026-06-12.html">第26期<span class="count">06-12</span></a>
+        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
+  </aside>
+
+  <!-- === Article === -->
+  <main class="main">
+    <article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Token 压缩工业化 · MCP 成为基础设施</h1>
+
+      <div class="article-meta">
+        <span>第29期</span>
+        <span class="dot"></span>
+        <span>2026年6月19日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Agent 工具链的「降本」进入实战阶段——headroom（38K⭐）+ context-mode（17K⭐）代表上下文优化从 nice-to-have 变成必选项。同时 MCP 获 Google/Microsoft/Unreal 三方官方背书，从社区协议升级为基础设施标准。</div>
+        <p>本期两大信号交织：① token 优化工具集体爆发——headroom 和 context-mode 合计 55K+ 星，配合 HN 热帖"Bad MCP design costs 5x tokens"，上下文效率成为 agent 工程的核心关注点；② MCP 获大厂官方背书——Google 合维护 Go SDK，Microsoft 合维护 C# SDK + 官方 MCP catalog，Unreal Engine 5.8 原生 MCP server。MCP 不再是 Anthropic 的实验，而是下一波 AI 应用的基础设施层。侧翼观察：NVIDIA SkillSpector 代表 agent 安全从 hobby 升级为独立赛道。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">38,185 ⭐</div><div class="bn-desc">headroom — token 压缩 60-95%，MCP server 即插即用</div></div>
+        <div class="bignum"><div class="bn-val">17,784 ⭐</div><div class="bn-desc">context-mode — 上下文优化 98% 缩减，15 平台</div></div>
+        <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">本周采集不重复仓库</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+        <div class="bignum"><div class="bn-val">21</div><div class="bn-desc">深度验证仓库</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Token 压缩工业化</strong> — headroom 38K⭐ 和 context-mode 17K⭐ 合计 55K+ 星。上下文效率不再是 nice-to-have，而是决定 agent 能否规模化使用的核心指标。HN 热帖 "Bad MCP design costs 5x tokens" 进一步放大焦虑。</p></div>
+          <div class="takeaway"><p><strong>MCP 成为基础设施</strong> — Google/Microsoft 合维护官方 SDK，微软发布官方 MCP catalog，Unreal Engine 5.8 原生集成 MCP server。MCP 从"Anthropic 的实验协议"升级为"获大厂官方背书的基础设施层"。</p></div>
+          <div class="takeaway"><p><strong>Agent 安全成独立赛道</strong> — NVIDIA SkillSpector + Tencent AI-Infra-Guard + snyk agent-scan 三足鼎立。加上 HN 热议"低技能攻击者用 Claude+Codex 攻破 14 家公司"，agent 安全从理论威胁变成实际攻防需求。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：headroom ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>chopratejas/headroom — 把你的 token 消耗砍掉 60-95%</h2>
+            <p>headroom 是一个智能压缩工具，在工具输出、日志、文件、RAG 块到达 LLM 之前进行压缩。支持 library / proxy / MCP server 三种接入方式，零侵入挂到 Claude Code、Cursor 等 agent 工具上。创建于 2026 年 1 月，本周已涨至 38K 星，是本周 GitHub Trending 的持续高热度项目。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/chopratejas/headroom">chopratejas/headroom</a></td></tr>
+                <tr><td>Stars</td><td>⭐38,185</td></tr>
+                <tr><td>语言</td><td>Python · Apache 2.0</td></tr>
+                <tr><td>标签</td><td>agent, ai, claude-code, compression, context-engineering, context-window, cursor, mcp</td></tr>
+                <tr><td>判标</td><td>🔥 值得马上试（重度 agent 用户省 token 费，MCP server 即插即用）</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>每个用 agent 的人都遇到的问题——工具输出太长，token 烧得飞快。headroom 不是简单截断，而是智能压缩，保证下游 LLM 理解质量的前提下减少 60-95% 的 token。MCP server 模式意味着可以零侵入挂到现有 agent 工具链上。配合本周 HN 热帖「Bad MCP design costs your agent 5x more tokens」一起看——上下文优化正在从 nice-to-have 变成 agent 工程的必选基础设施。</p>
+
+            <p><strong>与 context-mode 的协同效应：</strong></p>
+            <ul>
+              <li>headroom 压缩工具输出内容——解决"喂给 LLM 的数据太多"</li>
+              <li>context-mode（mksglu/context-mode，17K⭐）沙箱隔离工具输出 + 与 Claude Code/Codex 的 hooks 深度集成——解决"agent 看到的东西太多"</li>
+              <li>两者互补而非竞争——headroom 做内容压缩，context-mode 做上下文结构优化</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 如果你每天用 Claude Code/Codex 做开发，试试 `pip install headroom` 然后挂 MCP server——token 省多少一跑就知道。这是本期最"现在就能用"的工具。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：NVIDIA SkillSpector ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>NVIDIA/SkillSpector — 大厂正式入场 Agent Skills 安全扫描</h2>
+            <p>NVIDIA 出品的 AI agent skills 安全扫描器，检测技能文件中的漏洞、恶意模式和安全隐患。Apache 2.0 开源，创建于 2026 年 3 月，最近两周从 7K 飙升至 8.2K 星。</p>
+
+            <div class="card">
+              <h3>核心信息</h3>
+              <table class="info-table">
+                <tr><td>仓库</td><td><a href="https://github.com/NVIDIA/SkillSpector">NVIDIA/SkillSpector</a></td></tr>
+                <tr><td>Stars</td><td>⭐8,231（持续增长）</td></tr>
+                <tr><td>语言</td><td>Python · Apache 2.0</td></tr>
+                <tr><td>标签</td><td>agent-security, skills-scanner, vulnerability-detection</td></tr>
+                <tr><td>判标</td><td>⚡ 值得关注进度（方向对但还早期，agent 安全需求在快速成型）</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么关注：</strong>Agent skills 生态爆发的必然副产品——安全问题。skills 文件本质上是 LLM 自动执行的指令集，一旦被投毒或引入恶意模式，agent 会无差别执行。NVIDIA 以硬件+AI infra 的身份进场，说明 agent 安全已从 hobby 项目升级到基础设施级别。</p>
+
+            <p><strong>Agent 安全三足鼎立矩阵：</strong></p>
+            <ul>
+              <li><a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a>（8.2K⭐）— 专注 Agent Skills 文件层安全扫描</li>
+              <li><a href="https://github.com/Tencent/AI-Infra-Guard">Tencent AI-Infra-Guard</a>（3.9K⭐）— 全栈 AI 红队测试，覆盖 agent/skills/MCP/infra</li>
+              <li><a href="https://github.com/snyk/agent-scan">snyk agent-scan</a>（2.6K⭐）— 面向 agent、MCP server 和 skills 的安全扫描</li>
+            </ul>
+
+            <p><strong>本周安全事件催化：</strong>HN 热议（561pts）"Microsoft's open source tools were hacked to steal passwords of AI developers" + HN 讨论"低技能攻击者用 Claude+Codex 攻破 14 家公司"——agent 安全从理论威胁变成实际攻防需求。这一趋势将加速 SkillSpector 类工具的采用。</p>
+
+            <blockquote>
+              <strong>判标说明：</strong>⚡ 目前 SkillSpector 还比较早期，不如 headroom 那样"装了就见效"。但方向对——agent 安全扫描的需求正在快速成型，NVIDIA 的背书意味着它会持续投入。如果你的项目用了 Agent Skills，建议关注并定期跑一遍扫描。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/chopratejas/headroom">headroom</a></td><td>⭐38,185</td><td>Token 压缩 60-95%，library/proxy/MCP 三模式</td></tr>
+            <tr><td><a href="https://github.com/mksglu/context-mode">context-mode</a></td><td>⭐17,784</td><td>上下文窗口优化，沙箱隔离输出，15 个平台</td></tr>
+            <tr><td><a href="https://github.com/mukul975/Anthropic-Cybersecurity-Skills">Cybersecurity-Skills</a></td><td>⭐16,685</td><td>754 条安全 skills，覆盖 5 大框架，agent 即插即用</td></tr>
+            <tr><td><a href="https://github.com/larksuite/cli">larksuite/cli</a></td><td>⭐14,404</td><td>飞书官方 CLI，面向人类和 AI Agent 双用户</td></tr>
+            <tr><td><a href="https://github.com/NVIDIA/SkillSpector">SkillSpector</a></td><td>⭐8,231</td><td>NVIDIA Agent Skills 安全扫描器，产业巨头背书</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/registry">MCP registry</a></td><td>⭐6,942</td><td>MCP 社区注册表上线，server 发现基础设施</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/go-sdk">MCP Go SDK</a></td><td>⭐4,704</td><td>Google 合维护的 Go 官方 SDK</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/csharp-sdk">MCP C# SDK</a></td><td>⭐4,340</td><td>Microsoft 合维护的 C# 官方 SDK</td></tr>
+            <tr><td><a href="https://github.com/microsoft/mcp">microsoft/mcp</a></td><td>⭐3,334</td><td>微软官方 MCP server catalog</td></tr>
+            <tr><td><a href="https://github.com/Tencent/AI-Infra-Guard">AI-Infra-Guard</a></td><td>⭐3,935</td><td>腾讯全栈 AI 红队测试平台</td></tr>
+            <tr><td><a href="https://github.com/open-gitagent/opengap">opengap</a></td><td>⭐2,863</td><td>框架无关、git-native 的 agent 定义标准</td></tr>
+            <tr><td><a href="https://github.com/deanpeters/Product-Manager-Skills">PM Skills</a></td><td>⭐5,250</td><td>产品经理 skills 框架，Claude Code/Codex 可用</td></tr>
+            <tr><td><a href="https://github.com/mcp-use/mcp-use">mcp-use</a></td><td>⭐10,124</td><td>全栈 MCP 框架，ChatGPT/Claude MCP Apps 开发</td></tr>
+            <tr><td><a href="https://github.com/dongshuyan/compass-skills">compass-skills</a></td><td>⭐336</td><td>🆕 司南：中文个性化 Agent Skills 任务总控</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>MCP 官方 SDK 矩阵成型</td><td>Go SDK（Google）+ C# SDK（Microsoft）+ 官方 catalog。MCP 获大厂正式背书</td><td>🔥</td></tr>
+            <tr><td>Token 压缩方案集中爆发</td><td>headroom + context-mode 合计 55K⭐。上下文优化从 nice-to-have 变必选</td><td>🔥</td></tr>
+            <tr><td>Unreal Engine 5.8 加入 MCP</td><td>游戏引擎原生 MCP server，3D/游戏开发工具链开始 agent 化</td><td>⚡</td></tr>
+            <tr><td>Agent 安全三足鼎立</td><td>NVIDIA + Tencent + Snyk 形成 agent 安全矩阵</td><td>⚡</td></tr>
+            <tr><td>飞书官方 CLI 面向 Agent</td><td>larksuite/cli 14K⭐，首次有办公套件以 AI Agent 为第一用户设计 CLI</td><td>⚡</td></tr>
+            <tr><td>Skills 品类大爆发</td><td>安全 754 条 + PM + SEO/GEO(20) + 设计趋势(127年) + 命理(129⭐)</td><td>❄️</td></tr>
+            <tr><td>MCP server 就绪度评分</td><td>isyourmcpready.com 对标新标准给 server 打分</td><td>❄️</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>superpowers</td><td>⭐233,228，Agent Skills 框架领跑</td><td>🔥</td></tr>
+            <tr><td>deer-flow（ByteDance）</td><td>⭐71,676，SuperAgent 框架持续高热度</td><td>🔥</td></tr>
+            <tr><td>headroom</td><td>⭐38,185，上下文压缩方案标杆</td><td>🔥</td></tr>
+            <tr><td>oh-my-pi</td><td>⭐13,522，终端 AI Coding agent</td><td>⚡</td></tr>
+            <tr><td>MCP 安全赛道</td><td>NVIDIA + Tencent + Snyk，矩阵持续扩大</td><td>⚡</td></tr>
+            <tr><td>compass-skills（司南）</td><td>⭐336，中文首个 Agent Skills 任务总控（上周重点推荐）</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>MCP 从协议变成基础设施——官方 SDK + 注册表 + 企业背书三管齐下</h3>
+          <p>Google 和 Microsoft 分别合维护 MCP 的 Go/C# 官方 SDK，微软还发布了官方 MCP server catalog。加上社区注册表上线（6.9K⭐）、Unreal Engine 5.8 原生集成 MCP，MCP 已经不再是 "Anthropic 的实验性协议" 而是获得大厂正式背书的基础设施层。</p>
+          <p><strong>传导链：</strong>官方 SDK → 降低开发门槛 → 更多 MCP server → 更多 agent 可调用工具 → agent 能力边界扩大。这个势头下，未来 3-6 个月会出现大量 "X 软件 + MCP server" 的组合——从飞书 CLI（已实现）到游戏引擎（已实现）再到更多垂直软件，agent 可用的工具种类将指数级增长。</p>
+          <p><strong>下半年预判：</strong>MCP 将像 REST API 一样成为软件的标准配置。不提供 MCP server 的软件就像不提供 API 的 SaaS——功能上不缺失，但 agent 生态中缺位。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>上下文成本焦虑催生新工具品类——token 压缩和上下文优化成为 agent 工程的核心关注点</h3>
+          <p>headroom（38K⭐）和 context-mode（17K⭐）的高速增长不是偶然。当一个 Claude Code session 动辄消耗数百万 token、成本达到几十美元时，token 效率不再是可以延后优化的细节，而是决定 agent 能否规模化使用的生死线。HN 热帖 "Bad MCP design costs your agent 5x more tokens" 进一步放大了这个焦虑。</p>
+          <p><strong>为什么现在是拐点：</strong>上周 data 显示 Claude Code 单工具占 GitHub 全平台公开提交的 4.5%——agent 使用量在快速增长，token 成本的基数随之膨胀。在 agent 使用量翻倍的背景下，压缩 50% token 等于省下一半的钱，ROI 直接可见。</p>
+          <p><strong>下半年预判：</strong>会出现更多专门优化 agent 上下文效率的工具——智能工具选择（只加载需要的 tool）、增量上下文管理、MCP tool description 自动压缩等。可能发展出类似 webperf 那样的独立子领域（agent-perf）。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>给 Claude Code / Codex 装上 headroom：</strong></p>
+          <pre><code>pip install headroom
+# 配一个 MCP server，agent 工具输出自动压缩
+# Token 省 60% 以上，一跑就知道值不值</code></pre>
+
+          <p><strong>浏览 MCP 官方 SDK 生态：</strong></p>
+          <pre><code># Go 用户
+go get github.com/modelcontextprotocol/go-sdk
+# .NET 用户  
+dotnet add package ModelContextProtocol
+# 查看微软官方 MCP server catalog
+open https://github.com/microsoft/mcp</code></pre>
+
+          <p><strong>关注：</strong>如果你在用 Agent Skills，关注 <a href="https://github.com/NVIDIA/SkillSpector">NVIDIA SkillSpector</a>——虽然现在不急着跑，但 agent 安全的需求正在快速成型。飞书用户关注 <a href="https://github.com/larksuite/cli">larksuite/cli</a>——官方 CLI 以 AI Agent 为第一用户设计，可能改变飞书自动化的方式。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">103</div><div class="bn-desc">GitHub repos collected (7 queries)</div></div>
+          <div class="bignum"><div class="bn-val">50</div><div class="bn-desc">HN stories (5 queries)</div></div>
+          <div class="bignum"><div class="bn-val">21</div><div class="bn-desc">Deep-verified repos</div></div>
+          <div class="bignum"><div class="bn-val">0</div><div class="bn-desc">Metaso (兜底跳过)</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>时间</th><th>条目</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub Search API</td><td>7 queries × 15</td><td>06-19</td><td>103 unique repos</td></tr>
+            <tr><td>HN Algolia API</td><td>5 queries × 10</td><td>06-19</td><td>50 stories</td></tr>
+            <tr><td>GitHub Repo Detail API</td><td>21 repos</td><td>06-19</td><td>21 verified</td></tr>
+            <tr><td>HN Algolia (补充)</td><td>3 queries × 5</td><td>06-19</td><td>15 stories</td></tr>
+            <tr><td>Metaso Web Search</td><td>0 queries</td><td>N/A</td><td>0 (skipped fallback)</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ Metaso 本期未调用（cron 模式下不稳定 + 历史上常返回旧数据）。全量使用 GitHub Search API + HN Algolia API 作为主数据源。本期数据覆盖度正常，103 repos + 65 HN stories + 21 深度验证提供充足的策展素材。</blockquote>
+
+      </div>
+
+      <div class="article-footer">
+        <p>🏷️ #工具推荐榜 #SkillsWatch #2026Week25</p>
+        <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
+      </div>
+    </article>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+</footer>
+
+<!-- AI Chat Widget -->
+<div class="ai-chat-widget">
+  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="title">AI 助理</span>
+      <button class="close-btn" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages">
+      <div class="ai-chat-msg assistant">
+        <div class="label">AI 助理</div>
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。
+      </div>
+    </div>
+    <div class="ai-chat-input-row">
+      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="chat.js"></script>
+</body>
+</html>
