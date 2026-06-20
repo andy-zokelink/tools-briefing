@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 调研报告 · 趁手工具推荐榜</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Reports directory page overrides */
+  .reports-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+  }
+
+  /* Hero */
+  .reports-hero {
+    padding: 2rem 0 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .reports-hero .badge {
+    display: inline-block;
+    background: var(--warm-light);
+    color: var(--warm);
+    border: 1px solid var(--warm-border);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .reports-hero h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .reports-hero h1 span {
+    color: var(--warm);
+  }
+
+  .reports-hero .sub {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 550px;
+  }
+
+  /* Search */
+  .search-box {
+    display: flex;
+    max-width: 480px;
+    margin-top: 20px;
+    gap: 8px;
+  }
+
+  .search-box input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 16px;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input:focus {
+    border-color: var(--warm);
+  }
+
+  .search-box input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .search-box button {
+    background: var(--text);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-family: inherit;
+  }
+
+  .search-box button:hover {
+    opacity: 0.8;
+  }
+
+  /* Stats */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .stat-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    text-align: center;
+    transition: border-color 0.15s;
+  }
+
+  .stat-item:hover {
+    border-color: var(--warm-border);
+  }
+
+  .stat-item .val {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .stat-item .val.warm {
+    color: var(--warm);
+  }
+
+  .stat-item .lbl {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Category overview cards */
+  .cat-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .cat-card {
+    display: block;
+    text-decoration: none;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .cat-card:hover {
+    border-color: var(--warm-border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .cat-card .cat-card-icon {
+    font-size: 1.3rem;
+    margin-bottom: 6px;
+  }
+
+  .cat-card .cat-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .cat-card .cat-card-desc {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* Category sections */
+  .cat-section {
+    margin-bottom: 32px;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 10px;
+  }
+
+  .cat-header:hover .cat-title-text {
+    color: var(--warm);
+  }
+
+  .cat-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cat-title .cat-icon {
+    font-size: 1.2rem;
+  }
+
+  .cat-title .cat-title-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: color 0.2s;
+    letter-spacing: -0.01em;
+  }
+
+  .cat-count {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-weight: 400;
+    background: var(--bg-secondary);
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+
+  .cat-toggle {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    transition: transform 0.3s;
+    font-weight: 500;
+  }
+
+  .cat-section.collapsed .cat-toggle {
+    transform: rotate(-90deg);
+  }
+
+  .cat-section.collapsed .cat-body {
+    display: none;
+  }
+
+  /* Report list */
+  .report-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .report-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .report-item:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border);
+  }
+
+  .report-item .ri-icon {
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    width: 24px;
+    text-align: center;
+  }
+
+  .report-item .ri-title {
+    flex: 1;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .report-item .ri-source {
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    background: var(--bg-secondary);
+    padding: 2px 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+
+  .report-item .ri-date {
+    font-size: 10.5px;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    width: 65px;
+    text-align: right;
+  }
+
+  /* Section title */
+  .sec-title {
+    margin-bottom: 20px;
+  }
+
+  .sec-title h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  /* AI Assistant */
+  .ai-assistant {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin: 48px 0 40px;
+    overflow: hidden;
+  }
+
+  .ai-assistant .ai-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ai-assistant .ai-header .ai-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #27a644;
+    flex-shrink: 0;
+  }
+
+  .ai-assistant .ai-header h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .ai-assistant .ai-header p {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  .ai-chat {
+    padding: 12px 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 100px;
+    background: var(--bg);
+  }
+
+  .ai-chat .msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .ai-chat .msg.user {
+    align-self: flex-end;
+    background: var(--text);
+    color: #fff;
+  }
+
+  .ai-chat .msg.bot {
+    align-self: flex-start;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .ai-chat .msg.bot .highlight {
+    color: var(--warm);
+    font-weight: 500;
+  }
+
+  .ai-chat .msg.bot .tag-result {
+    display: inline-block;
+    padding: 2px 8px;
+    margin: 2px;
+    border-radius: 4px;
+    background: var(--warm-light);
+    color: var(--warm);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid var(--warm-border);
+  }
+
+  .ai-chat .msg.bot .tag-result:hover {
+    background: var(--warm-light);
+    border-color: var(--warm);
+  }
+
+  .ai-input-area {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+    background: var(--bg);
+  }
+
+  .ai-input-area input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    color: var(--text);
+    font-size: 13px;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .ai-input-area input:focus {
+    border-color: var(--warm);
+  }
+
+  .ai-input-area input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .ai-input-area button {
+    background: var(--text);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+
+  .ai-input-area button:hover {
+    opacity: 0.8;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .reports-container {
+      padding: 2rem 1.2rem;
+    }
+
+    .report-item .ri-date {
+      display: none;
+    }
+
+    .reports-hero {
+      padding: 1rem 0;
+    }
+
+    .reports-hero h1 {
+      font-size: 1.4rem;
+    }
+
+    .search-box {
+      max-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+  <!-- === Left Sidebar === -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">浏览</div>
+        <a href="../index.html">🏠 返回首页</a>
+        <a href="index.html" class="active">📋 研究报告</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">报告分类</div>
+        <a href="#cat-ai-tools">🤖 AI 工具与平台</a>
+        <a href="#cat-models">🧠 大模型与趋势</a>
+        <a href="#cat-hardware">📦 AI 硬件与边缘计算</a>
+        <a href="#cat-finance">📈 金融工具与量化</a>
+        <a href="#cat-cloud">☁️ 云厂商与 CLI 工具</a>
+        <a href="#cat-ecosystem">🛠️ 工具生态与简报</a>
+        <a href="#cat-education">🎓 教育应用</a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">关于</div>
+        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      28 份 AI 深度调研报告<br>秘塔搜索 × 飞书归档
+    </div>
+  </aside>
+
+  <!-- === Main Content === -->
+  <main class="main">
+    <div class="reports-container">
+      <header class="reports-hero" id="top">
+        <div class="badge">28 份报告 · 7 个分类 · 持续更新</div>
+        <h1>AI 深度调研<br><span>报告目录</span></h1>
+        <p class="sub">秘塔搜索 × 飞书归档 × 交叉验证 —— 模型对比、市场分析、工具生态全覆盖</p>
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索报告… 如「金融」「云厂商」「龙虾」" oninput="filterReports()">
+          <button onclick="document.getElementById('searchInput').focus()">搜索</button>
+        </div>
+      </header>
+
+      <section class="stats-strip" id="stats">
+        <div class="stat-item"><div class="val warm">28</div><div class="lbl">报告总数</div></div>
+        <div class="stat-item"><div class="val">7</div><div class="lbl">分类维度</div></div>
+        <div class="stat-item"><div class="val warm">14</div><div class="lbl">飞书调研</div></div>
+        <div class="stat-item"><div class="val">10</div><div class="lbl">秘塔搜索</div></div>
+        <div class="stat-item"><div class="val">2026.06</div><div class="lbl">最后更新</div></div>
+      </section>
+
+      <!-- Category overview cards -->
+      <div class="sec-title"><h2>📂 分类概览</h2></div>
+      <div class="cat-overview">
+        <a href="#cat-ai-tools" class="cat-card">
+          <div class="cat-card-icon">🤖</div>
+          <div class="cat-card-title">AI 工具与平台</div>
+          <div class="cat-card-desc">5 份报告 · Agent全谱系 · CLI编程助手 · Coze CLI</div>
+        </a>
+        <a href="#cat-models" class="cat-card">
+          <div class="cat-card-icon">🧠</div>
+          <div class="cat-card-title">大模型与趋势</div>
+          <div class="cat-card-desc">2 份报告 · 面壁智能 · 4B小模型对比</div>
+        </a>
+        <a href="#cat-hardware" class="cat-card">
+          <div class="cat-card-icon">📦</div>
+          <div class="cat-card-title">AI 硬件与边缘计算</div>
+          <div class="cat-card-desc">2 份报告 · 龙虾盒子 · 松果派·EdgeClaw</div>
+        </a>
+        <a href="#cat-finance" class="cat-card">
+          <div class="cat-card-icon">📈</div>
+          <div class="cat-card-title">金融工具与量化</div>
+          <div class="cat-card-desc">4 份报告 · Vibe-Trading · A股数据源</div>
+        </a>
+        <a href="#cat-cloud" class="cat-card">
+          <div class="cat-card-icon">☁️</div>
+          <div class="cat-card-title">云厂商与 CLI 工具</div>
+          <div class="cat-card-desc">3 份报告 · 百炼·CloudBase·veCLI·Coze</div>
+        </a>
+        <a href="#cat-ecosystem" class="cat-card">
+          <div class="cat-card-icon">🛠️</div>
+          <div class="cat-card-title">工具生态与简报</div>
+          <div class="cat-card-desc">7 份报告 · Graphviz · 新程 · 周报简报</div>
+        </a>
+        <a href="#cat-education" class="cat-card">
+          <div class="cat-card-icon">🎓</div>
+          <div class="cat-card-title">教育应用</div>
+          <div class="cat-card-desc">3 份报告 · MKS 科学题库 · RAG检索</div>
+        </a>
+      </div>
+
+      <!-- Report Catalog -->
+      <div id="catalog">
+        <div class="cat-section" data-category="AI工具" id="cat-ai-tools">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">🤖</span>
+              <span class="cat-title-text">AI 工具与平台</span>
+              <span class="cat-count">5 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="ai编程组合横向对比hermes-vs-kimi-code-cli.html" data-title="AI编程组合横向对比：Hermes vs Kimi Code CLI" data-keywords="hermes kimi 编程 code cli 组合 对比">
+              <span class="ri-icon">📋</span>
+              <span class="ri-title">AI编程组合横向对比：Hermes vs Kimi Code CLI</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="coze-cli-完整工具清单与点评.html" data-title="Coze CLI 完整工具清单与点评" data-keywords="coze 扣子 cli 工具 清单 点评 模型 插件">
+              <span class="ri-icon">📋</span>
+              <span class="ri-title">Coze CLI 完整工具清单与点评</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="扣子coze-cli深度调研能力全景与实战案例.html" data-title="扣子Coze CLI深度调研：能力全景与实战案例" data-keywords="coze 扣子 cli 深度 调研 实战 全景">
+              <span class="ri-icon">🔬</span>
+              <span class="ri-title">扣子Coze CLI深度调研：能力全景与实战案例</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="ai-agents-full-spectrum.html" data-title="22款AI编程Agent全谱系深度横评" data-keywords="agent 编程 全谱系 横评 claude codex deepseek opencode hermes cline openclaw">
+              <span class="ri-icon">🌐</span>
+              <span class="ri-title">22款AI编程Agent全谱系深度横评</span>
+              <span class="ri-source">秘塔搜索×33</span>
+              <span class="ri-date">06-14</span>
+            </a>
+            <a class="report-item" href="cli-tools-comparison.html" data-title="5款CLI编程助手深度交叉对比" data-keywords="cli 编程 助手 claude code codex kimi codebuddy trae 对比">
+              <span class="ri-icon">⚔️</span>
+              <span class="ri-title">5款CLI编程助手深度交叉对比</span>
+              <span class="ri-source">秘塔搜索×11</span>
+              <span class="ri-date">06-14</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="大模型" id="cat-models">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">🧠</span>
+              <span class="cat-title-text">大模型与趋势</span>
+              <span class="cat-count">2 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="基座大模型全景调研面壁智能-国内外格局.html" data-title="基座大模型全景调研：面壁智能 + 国内外格局" data-keywords="基座 大模型 面壁 智能 deepseek qwen kimi gpt claude gemini 格局">
+              <span class="ri-icon">🌐</span>
+              <span class="ri-title">基座大模型全景调研：面壁智能 + 国内外格局</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="4b-comparison.html" data-title="5款4B级小模型深度交叉对比" data-keywords="4b 小模型 minicpm phi qwen gemma 新程 alpha 对比">
+              <span class="ri-icon">📊</span>
+              <span class="ri-title">5款4B级小模型深度交叉对比</span>
+              <span class="ri-source">秘塔搜索×15</span>
+              <span class="ri-date">06-11</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="AI硬件" id="cat-hardware">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">📦</span>
+              <span class="cat-title-text">AI 硬件与边缘计算</span>
+              <span class="cat-count">2 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="龙虾盒子openclaw-box市场全景调研报告.html" data-title="龙虾盒子（OpenClaw Box）市场全景调研报告" data-keywords="龙虾 openclaw box 边缘 盒子 ai 硬件 中科可控 面壁 nvidia">
+              <span class="ri-icon">🦞</span>
+              <span class="ri-title">龙虾盒子（OpenClaw Box）市场全景调研报告</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="面壁智能硬件产品调研松果派-edgeclaw-box.html" data-title="面壁智能硬件产品调研：松果派 & EdgeClaw Box" data-keywords="面壁 智能 硬件 松果派 edgeclaw box 开发板">
+              <span class="ri-icon">🔧</span>
+              <span class="ri-title">面壁智能硬件产品调研：松果派 & EdgeClaw Box</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="金融工具" id="cat-finance">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">📈</span>
+              <span class="cat-title-text">金融工具与量化</span>
+              <span class="cat-count">4 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="6个开源ai金融工具横向对比.html" data-title="6个开源AI金融工具横向对比" data-keywords="开源 ai 金融 工具 对比 vibe-trading tradingagents dexter">
+              <span class="ri-icon">📊</span>
+              <span class="ri-title">6个开源AI金融工具横向对比</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="vibe-trading深度调研报告.html" data-title="Vibe-Trading深度调研报告" data-keywords="vibe trading 深度 调研 量化 akshare 回测">
+              <span class="ri-icon">🔬</span>
+              <span class="ri-title">Vibe-Trading深度调研报告</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-30</span>
+            </a>
+            <a class="report-item" href="vibe-trading竞品横向对比.html" data-title="Vibe-Trading竞品横向对比" data-keywords="vibe trading 竞品 对比 alphabench composer openbb">
+              <span class="ri-icon">⚔️</span>
+              <span class="ri-title">Vibe-Trading竞品横向对比</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-30</span>
+            </a>
+            <a class="report-item" href="金融工具与a股数据源综合测评.html" data-title="金融工具与A股数据源综合测评" data-keywords="金融 工具 a股 数据源 测评 akshare tushare">
+              <span class="ri-icon">📐</span>
+              <span class="ri-title">金融工具与A股数据源综合测评</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-30</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="云服务" id="cat-cloud">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">☁️</span>
+              <span class="cat-title-text">云厂商与 CLI 工具</span>
+              <span class="cat-count">3 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="三大云厂商ai-cli交叉调研.html" data-title="三大云厂商AI CLI交叉调研" data-keywords="云厂商 ai cli 交叉 调研 阿里 百炼 腾讯 cloudbase 火山 vecli">
+              <span class="ri-icon">📋</span>
+              <span class="ri-title">三大云厂商AI CLI交叉调研：阿里百炼 vs 腾讯CloudBase vs 火山veCLI</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="三大云厂商ai能力全景-vs-中科领创业务场景.html" data-title="三大云厂商AI能力全景 vs 中科领创业务场景调研" data-keywords="云厂商 ai 能力 全景 中科领创 业务 场景">
+              <span class="ri-icon">🏢</span>
+              <span class="ri-title">三大云厂商AI能力全景 vs 中科领创业务场景</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="四家云ai-cli交叉调研.html" data-title="四家云AI CLI交叉调研" data-keywords="四家 云 ai cli 交叉 调研 百炼 cloudbase vecli coze">
+              <span class="ri-icon">🔀</span>
+              <span class="ri-title">四家云AI CLI交叉调研：百炼 vs CloudBase vs veCLI vs Coze</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="工具生态" id="cat-ecosystem">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">🛠️</span>
+              <span class="cat-title-text">工具生态与简报</span>
+              <span class="cat-count">7 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="graphviz与同类绘图工具对比调研.html" data-title="Graphviz与同类绘图工具对比调研" data-keywords="graphviz 绘图 工具 对比 mermaid plantuml d2 drawio">
+              <span class="ri-icon">📐</span>
+              <span class="ri-title">Graphviz与同类绘图工具对比调研</span>
+              <span class="ri-source">飞书</span>
+              <span class="ri-date">05-29</span>
+            </a>
+            <a class="report-item" href="xincheng-alpha-competitors.html" data-title="新程 Alpha 竞品全景分析" data-keywords="新程 alpha 竞品 全景 分析 小模型 群体智能">
+              <span class="ri-icon">⚡</span>
+              <span class="ri-title">新程 Alpha 竞品全景分析</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+            <a class="report-item" href="xincheng-alpha-deployment.html" data-title="新程 Alpha 部署与使用指南" data-keywords="新程 alpha 部署 使用 指南 团子 硬件">
+              <span class="ri-icon">🚀</span>
+              <span class="ri-title">新程 Alpha 部署与使用指南</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+            <a class="report-item" href="xincheng-alpha-initial.html" data-title="新程 Alpha 认知模型初探" data-keywords="新程 alpha 认知 模型 小冰 李笛 知识 认知 解耦">
+              <span class="ri-icon">🧠</span>
+              <span class="ri-title">新程 Alpha 认知模型初探</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+            <a class="report-item" href="tools-briefing-2026-06-10.html" data-title="趁手工具推荐榜 × Skills Watch（5期）" data-keywords="趁手 工具 skills watch 简报 github trending">
+              <span class="ri-icon">📰</span>
+              <span class="ri-title">趁手工具推荐榜 × Skills Watch（5期）</span>
+              <span class="ri-source">GitHub Trending</span>
+              <span class="ri-date">06-10</span>
+            </a>
+            <a class="report-item" href="tool-warehouse-2026-06-07.html" data-title="工具兵器库周度采集 2026-06-07" data-keywords="工具 兵器库 周度 采集 42plugin">
+              <span class="ri-icon">🏪</span>
+              <span class="ri-title">工具兵器库周度采集 2026-06-07</span>
+              <span class="ri-source">42plugin</span>
+              <span class="ri-date">06-07</span>
+            </a>
+            <a class="report-item" href="daily-ai-briefing-2026-05-23.html" data-title="品味AI每天简报 2026-05-23" data-keywords="品味 ai 简报 行业 产业 趋势">
+              <span class="ri-icon">💎</span>
+              <span class="ri-title">品味AI每天简报 2026-05-23</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">05-23</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="cat-section" data-category="教育应用" id="cat-education">
+          <div class="cat-header" onclick="toggleCategory(this)">
+            <div class="cat-title">
+              <span class="cat-icon">🎓</span>
+              <span class="cat-title-text">教育应用</span>
+              <span class="cat-count">3 份</span>
+            </div>
+            <div class="cat-toggle">▾</div>
+          </div>
+          <div class="cat-body report-list">
+            <a class="report-item" href="4b-model-comparison.html" data-title="Qwen3-4B → 科学题库生成（推荐首选）" data-keywords="qwen3 4b 科学 题库 mks 教育 gguf">
+              <span class="ri-icon">📝</span>
+              <span class="ri-title">Qwen3-4B → 科学题库生成（推荐首选）</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+            <a class="report-item" href="4b-model-comparison.html" data-title="MiniCPM 3.0 → 知识检索增强（RAG 最强）" data-keywords="minicpm rag 知识 检索 mks">
+              <span class="ri-icon">🔍</span>
+              <span class="ri-title">MiniCPM 3.0 → 知识检索增强（RAG 最强）</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+            <a class="report-item" href="4b-model-comparison.html" data-title="Gemma 4 E2B → 科学图表理解（多模态）" data-keywords="gemma e2b 多模态 图表 mks 科学">
+              <span class="ri-icon">🖼️</span>
+              <span class="ri-title">Gemma 4 E2B → 科学图表理解（多模态）</span>
+              <span class="ri-source">秘塔搜索</span>
+              <span class="ri-date">06-11</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Assistant -->
+      <div id="assistant">
+        <div class="ai-assistant">
+          <div class="ai-header">
+            <div class="ai-dot"></div>
+            <div>
+              <h3>AI 调研助手</h3>
+              <p>本地检索 · 快速定位报告 · 试试问「有哪些金融相关的报告？」</p>
+            </div>
+          </div>
+          <div class="ai-chat" id="chatWindow">
+            <div class="msg bot">
+              👋 你好！我是调研中心 AI 助手。<br>
+              你可以问我：<br>
+              · 「有哪些<span class="highlight">金融工具</span>相关的报告？」<br>
+              · 「<span class="highlight">云厂商 AI CLI</span> 怎么选？」<br>
+              · 「<span class="highlight">新程 Alpha</span> 是什么？」<br>
+              · 「<span class="highlight">龙虾盒子</span>有哪些竞品？」
+            </div>
+          </div>
+          <div class="ai-input-area">
+            <input type="text" id="chatInput" placeholder="问点什么…" onkeydown="if(event.key==='Enter')askAI()">
+            <button onclick="askAI()">发送</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <p>AI 调研中心 · Powered by Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive · <a href="https://github.com/andy-zokelink/tools-briefing">GitHub 仓库</a></p>
+</footer>
+
+<script>
+// Category toggle
+function toggleCategory(header) {
+  header.parentElement.classList.toggle('collapsed');
+}
+
+// Filter reports
+function filterReports() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  document.querySelectorAll('.cat-section').forEach(section => {
+    let visible = 0;
+    section.querySelectorAll('.report-item').forEach(item => {
+      const kw = item.dataset.keywords || '';
+      const title = item.dataset.title || '';
+      if (!q || title.toLowerCase().includes(q) || kw.toLowerCase().includes(q)) {
+        item.style.display = 'flex';
+        visible++;
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    section.style.display = visible > 0 ? '' : 'none';
+    if (visible > 0 && section.classList.contains('collapsed')) {
+      section.classList.remove('collapsed');
+    }
+  });
+}
+
+// AI Assistant
+const reportIndex = [
+  {t:"AI编程组合横向对比：Hermes vs Kimi Code CLI",c:"AI工具",k:"hermes kimi code cli 编程 会员 订阅 成本 工具链"},
+  {t:"Coze CLI 完整工具清单与点评",c:"AI工具",k:"coze 扣子 cli 工具 模型 插件 技能 云电脑 云手机 多模态"},
+  {t:"扣子Coze CLI深度调研：能力全景与实战案例",c:"AI工具",k:"coze 扣子 cli 工作流 agent world 实战 案例 视频 语音"},
+  {t:"22款AI编程Agent全谱系深度横评",c:"AI工具",k:"agent 编程 全谱系 横评 claude codex deepseek opencode hermes cline openclaw"},
+  {t:"5款CLI编程助手深度交叉对比",c:"AI工具",k:"cli 编程 助手 claude code codex kimi codebuddy trae 对比"},
+  {t:"基座大模型全景调研：面壁智能 + 国内外格局",c:"大模型",k:"基座 大模型 面壁 deepseek qwen kimi gpt claude gemini 格局 miniCPM"},
+  {t:"5款4B级小模型深度交叉对比",c:"大模型",k:"4b 小模型 minicpm phi qwen gemma 新程 alpha benchmark 对比"},
+  {t:"龙虾盒子（OpenClaw Box）市场全景调研报告",c:"AI硬件",k:"龙虾 openclaw edgeclaw box 边缘 ai 硬件 中科可控 nvidia 安全 漏洞"},
+  {t:"面壁智能硬件产品调研：松果派 & EdgeClaw Box",c:"AI硬件",k:"面壁 松果派 edgeclaw box 开发板 隐私 路由 jetson"},
+  {t:"6个开源AI金融工具横向对比",c:"金融工具",k:"开源 ai 金融 工具 对比 vibe-trading tradingagents dexter anthropics"},
+  {t:"Vibe-Trading深度调研报告",c:"金融工具",k:"vibe trading 量化 akshare 回测 a股 策略 自然语言"},
+  {t:"Vibe-Trading竞品横向对比",c:"金融工具",k:"vibe trading 竞品 alphabench composer openbb 量化"},
+  {t:"金融工具与A股数据源综合测评",c:"金融工具",k:"金融 a股 数据源 akshare tushare 测评"},
+  {t:"三大云厂商AI CLI交叉调研",c:"云服务",k:"云厂商 ai cli 百炼 cloudbase vecli 阿里 腾讯 火山"},
+  {t:"三大云厂商AI能力全景 vs 中科领创业务场景",c:"云服务",k:"云厂商 ai 中科领创 业务 生图 视频 语音 小程序"},
+  {t:"四家云AI CLI交叉调研",c:"云服务",k:"四家 云 ai cli 百炼 cloudbase vecli coze 扣子"},
+  {t:"Graphviz与同类绘图工具对比调研",c:"工具生态",k:"graphviz 绘图 mermaid plantuml d2 drawio excalidraw"},
+  {t:"新程 Alpha 竞品全景分析",c:"工具生态",k:"新程 alpha 竞品 群体智能 isara autogen"},
+  {t:"新程 Alpha 部署与使用指南",c:"工具生态",k:"新程 alpha 部署 团子 硬件"},
+  {t:"新程 Alpha 认知模型初探",c:"工具生态",k:"新程 alpha 认知 小冰 李笛 知识 解耦"},
+  {t:"趁手工具推荐榜 × Skills Watch（5期）",c:"工具生态",k:"趁手 工具 skills watch github trending mcp"},
+  {t:"工具兵器库周度采集",c:"工具生态",k:"工具 兵器库 42plugin 采集"},
+  {t:"品味AI每天简报",c:"工具生态",k:"品味 ai 简报 行业 产业"},
+  {t:"Qwen3-4B → 科学题库生成",c:"教育应用",k:"qwen3 4b 科学 题库 mks 教育 gguf"},
+  {t:"MiniCPM 3.0 → 知识检索增强",c:"教育应用",k:"minicpm rag 知识 检索 mks"},
+  {t:"Gemma 4 E2B → 科学图表理解",c:"教育应用",k:"gemma e2b 多模态 图表 mks 科学"},
+];
+
+function askAI() {
+  const input = document.getElementById('chatInput');
+  const q = input.value.trim();
+  if (!q) return;
+
+  const chat = document.getElementById('chatWindow');
+
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg user';
+  userMsg.textContent = q;
+  chat.appendChild(userMsg);
+
+  const botMsg = document.createElement('div');
+  botMsg.className = 'msg bot';
+
+  const ql = q.toLowerCase();
+  const matches = reportIndex.filter(r => {
+    const all = (r.t + ' ' + r.c + ' ' + r.k).toLowerCase();
+    const terms = ql.split(/\s+/);
+    return terms.some(t => all.includes(t));
+  }).slice(0, 5);
+
+  if (matches.length > 0) {
+    let html = `找到 <b>${matches.length}</b> 份相关报告：<br><br>`;
+    matches.forEach((r, i) => {
+      html += `<span class="tag-result" onclick="scrollToReport('${r.t.replace(/'/g,"\\'")}')">${i+1}. ${r.t.substring(0,40)}${r.t.length>40?'…':''}</span><br>`;
+      html += `<small style="color:var(--text-tertiary)">📂 ${r.c}</small><br><br>`;
+    });
+    html += `<small style="color:var(--text-tertiary)">💡 点击标签可跳转定位</small>`;
+    botMsg.innerHTML = html;
+  } else {
+    botMsg.innerHTML = `未找到直接匹配「${q}」的报告。<br><br>试试：<br>· 「金融」「量化」「云厂商」「龙虾」<br>· 「新程」「面壁」「Coze」「Vibe」<br>· 或用顶部的搜索框筛查整个目录`;
+  }
+
+  chat.appendChild(botMsg);
+  chat.scrollTop = chat.scrollHeight;
+  input.value = '';
+}
+
+function scrollToReport(title) {
+  document.getElementById('searchInput').value = title.substring(0, 20);
+  filterReports();
+  document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

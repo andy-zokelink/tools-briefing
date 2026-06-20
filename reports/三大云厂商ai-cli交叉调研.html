@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三大云厂商AI CLI交叉调研 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">☁️ 云服务 · feishu</div><h1>三大云厂商AI CLI交叉调研</h1><p><span class="tag p">飞书</span> </p></header>
+<div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>三个都不建议装。</strong> 你的场景（Hermes Agent + DeepSeek V4 Flash + 秘塔搜索）已覆盖同等能力，云厂商CLI是给开发者终端编码用的，你对话式调模型的方式比命令行更高效。</div></div><div class="sec reveal" id="s-0"><h2>交叉调研报告：三大云厂商AI CLI横向对比</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-29 | 对象类型：工具/CLI | 调研人：阿爪调研模式：多对象交叉研究（metaso-research skill v2.2.0）</blockquote>
+<hr>
+</div>
+<div class="sec reveal" id="s-1"><h2>📌 一句话结论</h2>
+<div class="card">
+<p><strong>三个都不建议装。</strong> 你的场景（Hermes Agent + DeepSeek V4 Flash + 秘塔搜索）已覆盖同等能力，云厂商CLI是给开发者终端编码用的，你对话式调模型的方式比命令行更高效。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>对比框架</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">判断标准</th>
+</tr>
+<tr>
+<td class="">功能完整性</td>
+<td class="">模型数量、多模态能力、工具链丰富度</td>
+</tr>
+<tr>
+<td class="">安装门槛</td>
+<td class="">环境依赖、安装复杂度、平台兼容</td>
+</tr>
+<tr>
+<td class="">费用成本</td>
+<td class="gr">免费额度、订阅价格、按量成本</td>
+</tr>
+<tr>
+<td class="">生态兼容</td>
+<td class="">是否支持Hermes/OpenClaw等Agent框架、MCP协议</td>
+</tr>
+<tr>
+<td class="">差异化优势</td>
+<td class="">有没有独占能力是其他平台没有的</td>
+</tr>
+<tr>
+<td class="">适用场景</td>
+<td class="">最适合什么样的人用</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-3"><h2>各对象速览</h2>
+<div class="card"><h3>A · 阿里云百炼CLI（bailian-cli / bl）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">项目</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">发布时间</td>
+<td class="hi"><strong>2026年5月29日</strong>（就是今天）[IT之家]✅</td>
+</tr>
+<tr>
+<td class="">安装</td>
+<td class="hi"><code>npm install -g bailian-cli</code>，需 Node.js ≥ 22.12 [官方install.md]✅</td>
+</tr>
+<tr>
+<td class="">命令</td>
+<td class=""><code>bl</code> / <code>bailian</code></td>
+</tr>
+<tr>
+<td class="">模型</td>
+<td class="hi"><strong>150+款</strong>，含Qwen3全系列、GLM等 [官方公告]✅</td>
+</tr>
+<tr>
+<td class="">能力</td>
+<td class="hi">文本/图像/视频/语音/视觉理解/知识库/记忆/联网搜索/Workflow [官方]✅</td>
+</tr>
+<tr>
+<td class="">框架兼容</td>
+<td class="hi"><strong>原生支持Hermes Agent</strong>、Claude Code、Qoder、OpenClaw [官方]✅</td>
+</tr>
+<tr>
+<td class="">MCP协议</td>
+<td class="">支持</td>
+</tr>
+<tr>
+<td class="">价格</td>
+<td class="hi">Pro版¥200/月（9万次），按量后付费。新人7000万免费tokens [购买指南]✅</td>
+</tr>
+<tr>
+<td class="">开源</td>
+<td class="hi">GitHub已开源（github.com/modelstudioai/cli）[IT之家]✅</td>
+</tr>
+<tr>
+<td class="">今天刚发布</td>
+<td class="">最新、最热，但生态和文档成熟度待验证</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>B · 腾讯云 CloudBase AI CLI（tcb ai）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">项目</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">发布时间</td>
+<td class="hi">2025年8月 [快科技]✅</td>
+</tr>
+<tr>
+<td class="">安装</td>
+<td class="hi">一键脚本（curl/irm），或<code>npm install -g @cloudbase/cli</code> [官方]✅</td>
+</tr>
+<tr>
+<td class="">命令</td>
+<td class=""><code>tcb ai</code></td>
+</tr>
+<tr>
+<td class="">模型</td>
+<td class="hi">内置DeepSeek、Kimi K2，<strong>可调用Claude Code/Codex/Qwen Code/aider/Cursor</strong> [官方]✅</td>
+</tr>
+<tr>
+<td class="">核心能力</td>
+<td class="hi">统一调度多个AI CLI工具，从代码生成到<strong>云部署一条龙</strong>（云函数/数据库/存储）[官方]✅</td>
+</tr>
+<tr>
+<td class="">框架兼容</td>
+<td class="">云开发+CodeBuddy生态，CI/CD集成</td>
+</tr>
+<tr>
+<td class="">MCP协议</td>
+<td class="hi">支持（CloudBase MCP）[官方]✅</td>
+</tr>
+<tr>
+<td class="">价格</td>
+<td class="hi"><strong>完全免费</strong>，新环境送100万tokens [快科技]✅</td>
+</tr>
+<tr>
+<td class="">版本迭代</td>
+<td class="hi">2026年4月升级到V3，面向AI Agent重新设计 [腾讯云开发者]✅</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="">不是直接调大模型，而是"AI CLI的调度中心"</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>C · 火山引擎 veCLI（vecli）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">项目</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">发布时间</td>
+<td class="hi">2025年9月 [IT之家]✅</td>
+</tr>
+<tr>
+<td class="">安装</td>
+<td class="hi"><code>npm install -g @volcengine/vecli</code> [官方]✅</td>
+</tr>
+<tr>
+<td class="">命令</td>
+<td class=""><code>vecli</code></td>
+</tr>
+<tr>
+<td class="">模型</td>
+<td class="hi">豆包1.6、DeepSeek V3.1、Kimi-K2、GLM-4.7等 [官方]✅</td>
+</tr>
+<tr>
+<td class="">核心能力</td>
+<td class="hi">"思考-行动"ReAct循环，终端直接部署，MCP Server集成 [官方]✅</td>
+</tr>
+<tr>
+<td class="">框架兼容</td>
+<td class="hi">支持OpenClaw，赞助ClawHub中国镜像 [OFweek]✅</td>
+</tr>
+<tr>
+<td class="">MCP协议</td>
+<td class="hi">支持，可扩展飞书MCP [官方]✅</td>
+</tr>
+<tr>
+<td class="">价格</td>
+<td class="">首月¥9.9，后续按量。但评价分化：高峰时段20s+等待，配额消耗快 [V2EX用户]⚠️</td>
+</tr>
+<tr>
+<td class="">差异化</td>
+<td class="hi">字节生态（豆包大模型+火山云），推"控价保利"策略 [OFweek]✅</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="">终端AI智能体，代码生成+部署，偏向开发者</td>
+</tr>
+</table></div>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-4"><h2>横向对比表</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">阿里百炼CLI</th>
+<th class="">腾讯CloudBase AI CLI</th>
+<th class="">火山veCLI</th>
+<th class="">赢家</th>
+</tr>
+<tr>
+<td class="">模型数量</td>
+<td class="hi"><strong>150+</strong> 最多</td>
+<td class="">内置几款+可调外部CLI</td>
+<td class="">6-8款</td>
+<td class="">阿里</td>
+</tr>
+<tr>
+<td class="">多模态能力</td>
+<td class="hi">文本+图像+语音+视频 <strong>最全</strong></td>
+<td class="">侧重文本/代码</td>
+<td class="">文本+代码为主</td>
+<td class="">阿里</td>
+</tr>
+<tr>
+<td class="">安装门槛</td>
+<td class="">npm + Node ≥ 22.12（偏高）</td>
+<td class="">一键脚本（最低）</td>
+<td class="">npm</td>
+<td class="">腾讯</td>
+</tr>
+<tr>
+<td class="">费用</td>
+<td class="">¥200/月或按量</td>
+<td class="gr"><strong>免费</strong>+100万tokens</td>
+<td class="">¥9.9首月+按量</td>
+<td class="">腾讯</td>
+</tr>
+<tr>
+<td class="">Hermes兼容</td>
+<td class=""><strong>原生支持</strong></td>
+<td class="">不直接支持</td>
+<td class="">需自行配置</td>
+<td class="">阿里</td>
+</tr>
+<tr>
+<td class="">差异化</td>
+<td class="hi">模型最多、能力最全</td>
+<td class="gr">免费、云部署一条龙</td>
+<td class="">豆包生态+ReAct</td>
+<td class="">看场景</td>
+</tr>
+<tr>
+<td class="">成熟度</td>
+<td class="">今天刚发（待验证）</td>
+<td class="">运营近1年，V3版</td>
+<td class="">运营8个月</td>
+<td class="">腾讯</td>
+</tr>
+<tr>
+<td class="">开发者口碑</td>
+<td class="">今天刚发，暂无</td>
+<td class="gr">正面（免费+全流程）</td>
+<td class="">两极（便宜但不稳）</td>
+<td class="">腾讯</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-5"><h2>交叉分析</h2>
+<div class="card"><h3>Trade-off</h3>
+<ul><li><strong>阿里百炼CLI</strong> — 能力最全、模型最多、原生支持Hermes，但今天刚发布，而且¥200/月成本不低。你的Hermes已经能切任意模型provider，百炼CLI的模型能力对你是冗余的。· <strong>腾讯CloudBase AI CLI</strong> — 免费、零门槛、云部署能力强大。但本质上是个"AI编程工具的调度器"，你用Hermes+Claude Code已经能完成同样的事。· <strong>火山veCLI</strong> — 首月¥9.9便宜，但体验不稳定（高峰慢、配额消耗快）。豆包模型虽好，但Hermes也可以直接调豆包API。</li></ul>
+</div>
+<div class="card"><h3>你的场景适配度</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">你的现状</th>
+<th class="">对比</th>
+</tr>
+<tr>
+<td class="">主力模型 DeepSeek V4 Flash</td>
+<td class="">三家都支持，但Hermes已直连，不需要CLI做跳板</td>
+</tr>
+<tr>
+<td class="">用Hermes Agent对话式交互</td>
+<td class="">CLI是命令行模式，对你来说是倒退</td>
+</tr>
+<tr>
+<td class="">搜索用秘塔MCP</td>
+<td class="">三家不支持秘塔独有搜索能力</td>
+</tr>
+<tr>
+<td class="">文档归档用飞书</td>
+<td class="">三家CLI没这个功能</td>
+</tr>
+<tr>
+<td class="">需要多模态（如图生视频）</td>
+<td class="">唯一有价值的是阿里百炼CLI的多模态，但¥200/月值不值？</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>观点分歧</h3>
+<ul><li>正方：阿里百炼CLI今天刚发，支持Hermes原生，模型最全，未来生态可期· 反方：你不需要CLI，Hermes已覆盖同等能力。阿里百炼CLI适合的是<strong>其他Agent框架用户</strong>（如Claude Code直接调阿里云模型），不是Hermes用户· 我的判断：阿里百炼CLI对Hermes用户的价值是"多一个模型入口"，但Hermes本身已支持多provider切换，这个入口是多余的</li></ul>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-6"><h2>场景推荐</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">场景</th>
+<th class="">推荐</th>
+<th class="">理由</th>
+</tr>
+<tr>
+<td class="">需要阿里独家模型（如Qwen某特定版本）</td>
+<td class="">阿里百炼CLI</td>
+<td class="">但也可通过Hermes配阿里云API实现</td>
+</tr>
+<tr>
+<td class="">从零开发一键部署小程序/Web</td>
+<td class="">腾讯CloudBase AI CLI</td>
+<td class="">从代码到部署一条龙，最适合</td>
+</tr>
+<tr>
+<td class="">字节生态深度用户</td>
+<td class="">火山veCLI</td>
+<td class="">豆包+飞书+火山云打通</td>
+</tr>
+<tr>
+<td class="">你用Hermes日常工作</td>
+<td class=""><strong>都不需要</strong></td>
+<td class="">现有方案已覆盖</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-7"><h2>💎 综合判断</h2>
+<div class="card">
+<p><strong>不装比装好。</strong> 你的核心工具链是：Hermes Agent ↔ DeepSeek V4 Flash + 秘塔搜索 + 飞书。这三家CLI解决的都是"在终端里调AI模型写代码"的问题，而你用对话方式已经完成了同样的事。除非你明确要跑某个阿里/腾讯/字节独占的模型能力，否则装CLI反而多一个需要维护API Key和账单的东西。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-8"><h2>💎 连接性分析</h2>
+<div class="card">
+<ul><li><strong>跟中科领创</strong>：无直接业务关联。这些CLI对芯片代理/智能硬件方案商的日常工作帮助有限· <strong>间接启发</strong>：阿里云百炼CLI今天发布且原生支持Hermes Agent，说明Hermes生态在扩大，你选的工具方向是对的· <strong>如果将来需要</strong>：通过Hermes切换provider调用阿里云百炼的API即可，无需额外装CLI</li></ul>
+<hr>
+</div>
+<div class="sec reveal" id="s-9"><h2>⚠️ 风险提示</h2>
+<div class="card">
+<ul><li><strong>信源质量</strong>：主要信源是官方公告和科技媒体，可信度较高。费用数据来自购买指南，实际可能随促销变动· <strong>信息缺口</strong>：阿里百炼CLI今天刚发布，实际使用体验和稳定性尚无第三方评测· <strong>时效性</strong>：费用信息截至2026年5月，可能随促销调整</li></ul>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/BKYEdZ2LlokDpdxtHQEcwOxzn7d" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+
+</body>
+</html>

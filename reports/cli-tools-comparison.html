@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5款CLI编程助手深度交叉对比 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #08090a;
+    --panel: #0f1011;
+    --surface: #191a1b;
+    --surface2: #222326;
+    --text: #f7f8f8;
+    --text2: #d0d6e0;
+    --text3: #8a8f98;
+    --text4: #62666d;
+    --accent: #5e6ad2;
+    --accent-bright: #7170ff;
+    --green: #27a644;
+    --orange: #d2991d;
+    --red: #f85149;
+    --border: rgba(255,255,255,0.08);
+    --border-subtle: rgba(255,255,255,0.05);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text2);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv01','ss03';
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  #particles {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none; opacity: 0.65;
+  }
+  #glow {
+    position: fixed; z-index: 0; pointer-events: none;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(113,112,255,0.07) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: left 0.8s ease-out, top 0.8s ease-out;
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  nav, .hero, .kpi-row, .sec, footer { position: relative; z-index: 1; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,16,17,0.92); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 24px;
+  }
+  nav .inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 24px;
+    height: 52px;
+  }
+  nav .logo {
+    font-size: 15px; font-weight: 600; color: var(--text);
+    letter-spacing: -0.2px; white-space: nowrap;
+  }
+  nav .logo span { color: var(--accent-bright); }
+  nav a {
+    font-size: 13px; font-weight: 500; color: var(--text3);
+    text-decoration: none; transition: color .15s; white-space: nowrap;
+  }
+  nav a:hover { color: var(--text); }
+
+  .hero {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 24px 64px; text-align: center;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(94,106,210,0.12); color: var(--accent-bright);
+    border: 1px solid rgba(94,106,210,0.25);
+    border-radius: 999px; padding: 4px 16px;
+    font-size: 12px; font-weight: 500; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600; letter-spacing: -0.04em;
+    color: var(--text); line-height: 1.15; margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent-bright); }
+  .hero p {
+    font-size: 1.1rem; color: var(--text3);
+    max-width: 700px; margin: 0 auto; font-weight: 400;
+  }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+    gap: 16px;
+    max-width: 1200px; margin: 0 auto 80px; padding: 0 24px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; text-align: center;
+  }
+  .kpi .val {
+    font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .kpi .val.accent { color: var(--accent-bright); }
+  .kpi .val.green { color: var(--green); }
+  .kpi .lbl { font-size: 13px; color: var(--text3); }
+
+  .sec {
+    max-width: 1200px; margin: 0 auto 72px; padding: 0 24px;
+  }
+  .sec h2 {
+    font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .sec .sub {
+    font-size: 14px; color: var(--text3); margin-bottom: 32px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px; margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px; letter-spacing: -0.01em;
+  }
+  .card p, .card li { font-size: 14px; color: var(--text2); }
+  .card li { padding: 4px 0; }
+  ul { list-style: none; padding: 0; }
+  li::before { content: "·"; color: var(--accent-bright); font-weight: 700; margin-right: 8px; }
+
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px; margin-bottom: 16px;
+    min-height: 280px; position: relative;
+  }
+  .chart-wrap canvas {
+    max-height: 380px; width: 100% !important; height: auto !important;
+  }
+  .chart-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  @media (max-width: 768px) { .chart-row { grid-template-columns: 1fr; } }
+
+  .tbl {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  .tbl th {
+    text-align: left; padding: 10px 14px;
+    color: var(--text3); font-weight: 500; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+  }
+  .tbl td {
+    padding: 10px 14px; color: var(--text2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl .hi { color: var(--accent-bright); font-weight: 600; }
+  .tbl .lo { color: var(--text4); }
+  .tbl .gr { color: var(--green); font-weight: 600; }
+
+  .acc { margin-bottom: 16px; }
+  .acc-hdr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 24px;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; font-size: 15px; font-weight: 600;
+    color: var(--text); transition: border-color .15s;
+  }
+  .acc-hdr:hover { border-color: rgba(255,255,255,0.15); }
+  .acc-hdr::after { content: "+"; font-size: 18px; color: var(--text3); font-weight: 400; transition: transform .2s; }
+  .acc.open .acc-hdr::after { content: "−"; }
+  .acc-body {
+    display: none; background: var(--surface);
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 10px 10px; padding: 24px;
+    font-size: 14px; color: var(--text2);
+  }
+  .acc.open .acc-body { display: block; }
+
+  .insight {
+    background: rgba(94,106,210,0.06);
+    border: 1px solid rgba(94,106,210,0.18);
+    border-radius: 10px; padding: 24px 28px; font-size: 14px;
+  }
+  .insight strong { color: var(--accent-bright); }
+
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 500; margin-right: 6px;
+  }
+  .tag.g { background: rgba(39,166,68,0.12); color: var(--green); border: 1px solid rgba(39,166,68,0.2); }
+  .tag.p { background: rgba(94,106,210,0.12); color: var(--accent-bright); border: 1px solid rgba(94,106,210,0.2); }
+  .tag.o { background: rgba(210,153,29,0.12); color: var(--orange); border: 1px solid rgba(210,153,29,0.2); }
+  .tag.r { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.18); }
+
+  .pills {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .pill {
+    padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border); color: var(--text3);
+    cursor: pointer; transition: all .15s; background: transparent;
+  }
+  .pill:hover, .pill.active {
+    background: rgba(94,106,210,0.1); color: var(--accent-bright);
+    border-color: rgba(94,106,210,0.3);
+  }
+
+  .note { font-size: 12px; color: var(--text4); margin-top: 8px; }
+
+  footer {
+    text-align: center; padding: 48px 24px;
+    color: var(--text4); font-size: 12px;
+    border-top: 1px solid var(--border-subtle); margin-top: 80px;
+  }
+  footer a { color: var(--text3); }
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+
+<canvas id="particles"></canvas>
+<div id="glow"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="inner">
+    <div class="logo"><span>◈</span> CLI编程助手深度调研</div>
+    <a href="#summary">总览</a>
+    <a href="#data">数据对比</a>
+    <a href="#models">逐款解析</a>
+    <a href="#scenarios">场景推荐</a>
+    <a href="#verdict">结论</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="badge">2026.06 · 秘塔AI搜索 × 6路搜索 + 5篇精读</div>
+  <h1><span>5款CLI编程助手</span><br>深度交叉对比</h1>
+  <p>Claude Code · Codex CLI · Kimi CLI · CodeBuddy CLI · Trae Agent CLI —— 11个维度，数据可查，场景可落地</p>
+</header>
+
+<!-- KPI -->
+<section class="kpi-row">
+  <div class="kpi">
+    <div class="val accent">80.9%</div>
+    <div class="lbl">SWE-bench 最高分 (Claude Opus 4.5)</div>
+  </div>
+  <div class="kpi">
+    <div class="val">124K+</div>
+    <div class="lbl">GitHub Stars 最多 (Claude Code)</div>
+  </div>
+  <div class="kpi">
+    <div class="val green">¥1/M</div>
+    <div class="lbl">最便宜API单价 (Kimi K2)</div>
+  </div>
+  <div class="kpi">
+    <div class="val">3/5</div>
+    <div class="lbl">开源可审计 (Codex/Kimi/Trae)</div>
+  </div>
+  <div class="kpi">
+    <div class="val accent">¥100-200</div>
+    <div class="lbl">最优组合月成本</div>
+  </div>
+</section>
+
+<!-- Section: 总览 -->
+<div class="sec reveal" id="summary">
+  <h2>📊 核心发现</h2>
+  <p class="sub">五款工具分两个阵营：全球标杆 vs 国产追赶。选型关键是你的付费生态、语言场景和开源需求。</p>
+
+  <div class="chart-row">
+    <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>🔑 一句话选型：</strong>
+    · 已有 ChatGPT Plus → Codex CLI 零成本上手（开源、轻量、更新快）<br>
+    · 团队用 Claude + 大型代码库 → Claude Code 能力天花板（Sub-agents/Hooks/CI-CD）<br>
+    · 中文场景 + 追求性价比 → Kimi CLI（API ¥1/M token，SWE-bench 80.2%逼近Opus）<br>
+    · 腾讯生态 + 免费刚需 → CodeBuddy CLI（微信登录零门槛，国际版曲线救国）<br>
+    · 多模型不锁定 + 开源合规 → Trae Agent CLI（Ollama本地模型，容器化隔离）
+  </div>
+</div>
+
+<!-- Section: 数据对比 -->
+<div class="sec reveal" id="data">
+  <h2>📐 硬指标对比</h2>
+  <p class="sub">数据来源：官方文档 · GitHub · SWE-bench Verified · 第三方评测 · 秘塔交叉验证</p>
+
+  <div style="overflow-x:auto">
+  <table class="tbl">
+    <tr><th>指标</th><th>Claude Code</th><th>Codex CLI</th><th>Kimi CLI</th><th>CodeBuddy CLI</th><th>Trae Agent CLI</th></tr>
+    <tr><td>开发商</td><td>Anthropic</td><td>OpenAI</td><td>月之暗面</td><td>腾讯云</td><td>字节跳动</td></tr>
+    <tr><td>底层模型</td><td>Claude Sonnet/Opus 4</td><td>GPT-5-Codex / o3/o4</td><td>Kimi K2/K2.5/K2.6</td><td>DeepSeek V3 / Claude/Gemini/GPT</td><td>无绑定（OpenAI/Anthropic/Gemini/Ollama）</td></tr>
+    <tr><td>SWE-bench 最高</td><td class="hi">80.9% (Opus 4.5)</td><td>~69.1% (o4-mini)</td><td class="hi">80.2% (K2.6)</td><td class="lo">模型依赖</td><td class="lo">模型依赖</td></tr>
+    <tr><td>GitHub Stars</td><td class="hi">124K+</td><td>82.9K+</td><td>4.3K+</td><td class="lo">无独立仓库</td><td>增长中</td></tr>
+    <tr><td>开源</td><td class="lo">❌ 闭源</td><td class="gr">✅ Apache 2.0</td><td class="gr">✅ Apache 2.0</td><td class="lo">❌ 闭源</td><td class="gr">✅ Apache 2.0</td></tr>
+    <tr><td>定价（最低）</td><td>$20/月 Pro</td><td>$20/月（含 ChatGPT Plus）</td><td class="gr">约¥50-100/月 或 API ¥1/M</td><td class="gr">国内免费 国际$9.95/月</td><td class="gr">开源免费（自备API Key）</td></tr>
+    <tr><td>上下文窗口</td><td class="hi">200K tokens</td><td>128K-200K（模型依赖）</td><td>128K tokens（20万汉字）</td><td>模型依赖（~128K）</td><td>模型依赖</td></tr>
+    <tr><td>中文支持</td><td>可用但不突出</td><td>可用但不突出</td><td class="hi">原生中文 最强</td><td class="hi">原生中文 一流</td><td class="hi">原生中文 出色</td></tr>
+    <tr><td>平台支持</td><td>macOS, Linux</td><td>macOS, Linux, Win(WSL2)</td><td>macOS, Linux</td><td class="hi">macOS, Linux, Windows</td><td class="hi">macOS, Linux, Windows</td></tr>
+    <tr><td>安装方式</td><td>npm/curl</td><td>npm/brew</td><td>uv/pip</td><td>npm (Node 18+)</td><td>Python 3.12+</td></tr>
+    <tr><td>工作模式</td><td class="hi">深度 Agentic（Sub-agents/Hooks/Routines）</td><td>3档审批（suggest/auto/full-auto）</td><td>双模（Shell + Ctrl+K切Agent）</td><td>手动+计划+自动编辑</td><td>REPL交互+单次run</td></tr>
+    <tr><td>独有特色</td><td>Sub-agents并行/Hooks事件链/Routines定时/CLAUDE.md记忆</td><td>Rust极致轻量(~80MB)/Web云端/多模态/789版本迭代</td><td>Agent Swarm 100并行/视频→代码/ACP编辑器协议</td><td>微信登录零门槛/腾讯云DevOps/32官方插件/VPC私有部署</td><td>多模型无锁定/Ollama本地/容器化/任务轨迹JSON</td></tr>
+    <tr><td>IDE集成</td><td class="hi">CLI+VS Code+JetBrains+桌面+Web+iOS</td><td>CLI+VS Code+Cursor+Windsurf+Web</td><td>CLI+VS Code+JetBrains+Cursor(ACP)+Zed</td><td>CLI+VS Code+JetBrains+CodeBuddy IDE+微信开发者</td><td>纯CLI（独立于Trae IDE）</td></tr>
+    <tr><td>成熟度</td><td class="hi">最成熟（衍生生态43K+60K Stars）</td><td>快速迭代（1450万+/月下载）</td><td>Technical Preview（增长快）</td><td>内部90%+工程师使用</td><td>Trae IDE月活160万+</td></tr>
+  </table>
+  </div>
+  <div class="note">* SWE-bench 数据来自官方技术报告和第三方评测。CodeBuddy/Trae 的 SWE-bench 分数取决于所选模型，非产品自身评分。Kimi K2.6 SWE-bench 80.2% 来自月之暗面官方公布。</div>
+</div>
+
+<!-- Section: 逐款解析 -->
+<div class="sec reveal" id="models">
+  <h2>🔍 逐工具深度解析</h2>
+  <p class="sub">点击展开每款工具的架构、特色能力和适用边界</p>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Claude Code (Anthropic)<span class="tag p" style="margin-left:12px">🏆 能力天花板</span></div>
+    <div class="acc-body">
+      <p><strong>定位：</strong>深度Agentic编程助手，面向大型代码库的复杂工程任务。Sub-agents可并行处理多子任务，Hooks在文件修改后自动触发lint/格式化，Routines支持定时后台任务，CLAUDE.md持久化项目规范。</p>
+      <p style="margin-top:12px"><strong>模型：</strong>绑定Claude Sonnet 4/4.5、Opus 4/4.5。Opus 4.5 在 SWE-bench Verified 达80.9%，是目前单模型最高分。技术上可接其他模型但体验大幅下降。</p>
+      <p style="margin-top:12px"><strong>生态：</strong>124K+ GitHub Stars，awesome-claude-code 43.9K、claude-code-best-practice 53.2K、learn-claude-code 60.7K。CI/CD集成最完善（GitHub Actions深度整合）。</p>
+      <p style="margin-top:12px"><strong>短板：</strong>英文为主，中文非原生优化。国内用户需外币卡+网络工具，月$20-200门槛。闭源不可审计。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>10万行+大型代码库维护、跨仓库复杂重构、团队CI/CD自动化Code Review。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Codex CLI (OpenAI)<span class="tag g" style="margin-left:12px">⚡ 轻量标杆</span></div>
+    <div class="acc-body">
+      <p><strong>定位：</strong>Rust编写的极轻量（~80MB）开源CLI Agent，ChatGPT Plus订阅即用。三种审批模式（suggest/auto-edit/full-auto），适合从快速问答到全自动沙箱执行的全场景覆盖。</p>
+      <p style="margin-top:12px"><strong>模型：</strong>默认GPT-5-Codex，支持o3/o4-mini/GPT-5-mini/nano切换。SWE-bench约69.1%（o4-mini），GPT-5更高。</p>
+      <p style="margin-top:12px"><strong>更新速度：</strong>789个版本极速迭代，npm月下载1450万+。Web云端版（chatgpt.com/codex）多模态输入（截图→代码）。82.9K+ GitHub Stars。</p>
+      <p style="margin-top:12px"><strong>短板：</strong>轻量定位意味着项目理解深度不如Claude Code，无持久化记忆文件，无可比肩的Sub-agents/Hooks。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>日常单文件修改、快速问答、局部重构。已有ChatGPT Plus订阅者零成本上手。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Kimi CLI/Kimi Code (月之暗面)<span class="tag p" style="margin-left:12px">🇨🇳 中文性价比王</span></div>
+    <div class="acc-body">
+      <p><strong>定位：</strong>开源（Apache 2.0）中文编程CLI，Kimi K2/K2.5/K2.6 1T参数MoE模型。双模交互（Shell默认 + Ctrl+K切Agent），既保留命令行高效性又有AI辅助。</p>
+      <p style="margin-top:12px"><strong>性能：</strong>K2.5 SWE-bench 76.8%，K2.6达80.2%已逼近Claude Opus水平。API价格输入¥1/百万token、输出¥2/百万token，单位美元成本下编程产出超过任何同类前沿模型。</p>
+      <p style="margin-top:12px"><strong>独有：</strong>Agent Swarm（100个并行Agent）、视频→代码（Video-to-Code）、ACP编辑器协议（对接Zed/JetBrains/Cursor）。K2.5/K2.6模型在HuggingFace开源。</p>
+      <p style="margin-top:12px"><strong>短板：</strong>4300+ Stars，Technical Preview阶段，生态还在建设。Windows未明确支持。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>中文主力开发、追求API性价比、已有Kimi会员直接零成本上手。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">CodeBuddy CLI (腾讯云)<span class="tag o" style="margin-left:12px">🏢 腾讯生态专用</span></div>
+    <div class="acc-body">
+      <p><strong>定位：</strong>模型聚合型CLI——国内版仅DeepSeek V3.1/V3，国际版支持Claude Sonnet 4/Gemini 2.5 Pro/GPT-5全系。手动模式+计划模式（只出方案不执行）+自动接受编辑模式。</p>
+      <p style="margin-top:12px"><strong>定价：</strong>国内版公测免费（10万token/月），企业版¥158/人/月。国际版免费+Pro $9.95/月。微信扫码登录零门槛。</p>
+      <p style="margin-top:12px"><strong>生态：</strong>腾讯内部90%+工程师使用，32个官方插件（云原生/合规/协作），与腾讯云DevOps/CODING/微信小程序深度整合，支持企业VPC私有部署。</p>
+      <p style="margin-top:12px"><strong>短板：</strong>闭源。缺失/agents（子代理）、/hooks（钩子）、/ide（IDE集成状态）、后台任务。本质是模型聚合器，自身不做模型。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>深度绑定腾讯云生态、需要免费+无需翻墙的国内CLI、企业国密合规需求。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Trae Agent CLI (字节跳动)<span class="tag g" style="margin-left:12px">🔓 最灵活开源</span></div>
+    <div class="acc-body">
+      <p><strong>定位：</strong>开源（Apache 2.0）纯CLI Agent，最大卖点是模型无锁定——支持OpenAI、Anthropic、Google Gemini、Doubao，甚至Ollama本地模型（DeepSeek-Coder/Qwen3等），五款中模型兼容性最强。</p>
+      <p style="margin-top:12px"><strong>特色：</strong>容器化运行（--docker-image）隔离开发环境、任务轨迹JSON完整记录可审计、Lakeview可视化追踪、顺序思考工具链拆解复杂问题。支持200步长任务链。</p>
+      <p style="margin-top:12px"><strong>生态：</strong>Trae IDE（VS Code fork）月活160万+、注册600万+，但Trae Agent CLI是独立项目。支持macOS/Linux/Windows（Python 3.12+）。</p>
+      <p style="margin-top:12px"><strong>短板：</strong>无专用持久化记忆文件，依赖任务轨迹JSON回溯。社区规模小于Claude Code/Codex。Trae IDE自2026年2月起不再完全免费（按token计费五档套餐）。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>多模型灵活切换、代码隐私顾虑需本地模型、开源合规审计、容器化隔离。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section: 场景推荐 -->
+<div class="sec reveal" id="scenarios">
+  <h2>🎯 场景推荐矩阵</h2>
+  <p class="sub">选对不选贵——按你的真实需求匹配</p>
+
+  <div class="chart-wrap"><canvas id="scenarioChart"></canvas></div>
+
+  <div class="card">
+    <h3>5种场景 × 推荐工具</h3>
+    <table class="tbl">
+      <tr><th>你的场景</th><th>首选</th><th>次选</th><th>理由</th></tr>
+      <tr><td><strong>大型代码库重构（10万行+）</strong></td><td class="hi">Claude Code</td><td>Codex CLI</td><td>Sub-agents并行 + 200K上下文 + Hooks自动化</td></tr>
+      <tr><td><strong>日常轻量编码（单文件/快问快答）</strong></td><td class="hi">Codex CLI</td><td>Kimi CLI</td><td>Rust极速启动（~80MB）+ ChatGPT Plus零成本</td></tr>
+      <tr><td><strong>中文项目主力开发</strong></td><td class="hi">Kimi CLI</td><td>CodeBuddy</td><td>原生中文最强 + API最便宜 + K2.6性能接近Opus</td></tr>
+      <tr><td><strong>免费 + 国内网络环境</strong></td><td class="hi">CodeBuddy</td><td>Trae Agent</td><td>微信登录零门槛 + 国内版公测免费 + 无需翻墙</td></tr>
+      <tr><td><strong>不想被厂商锁定</strong></td><td class="hi">Trae Agent</td><td>Codex CLI</td><td>多模型任意切换 + Ollama本地 + Apache 2.0</td></tr>
+      <tr><td><strong>企业合规（国密/VPC）</strong></td><td class="hi">CodeBuddy</td><td>—</td><td>唯一支持企业VPC私有部署 + 国密合规</td></tr>
+      <tr><td><strong>CI/CD自动化流水线</strong></td><td class="hi">Claude Code</td><td>Trae Agent</td><td>GitHub Actions深度整合 + 容器化</td></tr>
+      <tr><td><strong>预算敏感 / 性价比优先</strong></td><td class="hi">Kimi CLI</td><td>Trae Agent (自备Key)</td><td>¥1-2/M token + 80.2% SWE-bench = 单位美元最多产出</td></tr>
+      <tr><td><strong>多模态需求（截图/视频→代码）</strong></td><td class="hi">Kimi CLI</td><td>Codex CLI</td><td>Kimi视频→代码独有 + Codex截图转代码</td></tr>
+      <tr><td><strong>离线/隐私敏感</strong></td><td class="hi">Trae Agent</td><td>—</td><td>唯一支持Ollama本地模型完全离线</td></tr>
+    </table>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>💡 组合策略（和老板现有生态最匹配）：</strong>
+    主力 → Kimi CLI（已有Kimi会员直接上手，中文最强，API最便宜）·
+    高难度重构 → 保留 Claude Code（API Key按量付费，已有配置不用动）·
+    轻量快速 → Codex CLI 补充（如有ChatGPT Plus订阅零成本多一个选择）<br>
+    <strong>月成本：¥50-100（Kimi会员）+ Claude API按量（¥50-100）≈ ¥100-200/月</strong>，覆盖深度+中文+轻量三种场景，避免重复订阅。
+  </div>
+</div>
+
+<!-- Section: 结论 -->
+<div class="sec reveal" id="verdict">
+  <h2>✅ 结论</h2>
+  <p class="sub">基于11个维度的综合评估</p>
+
+  <div class="card">
+    <h3>五款工具一人一句</h3>
+    <ul>
+      <li><strong>Claude Code</strong> — 能力天花板，大型代码库+CI/CD自动化首选，但成本高、中文弱、闭源</li>
+      <li><strong>Codex CLI</strong> — 开源轻量标杆，ChatGPT Plus订户零成本上手，适合日常轻量编码</li>
+      <li><strong>Kimi CLI</strong> — 中文性价比王，K2.6接近Claude Opus水平但API便宜10倍，已有Kimi会员直接上手</li>
+      <li><strong>CodeBuddy CLI</strong> — 腾讯生态专用，国内免费微信登录，国际版可"曲线救国"用Claude/Gemini</li>
+      <li><strong>Trae Agent CLI</strong> — 最灵活开源，不绑定任何模型，Ollama本地离线是隐私场景唯一解</li>
+    </ul>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>⚠️ 关键提醒：</strong>
+    · 不要被SWE-bench单指标迷惑——Kimi K2.6的80.2%虽接近Claude Opus的80.9%，但实际工程体验差距仍存在（尤其在复杂多文件重构场景）<br>
+    · CodeBuddy/Trae的SWE-bench取决于所选模型，产品自身无独立评分<br>
+    · 国产三款（Kimi/CodeBuddy/Trae）都在快速迭代中，半年后的格局可能完全不同<br>
+    · 闭源产品（Claude Code、CodeBuddy CLI）无法审计，代码隐私敏感场景选开源（Codex/Kimi/Trae）
+  </div>
+</div>
+
+<footer>
+  <p>调研时间：2026年6月14日 · 工具：秘塔AI搜索（6路搜索 + 5篇深度阅读 + 交叉验证）</p>
+  <p style="margin-top:4px">数据来源：Anthropic官方 · OpenAI GitHub · 月之暗面技术报告 · 腾讯云文档 · 字节跳动GitHub · 新浪科技 · juejin.cn · luomor.com · nxcode.io · fastgptplus.com</p>
+  <p style="margin-top:4px"><a href="https://github.com/andy-zokelink/xincheng-report">GitHub 仓库</a> · <a href="index.html">返回门户首页</a></p>
+</footer>
+
+<script>
+// ── Particle Network Background ──
+(function() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const PARTICLE_COUNT = 90;
+  const CONNECT_DIST = 160;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      r: Math.random() * 2 + 0.8,
+      o: Math.random() * 0.6 + 0.2
+    });
+  }
+
+  let mouseX = -100, mouseY = -100;
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX; mouseY = e.clientY;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -50 || p.x > w + 50) p.vx *= -1;
+      if (p.y < -50 || p.y > h + 50) p.vy *= -1;
+
+      const mdx = p.x - mouseX, mdy = p.y - mouseY;
+      const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+      if (mdist < 200) {
+        p.vx += (mdx / mdist) * 0.015;
+        p.vy += (mdy / mdist) * 0.015;
+      }
+      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (speed > 0.8) { p.vx *= 0.98; p.vy *= 0.98; }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(113,112,255,${Math.min(p.o + (mdist < 200 ? 0.3 : 0), 1)})`;
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECT_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(113,112,255,${0.1 * (1 - dist / CONNECT_DIST)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Mouse Glow Orb ──
+(function() {
+  const glow = document.getElementById('glow');
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', function(e) {
+    tx = e.clientX; ty = e.clientY;
+  });
+  function follow() {
+    cx += (tx - cx) * 0.06;
+    cy += (ty - cy) * 0.06;
+    glow.style.left = cx + 'px';
+    glow.style.top = cy + 'px';
+    requestAnimationFrame(follow);
+  }
+  follow();
+})();
+
+// ── Scroll Reveal ──
+(function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+})();
+
+// ── KPI Counter Animation ──
+(function() {
+  const animated = new Set();
+  const kpiObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !animated.has(entry.target)) {
+        animated.add(entry.target);
+        const valEl = entry.target.querySelector('.val');
+        if (!valEl) return;
+        const text = valEl.textContent.trim();
+        const num = parseFloat(text);
+        if (isNaN(num)) return;
+        const suffix = text.replace(/[0-9.]/g, '');
+        const duration = 1200;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = num * eased;
+          valEl.textContent = Number.isInteger(num) ? Math.round(current) + suffix : current.toFixed(1) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else valEl.textContent = text;
+        }
+        requestAnimationFrame(tick);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.kpi').forEach(function(el) { kpiObserver.observe(el); });
+})();
+
+// ── Radar: 多维度雷达图 ──
+(function() {
+  const ctx = document.getElementById('radarChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: ['代码能力', '开源可验证', '中文支持', '功能完整度', '生态成熟度', '性价比', '部署轻量', '模型灵活性'],
+      datasets: [
+        { label:'Claude Code', data:[10,3,4,10,10,4,7,3], borderColor:'#7170ff', backgroundColor:'rgba(113,112,255,0.1)', pointRadius:2 },
+        { label:'Codex CLI', data:[8,10,5,7,9,8,9,4], borderColor:'#27a644', backgroundColor:'rgba(39,166,68,0.1)', pointRadius:2 },
+        { label:'Kimi CLI', data:[9,8,10,7,5,9,7,4], borderColor:'#d2991d', backgroundColor:'rgba(210,153,29,0.1)', pointRadius:2 },
+        { label:'CodeBuddy CLI', data:[6,3,10,6,4,10,8,8], borderColor:'#8a8f98', backgroundColor:'rgba(138,143,152,0.1)', pointRadius:2 },
+        { label:'Trae Agent CLI', data:[6,10,9,6,3,10,8,10], borderColor:'#f85149', backgroundColor:'rgba(248,81,73,0.1)', pointRadius:2, borderDash:[4,4] },
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color:'#d0d6e0', font:{size:10}, padding:14, usePointStyle:true } },
+        title: { display:true, text:'8维度综合评分（基于调研数据）', color:'#8a8f98', font:{size:12}, padding:12 }
+      },
+      scales: {
+        r: {
+          beginAtZero: true, max:10, ticks: { stepSize:2, color:'#62666d', backdropColor:'transparent', font:{size:10} },
+          grid: { color:'rgba(255,255,255,0.06)' },
+          angleLines: { color:'rgba(255,255,255,0.06)' },
+          pointLabels: { color:'#8a8f98', font:{size:10} }
+        }
+      }
+    }
+  });
+})();
+
+// ── Bar: SWE-bench 对比 ──
+(function() {
+  const ctx = document.getElementById('barChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Claude Code\n(Opus 4.5)', 'Kimi CLI\n(K2.6)', 'Kimi CLI\n(K2.5)', 'Codex CLI\n(o4-mini)'],
+      datasets: [{
+        label: 'SWE-bench Verified',
+        data: [80.9, 80.2, 76.8, 69.1],
+        backgroundColor: ['rgba(113,112,255,0.7)', 'rgba(210,153,29,0.7)', 'rgba(210,153,29,0.4)', 'rgba(39,166,68,0.7)'],
+        borderColor: ['#7170ff', '#d2991d', '#d2991d', '#27a644'],
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display:true, text:'SWE-bench Verified 得分对比', color:'#8a8f98', font:{size:12}, padding:12 }
+      },
+      scales: {
+        y: { beginAtZero: true, max:100, ticks: { color:'#62666d', callback:v=>v+'%' }, grid:{color:'rgba(255,255,255,0.06)'} },
+        x: { ticks: { color:'#8a8f98', font:{size:10} }, grid:{display:false} }
+      }
+    }
+  });
+})();
+
+// ── Bar: GitHub Stars 对比 ──
+(function() {
+  const ctx = document.getElementById('scenarioChart');
+  if (!ctx) return;
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Claude Code', 'Codex CLI', 'Kimi CLI', 'Trae Agent CLI', 'CodeBuddy CLI'],
+      datasets: [{
+        label: 'GitHub Stars',
+        data: [124000, 82900, 4300, 2000, 0],
+        backgroundColor: ['rgba(113,112,255,0.7)', 'rgba(39,166,68,0.7)', 'rgba(210,153,29,0.7)', 'rgba(248,81,73,0.7)', 'rgba(138,143,152,0.5)'],
+        borderColor: ['#7170ff', '#27a644', '#d2991d', '#f85149', '#8a8f98'],
+        borderWidth: 1,
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: { display:true, text:'社区生态规模（GitHub Stars）', color:'#8a8f98', font:{size:12}, padding:12 }
+      },
+      scales: {
+        y: { beginAtZero: true, ticks: { color:'#62666d', callback:v=>(v/1000).toFixed(1)+'K' }, grid:{color:'rgba(255,255,255,0.06)'} },
+        x: { ticks: { color:'#8a8f98', font:{size:10} }, grid:{display:false} }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>

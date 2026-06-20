@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>基座大模型全景调研：面壁智能 + 国内外格局 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">🧠 大模型 · feishu</div><h1>基座大模型全景调研：面壁智能 + 国内外格局</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">80</div><div class="lbl">100+人，清北毕业占比</div></div><div class="kpi"><div class="val ">4</div><div class="lbl">2026年2月，**国产</div></div><div class="kpi"><div class="val ">85.7</div><div class="lbl">型占全球调用量TOP5的</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>团队特点</strong>：100+人，清北毕业占比80%，平均年龄28岁，出自清华大学自然语言处理实验室（THUNLP）。</div></div><div class="sec reveal" id="s-0"><h2>基座大模型全景调研：面壁智能 + 国内外格局</h2>
+<div class="card">
+<blockquote>调研时间：2026年5月29日 · 数据源：Metaso AI搜索</blockquote>
+<hr>
+</div>
+<div class="sec reveal" id="s-1"><h2>第一部分：面壁智能（ModelBest）深度调研</h2>
+<div class="acc"><div class="acc-hdr">一、公司概况</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">全称</td>
+<td class="">北京面壁智能科技有限责任公司</td>
+</tr>
+<tr>
+<td class="">成立</td>
+<td class="">2022年，北京</td>
+</tr>
+<tr>
+<td class="">官网</td>
+<td class="">modelbest.cn</td>
+</tr>
+<tr>
+<td class="">愿景</td>
+<td class="">"智周万物"——创造安全、普惠的通用AI</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="hi">以"高效"为第一性原理的端侧基座大模型公司</td>
+</tr>
+<tr>
+<td class="">融资</td>
+<td class="">累计超10亿元，2026年Q1跻身"基座大模型独角兽"</td>
+</tr>
+<tr>
+<td class="">荣誉</td>
+<td class="">2026年中关村论坛获颁"中国独角兽企业"</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">二、核心团队</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_7c43cf76"></canvas><div class="chart-label">背景 对比</div></div>
+<p><strong>团队特点</strong>：100+人，清北毕业占比80%，平均年龄28岁，出自清华大学自然语言处理实验室（THUNLP）。</p>
+</div>
+<div class="acc"><div class="acc-hdr">三、融资历程</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">时间</th>
+<th class="">轮次</th>
+<th class="">金额</th>
+<th class="">投资方</th>
+</tr>
+<tr>
+<td class="">2023.04</td>
+<td class="">天使轮</td>
+<td class="">数千万元</td>
+<td class="">知乎（领投）、智谱AI（跟投）</td>
+</tr>
+<tr>
+<td class="">2024.04</td>
+<td class="">A轮</td>
+<td class="">数亿元</td>
+<td class="">春华资本、哈勃投资、北京AI产业基金</td>
+</tr>
+<tr>
+<td class="">2025.05</td>
+<td class="">B轮</td>
+<td class="">数亿元</td>
+<td class="">洪泰基金、国中资本、茅台基金、清控金信</td>
+</tr>
+<tr>
+<td class="">2025.06</td>
+<td class="">B+轮</td>
+<td class="">数亿元</td>
+<td class="">龙芯创投、鼎晖百孚、中关村科学城基金</td>
+</tr>
+<tr>
+<td class="">2026 Q1</td>
+<td class="">新一轮</td>
+<td class="">数亿元</td>
+<td class="">深创投、汇川产投（领投），累计超10亿</td>
+</tr>
+<tr>
+<td class="">2026（预告）</td>
+<td class="">新一轮</td>
+<td class="">数亿元</td>
+<td class="">中国电信（领投）、中信金石、中信私募</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">四、核心技术：密度法则</div><div class="acc-body">
+<p>面壁智能最核心的技术理论——<strong>"密度法则"（Scaling Law of Model Density）</strong>：</p>
+<ul><li>大模型能力密度约 <strong>3.5个月翻一番</strong></li><li>推动行业从"拼规模"转向"拼密度"</li><li>2025年发表于《Nature Machine Intelligence》</li><li>核心逻辑：同等参数下性能更高、成本更低、功耗更低、速度更快</li></ul>
+</div>
+<div class="acc"><div class="acc-hdr">五、产品谱系：MiniCPM系列（"面壁小钢炮"）</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_3ceb91ac"></canvas><div class="chart-label">特点 对比</div></div>
+<p>覆盖0.5B\~9B参数，主打端侧部署：</p>
+<p><strong>关键数据</strong>：</p>
+<ul><li>GitHub + Hugging Face <strong>下载量超2400万</strong></li><li>GitHub <strong>3万+星标</strong></li><li>行业格局：<strong>"南Qwen，北面壁"</strong></li><li>推理成本：170万tokens仅1元（CPU推理，骁龙855），是GPT-4的1/4700</li></ul>
+</div>
+<div class="acc"><div class="acc-hdr">六、开源政策（OpenBMB）</div><div class="acc-body">
+<ul><li>2024年6月起：MiniCPM全系<strong>免费商用</strong></li><li>协议：Apache 2.0 + 《MiniCPM社区许可协议》</li><li>开源社区OpenBMB（github.com/OpenBMB）：</li></ul>
+<ul><li>MiniCPM（旗舰）、CPM.cu（CUDA推理）、ChatDev（多智能体协作）</li><li>AgentCPM-GUI（Android端GUI代理）、OlympiadBench（ACL 2024基准）</li><li>2022年由清华NLP实验室与智源联合发起</li></ul>
+</div>
+<div class="acc"><div class="acc-hdr">七、商业化落地</div><div class="acc-body">
+<p><strong>行业布局</strong>：汽车 / 手机 / PC / 智能家居</p>
+<p><strong>合作伙伴</strong>：</p>
+<ul><li>吉利、长安、大众（智能座舱）</li><li>华为、联想、英特尔（端侧AI）</li><li>华为云、百度智能云（云服务）</li></ul>
+<p><strong>硬件布局</strong>：</p>
+<ul><li>松果派开发板</li><li>EdgeClaw Box（边缘AI盒子）</li><li>计划2026年年中推出独立硬件产品</li></ul>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-2"><h2>第二部分：国际基座大模型格局</h2>
+<div class="card"><h3>一、国际第一梯队（三强鼎立）</h3>
+<div class="chart-wrap"><canvas id="chart_c4d15446"></canvas><div class="chart-label">多维度对比</div></div><div class="chart-wrap"><canvas id="chart_bc18306e"></canvas><div class="chart-label">多维度对比</div></div><div class="chart-wrap"><canvas id="chart_cb1bbc9f"></canvas><div class="chart-label">多维度对比</div></div>
+<p><strong>能力特点</strong>：</p>
+<ul><li>全能均衡、生态最成熟（ChatGPT+API+插件）</li><li>编程：SWE-bench Verified 74.9%</li><li>推理：AIME 2025 94.6%</li><li>多模态：MMMU 84.2%</li><li>数学推理准确率96.2%</li><li>上下文200万tokens</li></ul>
+<p><strong>能力特点</strong>：</p>
+<ul><li><strong>编码冠军</strong>：SWE-bench Verified 80.8%（行业最高之一）</li><li>Terminal-Bench 2.0领先</li><li>低幻觉、安全合规最强，适合金融/法律</li><li>高效文档分析，超长上下文处理</li></ul>
+<p><strong>能力特点</strong>：</p>
+<ul><li>原生多模态（视频/3D/图像），多模态理解93分</li><li>13/16基准测试领先（Gemini 3.1）</li><li>1M\~2M超长上下文</li><li>实时Google搜索集成</li><li>视频处理、跨境能力顶尖</li></ul>
+</div>
+<div class="card"><h3>二、国际第二梯队</h3>
+<div class="chart-wrap"><canvas id="chart_73ace943"></canvas><div class="chart-label">特点 对比</div></div>
+<ul><li>开源、免费、可定制</li><li>适合数据隐私敏感场景</li><li>多语言生态好</li><li>地端部署，无API费用</li></ul>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">版本</th>
+<th class="">特点</th>
+</tr>
+<tr>
+<td class="">Mistral Large 2</td>
+<td class="">强推理能力</td>
+</tr>
+<tr>
+<td class="">Mistral Small 3.1</td>
+<td class="">轻量高效</td>
+</tr>
+</table></div>
+<ul><li>法国团队，欧洲最强</li><li>开源策略灵活</li></ul>
+<ul><li>实时信息，低延迟</li><li>\$3/1M输入，\$15/1M输出</li><li>马斯克团队出品</li></ul>
+</div>
+<div class="card"><h3>三、国际总格局</h3>
+<p>2026年国际TOP10模型排名：</p>
+<p>1. <strong>Gemini 3.1 Pro</strong>（Google）—— 多模态/长上下文王者（94.6分） 2. <strong>Claude Opus 4.6</strong>（Anthropic）—— 深度推理/低幻觉（90.8分） 3. <strong>GPT-5.4</strong>（OpenAI）—— 全能均衡/生态成熟（92.5分） 4. <strong>GPT-5.2</strong>（OpenAI）—— 性价比次旗舰 5. <strong>Grok 4.1</strong>（xAI）—— 实时信息 6. <strong>Llama 4</strong>（Meta）—— 开源代表 7. <strong>Mistral Large 2</strong> —— 欧洲最强开源</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-3"><h2>第三部分：国内基座大模型格局</h2>
+<div class="card"><h3>一、2026年国产第一梯队</h3>
+<div class="chart-wrap"><canvas id="chart_e59ced33"></canvas><div class="chart-label">内容 对比</div></div><div class="chart-wrap"><canvas id="chart_34c0c052"></canvas><div class="chart-label">内容 对比</div></div><div class="chart-wrap"><canvas id="chart_8ea25540"></canvas><div class="chart-label">内容 对比</div></div><div class="chart-wrap"><canvas id="chart_a74ffe34"></canvas><div class="chart-label">内容 对比</div></div><div class="chart-wrap"><canvas id="chart_13506663"></canvas><div class="chart-label">内容 对比</div></div>
+<p>2026年格局：<strong>"三足鼎立"+"五强争霸"</strong></p>
+<p><strong>关键词</strong>：开源封神、代码屠榜、极致性价比、MIT协议最开放</p>
+<p><strong>关键词</strong>：开源最完善、多模态均衡、企业部署首选</p>
+<p><strong>关键词</strong>：开源天花板、Agent能力强、安全合规拉满</p>
+<p><strong>关键词</strong>：长文本定义者、Agent集群协同、办公自动化</p>
+<p><strong>关键词</strong>：性价比之王、速度最快、C端体验佳</p>
+</div>
+<div class="card"><h3>二、国产第二梯队</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">项目</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">特点</td>
+<td class="hi">中文理解顶尖，具身智能领先</td>
+</tr>
+<tr>
+<td class="">全球月活</td>
+<td class=""><strong>1.2亿+</strong></td>
+</tr>
+<tr>
+<td class="">多模态</td>
+<td class="">语音体验极佳</td>
+</tr>
+</table></div>
+<p><strong>关键词</strong>：移动端霸主、中文理解第一、用户量最大</p>
+<ul><li>知识图谱融合，中文理解与生成优秀</li><li>专业领域处理能力强</li><li>联动AI搜索，实时问答精准</li><li>综合得分约85.8分</li></ul>
+<ul><li>语音识别与合成能力全国领先</li><li>教育/办公场景深度结合</li><li>超拟人数字人</li></ul>
+<ul><li>深度融入微信生态</li><li>多模态能力</li><li>内容生态丰富</li></ul>
+<ul><li>医疗等垂直领域表现出色</li></ul>
+<ul><li>中英双语处理强</li><li>开源生态</li></ul>
+<ul><li>阶跃星辰 Step Audio R1.1（语音能力全球第一，已落地4200万台手机）</li><li>华为盘古（行业定制）</li><li>商汤 SenseNova-MARS（动态视觉推理）</li><li>昆仑万维天工（音乐生成+搜索增强）</li><li>上海AI Lab InternLM / 书生·浦语（开源）</li></ul>
+</div>
+<div class="card"><h3>三、国产大模型综合得分排名（2026年）</h3>
+<div class="chart-wrap"><canvas id="chart_4db2216a"></canvas><div class="chart-label">多维度对比</div></div>
+</div>
+<div class="card"><h3>四、国产模型调用量排名（全球）</h3>
+<p>2026年2月，<strong>国产4款模型占全球调用量TOP5的85.7%</strong>：</p>
+<p>1. MiniMax M2.5 2. Kimi K2.5 3. GLM-5 4. DeepSeek V3.2/V4 5. （美国模型）</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-4"><h2>第四部分：国际 vs 国产 多维交叉对比</h2>
+<div class="acc"><div class="acc-hdr">一、参数规模对比</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_c765eba3"></canvas><div class="chart-label">多维度对比</div></div>
+</div>
+<div class="acc"><div class="acc-hdr">二、上下文窗口对比</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_208b749b"></canvas><div class="chart-label">上下文窗口 对比</div></div>
+</div>
+<div class="acc"><div class="acc-hdr">三、API价格对比（每百万token，2026年）</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_7505fb59"></canvas><div class="chart-label">多维度对比</div></div>
+</div>
+<div class="acc"><div class="acc-hdr">四、核心能力雷达对比</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">能力维度</th>
+<th class="">GPT-5</th>
+<th class="">Claude</th>
+<th class="">Gemini</th>
+<th class="">DeepSeek</th>
+<th class="">通义千问</th>
+<th class="">GLM-5</th>
+<th class="">Kimi</th>
+<th class="">MiniMax</th>
+</tr>
+<tr>
+<td class="">代码能力</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+</tr>
+<tr>
+<td class="">数学推理</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★</td>
+</tr>
+<tr>
+<td class="">长文本</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+</tr>
+<tr>
+<td class="">多模态</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+</tr>
+<tr>
+<td class="">中文理解</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+</tr>
+<tr>
+<td class="gr">性价比</td>
+<td class="">★★★</td>
+<td class="">★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+</tr>
+<tr>
+<td class="">安全合规</td>
+<td class="">★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★</td>
+<td class="">★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★</td>
+<td class="">★★</td>
+</tr>
+<tr>
+<td class="">Agent能力</td>
+<td class="">★★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★★★</td>
+<td class="">★★★</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">五、综合实力排行榜（2026年5月）</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_546a7276"></canvas><div class="chart-label">多维度对比</div></div>
+<p><strong>国际+国产TOP排名</strong>：</p>
+</div>
+<div class="acc"><div class="acc-hdr">六、关键趋势判断</div><div class="acc-body">
+<p>1. <strong>中美差距缩小</strong>：国产模型在中文处理、速度、成本和合规方面已具明显优势 2. <strong>开源阵营</strong>：国产模型称霸，TOP10开源模型中国占8席 3. <strong>MoE成为主流架构</strong>：几乎所有新模型均采用MoE稀疏架构 4. <strong>长上下文成标配</strong>：百万token上下文窗口将普及 5. <strong>AI Agent成为标配</strong>：2026年所有旗舰模型均强化Agent能力 6. <strong>价格战白热化</strong>：DeepSeek V4 Flash仅\$0.14/M输入，是GPT-5.5的1/70 7. <strong>端侧是大趋势</strong>：面壁智能、MiniMax等专注端侧轻量路线 8. <strong>模型能力趋同</strong>：顶级模型之间的差距在缩小，选择越来越取决于价格和场景特化</p>
+</div>
+<div class="acc"><div class="acc-hdr">七、面壁智能在全局中的位置</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">面壁定位</th>
+</tr>
+<tr>
+<td class="">路线</td>
+<td class=""><strong>端侧高效小模型</strong>（非云端大参数竞赛）</td>
+</tr>
+<tr>
+<td class="">差异化核心</td>
+<td class=""><strong>密度法则</strong>——理论创新，行业共识推动者</td>
+</tr>
+<tr>
+<td class="">参数规模</td>
+<td class="">0.5B\~9B（远小于云端大模型的230B\~1.6T）</td>
+</tr>
+<tr>
+<td class="">优势场景</td>
+<td class="">汽车座舱/手机/IoT/边缘计算</td>
+</tr>
+<tr>
+<td class="">开源影响力</td>
+<td class=""><strong>"南Qwen，北面壁"</strong>（2400万下载量）</td>
+</tr>
+<tr>
+<td class="">与中科领创关联</td>
+<td class="">AIoT智能硬件场景高度匹配，可关注端侧合作可能</td>
+</tr>
+</table></div>
+</div>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/TzmKdTBqqo7ViqxNZr6cZ9vinbb" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+<script>new Chart(document.getElementById("chart_7c43cf76"),{type:"bar",data:{labels:["CEO", "联合创始人/首席科学家", "董事/CTO", "技术副总裁"],datasets:[{label:"背景",data:[0, 20069000.0, 26.0, 0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"背景 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_3ceb91ac"),{type:"bar",data:{labels:["MiniCPM（语言）", "MiniCPM-V（多模态）", "MiniCPM-o 4.5", "MiniCPM-SALA", "MiniCPM-1.2B"],datasets:[{label:"特点",data:[27.0, 2.0, 0, 0, 1225415100000000.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"特点 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_c4d15446"),{type:"radar",data:{labels:["输入价格", "输出价格", "上下文"],datasets:[{label:"GPT-5.4",data:[2.501, 12.0, 1.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"GPT-5.2",data:[1.751, 141.0, 400.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"GPT-5.4 Mini",data:[0.401, 1.601, 0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"GPT-5.4 Turb",data:[101.0, 301.0, 128.0],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_bc18306e"),{type:"radar",data:{labels:["输入价格", "输出价格", "上下文"],datasets:[{label:"Opus 4.6",data:[41.0, 201.0, 2001.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"Sonnet 4.6",data:[1.501, 7.501, 200.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"Haiku 4",data:[0.251, 1.251, 200.0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_cb1bbc9f"),{type:"radar",data:{labels:["输入价格", "输出价格", "上下文"],datasets:[{label:"Gemini 3.1 P",data:[21.0, 7.0, 12.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"Gemini 2.5 F",data:[0.101, 0.401, 400.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_73ace943"),{type:"bar",data:{labels:["Llama 4 Maveric", "Llama 4 Scout"],datasets:[{label:"特点",data:[400.0, 0],backgroundColor:["#7170ff", "#27a644"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"特点 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_e59ced33"),{type:"bar",data:{labels:["总参数", "激活参数", "上下文", "架构", "开源协议", "输入价格", "SWE-bench", "LiveCodeBench", "SuperCLUE", "长文本召回率", "价格对比"],datasets:[{label:"内容",data:[1.6, 494.0, 1.0, 0, 0, 101400.0, 804.6, 93.5, 70.98, 3.245497, 0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c", "#7170ff", "#27a644", "#d2991d"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内容 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_34c0c052"),{type:"bar",data:{labels:["总参数", "激活参数", "上下文", "开源协议", "特点", "多模态", "输入价格"],datasets:[{label:"内容",data:[397.0, 17.0, 1.0, 2.0, 0, 0, 82560000.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内容 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_8ea25540"),{type:"bar",data:{labels:["总参数", "激活参数", "上下文", "开源协议", "特点", "SWE-bench", "输入价格", "国际排名"],datasets:[{label:"内容",data:[744.0, 32.0, 200.0, 0, 0, 80.0, 40000.0, 20264.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内容 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_a74ffe34"),{type:"bar",data:{labels:["总参数", "激活参数", "上下文", "开源协议", "特点", "HLE", "输入价格"],datasets:[{label:"内容",data:[1.04, 32.0, 256.0, 0, 0, 0, 40000.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内容 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_13506663"),{type:"bar",data:{labels:["总参数", "激活参数", "上下文", "特点", "输入价格", "调用量"],datasets:[{label:"内容",data:[230.0, 10.0, 205.0, 100.0, 21000.0, 12026254.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内容 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_4db2216a"),{type:"radar",data:{labels:["模型", "综合得分"],datasets:[{label:"1",data:[4.0, 70.98],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"2",data:[2.0, 0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"3",data:[0, 90.5],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"4",data:[3.0, 89.7],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2},{label:"5",data:[2.5, 88.9],borderColor:"#39c5cf",backgroundColor:"#39c5cf33",pointRadius:2,borderWidth:2},{label:"6",data:[2.5, 0],borderColor:"#8a8f98",backgroundColor:"#8a8f9833",pointRadius:2,borderWidth:2},{label:"7",data:[4.5, 85.8],borderColor:"#e07b4c",backgroundColor:"#e07b4c33",pointRadius:2,borderWidth:2},{label:"8",data:[4.0, 83.2],borderColor:"#6bcd5c",backgroundColor:"#6bcd5c33",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_c765eba3"),{type:"radar",data:{labels:["总参数", "激活参数"],datasets:[{label:"**DeepSeek V",data:[1.6, 49.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"Kimi K2.5",data:[1.04, 32.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"GLM-5",data:[744.0, 40.0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"Qwen3.5-Max",data:[397.0, 17.0],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2},{label:"MiniMax M2.5",data:[230.0, 10.0],borderColor:"#39c5cf",backgroundColor:"#39c5cf33",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_208b749b"),{type:"bar",data:{labels:["Gemini 3.1 Pro", "GPT-5.4", "DeepSeek V4", "Qwen3.5-Plus", "Claude Opus 4.6", "Kimi K2.5", "GLM-5", "MiniMax M2.5", "Llama 4"],datasets:[{label:"上下文窗口",data:[1.0, 1.0, 1.0, 0, 2001.0, 256.0, 200.0, 205.0, 128.0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c", "#7170ff"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"上下文窗口 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_7505fb59"),{type:"radar",data:{labels:["输入价格", "输出价格", "性价比评级"],datasets:[{label:"Gemini 2.5 F",data:[0.1, 0.4, 0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"DeepSeek V4",data:[0.14, 0.5, 0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"GPT-5.4 Mini",data:[0.4, 1.6, 0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"MiniMax M2.5",data:[2.1, 8.4, 0],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2},{label:"GPT-5.4",data:[2.5, 12.0, 0],borderColor:"#39c5cf",backgroundColor:"#39c5cf33",pointRadius:2,borderWidth:2},{label:"Gemini 3.1 P",data:[2.0, 7.0, 0],borderColor:"#8a8f98",backgroundColor:"#8a8f9833",pointRadius:2,borderWidth:2},{label:"Claude Sonne",data:[1.5, 7.5, 0],borderColor:"#e07b4c",backgroundColor:"#e07b4c33",pointRadius:2,borderWidth:2},{label:"Kimi K2.5",data:[4.0, 21.0, 0],borderColor:"#6bcd5c",backgroundColor:"#6bcd5c33",pointRadius:2,borderWidth:2},{label:"GLM-5",data:[4.0, 22.0, 0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"Claude Opus ",data:[4.0, 20.0, 0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_546a7276"),{type:"radar",data:{labels:["模型", "综合得分"],datasets:[{label:"1",data:[3.1, 94.6],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"2",data:[0, 92.5],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"3",data:[4.6, 90.8],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"4",data:[3.5, 89.7],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2},{label:"5",data:[4.1, 0],borderColor:"#39c5cf",backgroundColor:"#39c5cf33",pointRadius:2,borderWidth:2},{label:"6",data:[4.0, 70.98],borderColor:"#8a8f98",backgroundColor:"#8a8f9833",pointRadius:2,borderWidth:2},{label:"7",data:[2.0, 0],borderColor:"#e07b4c",backgroundColor:"#e07b4c33",pointRadius:2,borderWidth:2},{label:"8",data:[0, 90.5],borderColor:"#6bcd5c",backgroundColor:"#6bcd5c33",pointRadius:2,borderWidth:2},{label:"9",data:[2.5, 88.9],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"10",data:[4.0, 0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"11",data:[2.5, 0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"12",data:[2.0, 0],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});</script>
+</body>
+</html>

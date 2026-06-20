@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI编程组合横向对比：Hermes vs Kimi Code CLI · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">🤖 AI工具 · feishu</div><h1>AI编程组合横向对比：Hermes vs Kimi Code CLI</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">68</div><div class="lbl">持15+平台、6种后端、</div></div><div class="kpi"><div class="val ">100</div><div class="lbl">de）· 高频控优先级（</div></div><div class="kpi"><div class="val ">４9</div><div class="lbl">i Code会员计费**</div></div><div class="kpi"><div class="val ">49</div><div class="lbl">· 低频使用（<每月等价</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong>对于已有Hermes+K2.6的用户，<strong>Hermes继续使用即可</strong>，无需购买Kimi Code订阅。Kimi Code CLI仅在需要"专属编程优化"或"与Kimi生态深度融合"时有价值。</div></div><div class="sec reveal" id="s-0"><h2>交叉调研报告：三种AI编程组合横向对比</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-30 | 对象类型：AI编程工具 | 调研人：阿爪</blockquote>
+</div>
+<div class="sec reveal" id="s-1"><h2>一句话结论</h2>
+<div class="card">
+<p>对于已有Hermes+K2.6的用户，<strong>Hermes继续使用即可</strong>，无需购买Kimi Code订阅。Kimi Code CLI仅在需要"专属编程优化"或"与Kimi生态深度融合"时有价值。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>各组合速览</h2>
+<div class="card"><h3>组合1：Hermes + K2.6（开放平台API）</h3>
+<p><strong>一句话定位</strong>：通用Agent调度框架 + 按量付费API，已有完整工具链</p>
+<p><strong>Hermes Agent是什么</strong>：· NousResearch开发的开源AI Agent框架，47,000+ Stars· 定位为"会成长的Agent"，支持跨会话记忆沉淀、Skills自动生成· 支持15+平台、6种后端、68个工具</p>
+<p><strong>K2.6接入方式</strong>：· 通过Hermes配置文件直连Kimi开放平台API· Base URL: <code>https://api.moonshot.cn/v1</code>· 按量付费，输入\$0.60/百万tokens，输出\$2.50/百万tokens</p>
+<hr>
+</div>
+<div class="card"><h3>组合2：Kimi Code CLI + K2.6（开放平台API）</h3>
+<p><strong>一句话定位</strong>：Kimi官方编程Agent + 按量付费API，工具链完整但受限制</p>
+<p><strong>Kimi Code CLI是什么</strong>：· Moonshot出品的编程专用Agent CLI· 内置工具：Read/Write/Bash/SearchWeb/FetchURL/Spawn· 支持MCP协议扩展</p>
+<p><strong>使用限制</strong>：· 开放平台API不能直接用于Kimi Code CLI· 需要在config.toml中配置开放平台的base_url和api_key· 部分功能可能受限（如非官方渠道可能触发风控）</p>
+<hr>
+</div>
+<div class="card"><h3>组合3：Kimi Code CLI + kimi-for-coding（会员订阅）</h3>
+<div class="chart-wrap"><canvas id="chart_cac85046"></canvas><div class="chart-label">多维度对比</div></div>
+<p><strong>一句话定位</strong>：Kimi官方编程Agent + 会员权益，专属优化但有限制</p>
+<p><strong>Kimi Code会员是什么</strong>：· Kimi会员体系的子功能，不单独售卖· 会员费包含Kimi Code额度使用权</p>
+<p><strong>会员档位</strong>：</p>
+<p><strong>会员专属功能</strong>：· 视频输入（Video2Code）· 高频控优先级（100 tokens/s）· Agent集群（高档位）· 与Kimi主站额度共享（共用限额）</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-3"><h2>横向对比表</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">Hermes+K2.6</th>
+<th class="">Kimi CLI+开放平台</th>
+<th class="">Kimi CLI+订阅</th>
+<th class="">赢家</th>
+</tr>
+<tr>
+<td class=""><strong>工具链完整性</strong></td>
+<td class="">★★★★★ 68工具</td>
+<td class="">★★★★☆ 6核心工具</td>
+<td class="">★★★★☆ 同左</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>工具类型</strong></td>
+<td class="">终端+文件+浏览器+Web+MCP</td>
+<td class="">终端+文件+Web+Spawn</td>
+<td class="">同左</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>模型调用</strong></td>
+<td class="">API直连</td>
+<td class="">API直连（受限）</td>
+<td class="">OAuth/会员API</td>
+<td class="">平手</td>
+</tr>
+<tr>
+<td class=""><strong>成本结构</strong></td>
+<td class="">按量付费</td>
+<td class="">按量付费</td>
+<td class="">固定订阅</td>
+<td class="">看用量</td>
+</tr>
+<tr>
+<td class=""><strong>额度限制</strong></td>
+<td class="">看余额</td>
+<td class="">看余额</td>
+<td class="">5小时滚动300-1200次</td>
+<td class="hi">开放平台✅</td>
+</tr>
+<tr>
+<td class=""><strong>并发能力</strong></td>
+<td class="">无限制</td>
+<td class="">无限制</td>
+<td class="hi">最高30并发</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>灵活性</strong></td>
+<td class="">★★★★★ 高度可定制</td>
+<td class="">★★★☆☆ 受限于框架</td>
+<td class="">★★☆☆☆ 锁定Kimi</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>与现有流程配合</strong></td>
+<td class="">★★★★★ 无缝衔接</td>
+<td class="">★★★☆☆ 需适配</td>
+<td class="">★★★☆☆ 需适配</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>记忆持久化</strong></td>
+<td class="">★★★★★ 跨会话记忆</td>
+<td class="">★★★☆☆ 会话级</td>
+<td class="">★★★☆☆ 会话级</td>
+<td class="hi">Hermes✅</td>
+</tr>
+<tr>
+<td class=""><strong>中文支持</strong></td>
+<td class="">依赖模型</td>
+<td class="">优化中文</td>
+<td class="">优化中文</td>
+<td class="hi">Kimi✅</td>
+</tr>
+<tr>
+<td class=""><strong>多模型切换</strong></td>
+<td class="">★★★★★ 200+模型</td>
+<td class="">★☆☆☆☆ 仅Kimi</td>
+<td class="">★☆☆☆☆ 仅Kimi</td>
+<td class="hi">Hermes✅</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-4"><h2>核心差异分析</h2>
+<div class="card"><h3>1. 工具链完整性</h3>
+<div class="chart-wrap"><canvas id="chart_4efa22fc"></canvas><div class="chart-label">内置工具 对比</div></div>
+<p><strong>判断</strong>：Hermes工具链更完善，特别是浏览器自动化、多媒体处理、任务管理等高级功能。</p>
+</div>
+<div class="card"><h3>2. 成本对比</h3>
+<p><strong>开放平台API计费</strong>（Hermes和Kimi CLI通用）：· 输入：\$0.60/百万tokens· 输出：\$2.50/百万tokens· 无固定月费，用多少花多少</p>
+<p><strong>Kimi Code会员计费</strong>４9元/月起（Andante档）· 包含额度，但与Kimi主站共用· 如果主站用完，Kimi Code也受限</p>
+<p><strong>结论</strong>：· 低频使用（<每月等价49元消耗）：开放平台更划算· 中高频使用：需要根据实际消耗计算，会员可能更划算（如果不受限额共享影响）</p>
+</div>
+<div class="card"><h3>3. 限制与风险</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">组合</th>
+<th class="">主要限制</th>
+<th class="">风险等级</th>
+</tr>
+<tr>
+<td class="">Hermes+K2.6</td>
+<td class="">需自己配置和维护</td>
+<td class="">低</td>
+</tr>
+<tr>
+<td class="">Kimi CLI+开放平台</td>
+<td class="">API不是专为CLI设计，可能触发风控</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">Kimi CLI+订阅</td>
+<td class="">与主站额度共享、额度不透明、模型锁定</td>
+<td class="">中</td>
+</tr>
+</table></div>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-5"><h2>模型能力对比</h2>
+<div class="card">
+<div class="chart-wrap"><canvas id="chart_7b671102"></canvas><div class="chart-label">上下文窗口 对比</div></div>
+<p><strong>重要说明</strong>：三个组合的底层模型实质是同一个（K2.6），差异在于调用方式和系统提示词优化。</p>
+<p><strong>实际差异</strong>：· <code>kimi-for-coding</code>可能针对编程场景有微调优化（代码理解、工具调用格式）· 但底层能力（推理、生成）相同· Hermes可以通过Skills和配置文件自定义编程优化</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-6"><h2>场景推荐</h2>
+<div class="card">
+<div class="chart-wrap"><canvas id="chart_269c95fc"></canvas><div class="chart-label">推荐组合 对比</div></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-7"><h2>核心争论与不同观点</h2>
+<div class="card"><h3>观点1：Kimi Code值得订阅吗？</h3>
+<p><strong>正方</strong>（推荐）：· 专为编程优化，体验更流畅· 视频输入等专属功能实用· 高频控优先级，高峰无阻塞</p>
+<p><strong>反方</strong>（质疑）：· 额度与主站共享，用完主站Kimi Code也停止· 额度计算不透明，"黑箱"操作· 高额使用下，按量付费可能更划算</p>
+<p><strong>我的判断</strong>：· 对于已有Hermes的用户，<strong>Kimi Code会员价值有限</strong>· 唯一吸引力：视频输入（如果需要）· 无此需求时，继续用Hermes+K2.6</p>
+</div>
+<div class="card"><h3>观点2：工具链完整性vs专业性</h3>
+<p><strong>不同观点</strong>：· Hermes工具多但"杂"，Kimi CLI工具少但"精"· Hermes是"百宝箱"，Kimi CLI是"专用工具"</p>
+<p><strong>我的判断</strong>：· 对于已有Hermes用户，多出的工具是资产而非负担· 完整工具链带来的灵活性更有价值</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-8"><h2>连接性分析</h2>
+<div class="card">
+<p><strong>与中科领创业务的关联</strong>：</p>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">业务场景</th>
+<th class="">Hermes+K2.6</th>
+<th class="">Kimi CLI+订阅</th>
+</tr>
+<tr>
+<td class="">AIoT方案开发</td>
+<td class="hi">✅ 多工具支持全流程</td>
+<td class="">⚠️ 仅编程部分</td>
+</tr>
+<tr>
+<td class="">协作沟通</td>
+<td class="hi">✅ 飞书/微信接入</td>
+<td class="">❌ 终端单机</td>
+</tr>
+<tr>
+<td class="">多模型试验</td>
+<td class="hi">✅ 200+模型</td>
+<td class="">❌ 锁定Kimi</td>
+</tr>
+<tr>
+<td class="">代码生成</td>
+<td class="hi">✅ 双方都支持</td>
+<td class="hi">✅ 可能更优</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-9"><h2>综合判断</h2>
+<div class="card"><h3>对于当前用户（已有Hermes+K2.6）</h3>
+<p><strong>建议</strong>：<strong>继续使用Hermes+K2.6，暂不购买Kimi Code会员</strong></p>
+<p><strong>理由</strong>：</p>
+<p>1. 工具链已完整，无需重复投资 2. 灵活性更高，支持多模型、多平台 3. 按量付费更透明，无固定成本 4. 与现有流程无缝衔接</p>
+<p><strong>什么时候考虑Kimi Code</strong>：</p>
+<p>1. 明确需要"视频转代码"功能 2. 需要与Kimi生态深度整合（如Kimi控制台统一管理） 3. Hermes满足不了的编程场景（尝试后发现Kimi更好） 4. 月度使用量超过49元，会员更划算</p>
+</div>
+<div class="card"><h3>三种组合最终推荐</h3>
+<div class="chart-wrap"><canvas id="chart_2c616915"></canvas><div class="chart-label">推荐组合 对比</div></div>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-10"><h2>风险提示</h2>
+<div class="card">
+<p>1. <strong>Kimi Code额度不透明</strong>：多位用户反馈额度计算"黑箱"，实际使用不可控 2. <strong>Kimi CLI+开放平台风控风险</strong>：非官方渠道可能触发封号 3. <strong>Hermes学习成本</strong>：功能强大但需要一定学习成本 4. <strong>信源局限</strong>：部分用户评价来自社区/GitHub，可能有偏差</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-11"><h2>下一步动作</h2>
+<div class="card">
+<p>1. 继续使用Hermes+K2.6现有配置 2. 如需要视频输入功能，可购义Kimi会员Andante档体验（49元/月） 3. 定期评估使用量，如月度消耗>49元再考虑会员 4. 关注Kimi Code更新，优化后可再次评估</p>
+<hr>
+<p><strong>报告完成</strong></p>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/O1KGdYVCCoFwFvxNraoc9pY6nbg" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+<script>new Chart(document.getElementById("chart_cac85046"),{type:"radar",data:{labels:["月费", "Kimi Code额"],datasets:[{label:"Andante",data:[49.0, 1.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"Moderato",data:[99.0, 4.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"Allegretto",data:[199.0, 20.0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"Allegro",data:[699.0, 60.0],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_4efa22fc"),{type:"bar",data:{labels:["Hermes+K2.6", "Kimi CLI"],datasets:[{label:"内置工具",data:[68.0, 6.0],backgroundColor:["#7170ff", "#27a644"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"内置工具 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_7b671102"),{type:"bar",data:{labels:["Hermes+K2.6", "Kimi CLI+开放平台", "Kimi CLI+订阅"],datasets:[{label:"上下文窗口",data:[256.0, 256.0, 256.0],backgroundColor:["#7170ff", "#27a644", "#d2991d"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"上下文窗口 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_269c95fc"),{type:"bar",data:{labels:["已有Hermes环境", "单纯编程任务", "需要视频输入", "需要多Agent并行", "多模型需求", "跨平台协作", "低预算/轻度使用", "高频编程使用"],datasets:[{label:"推荐组合",data:[2.6, 0, 0, 0, 2.6, 2.6, 2.6, 0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"推荐组合 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});
+new Chart(document.getElementById("chart_2c616915"),{type:"bar",data:{labels:["新手/无现有框架", "专业开发者", "已有Hermes", "企业/团队"],datasets:[{label:"推荐组合",data:[0, 0, 2.6, 2.6],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"推荐组合 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});</script>
+</body>
+</html>

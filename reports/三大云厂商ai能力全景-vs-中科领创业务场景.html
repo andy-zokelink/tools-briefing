@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三大云厂商AI能力全景 vs 中科领创业务场景 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">☁️ 云服务 · feishu</div><h1>三大云厂商AI能力全景 vs 中科领创业务场景</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">43</div><div class="lbl">✅ MCP工具链完整，</div></div><div class="kpi"><div class="val ">97.5</div><div class="lbl">音能力强**——声音复刻</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>三家云CLI的本质不是"工具"，而是各自AI能力的"能力发现入口"和"服务聚合目录"。</strong> 阿里百炼CLI能力最全（150+模型+MCP市场），腾讯CloudBase偏开发者生态（小程序/网站一键部署），火山veCLI偏多模态创作（豆包+即梦）。对中科领创而言，装它们不是"为了用CLI"，而是通过CLI快速了解各家能做什么、多少钱，再做决策——这个思路是对的。</div></div><div class="sec reveal" id="s-0"><h2>交叉调研报告：三大云厂商AI能力全景 vs 中科领创业务需求</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-29 | 对象类型：工具/平台能力 | 调研人：阿爪调研模式：多对象交叉研究（metaso-research skill v2.2.0）· xhighest推理强度</blockquote>
+<hr>
+</div>
+<div class="sec reveal" id="s-1"><h2>📌 一句话结论</h2>
+<div class="card">
+<p><strong>三家云CLI的本质不是"工具"，而是各自AI能力的"能力发现入口"和"服务聚合目录"。</strong> 阿里百炼CLI能力最全（150+模型+MCP市场），腾讯CloudBase偏开发者生态（小程序/网站一键部署），火山veCLI偏多模态创作（豆包+即梦）。对中科领创而言，装它们不是"为了用CLI"，而是通过CLI快速了解各家能做什么、多少钱，再做决策——这个思路是对的。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>对比框架</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">你的业务场景</th>
+<th class="">判断标准</th>
+</tr>
+<tr>
+<td class="">① 生图</td>
+<td class="">产品图/营销海报/宣传素材</td>
+<td class="">模型质量+中文能力+编辑能力</td>
+</tr>
+<tr>
+<td class="">② 生视频</td>
+<td class="">公司宣传片/产品演示</td>
+<td class="">视频质量+多镜头+时长</td>
+</tr>
+<tr>
+<td class="">③ PPT/文档</td>
+<td class="">商业计划书/方案汇报</td>
+<td class="">生成质量+数字人+声音复刻</td>
+</tr>
+<tr>
+<td class="">④ 语音</td>
+<td class="">智能客服/语音播报/声音复刻</td>
+<td class="">音色数量+情感控制+实时性</td>
+</tr>
+<tr>
+<td class="">⑤ 小程序/网站</td>
+<td class="">公司官网/客户展示系统</td>
+<td class="">一键生成+部署+托管</td>
+</tr>
+<tr>
+<td class="">⑥ 复杂系统</td>
+<td class="">供应链管理/客户系统</td>
+<td class="">开发工具链+云资源+AI辅助</td>
+</tr>
+<tr>
+<td class="">⑦ MCP生态</td>
+<td class="">聚合调度各种服务</td>
+<td class="">服务数量+接入门槛+覆盖范围</td>
+</tr>
+<tr>
+<td class="">⑧ 费用</td>
+<td class="">日常使用成本</td>
+<td class="gr">免费额度+按量单价+套餐性价比</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-3"><h2>各平台能力全景</h2>
+<div class="card"><h3>A · 阿里云百炼CLI（bailian-cli）—— 能力最全的"AI能力超市"</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">能力维度</th>
+<th class="">具体能力</th>
+<th class="">关键模型/服务</th>
+<th class="">费用</th>
+</tr>
+<tr>
+<td class="">🖼️ 生图</td>
+<td class="">文生图、图生图、图片编辑</td>
+<td class="">通义万相系列</td>
+<td class="">¥按量/套餐</td>
+</tr>
+<tr>
+<td class="">🎬 生视频</td>
+<td class="">文生视频、图生视频、PPT转视频</td>
+<td class="">通义万相视频模型</td>
+<td class="">¥按量，PPT转视频方案¥10起</td>
+</tr>
+<tr>
+<td class="">📄 PPT</td>
+<td class="">NLP生成PPT框架</td>
+<td class="">百炼Workflow+通义</td>
+<td class="">需自行编排</td>
+</tr>
+<tr>
+<td class="">🗣️ 语音</td>
+<td class="">TTS、声音复刻、数字人讲解</td>
+<td class="">CosyVoice</td>
+<td class="gr">新人有免费额度</td>
+</tr>
+<tr>
+<td class="">📱 小程序/网站</td>
+<td class="">百炼应用发布</td>
+<td class="">百炼应用平台</td>
+<td class="">需配合阿里云其他服务</td>
+</tr>
+<tr>
+<td class="">🏗️ 复杂系统</td>
+<td class="">百炼Workflow+函数计算</td>
+<td class="">通义千问150+模型</td>
+<td class="">按量</td>
+</tr>
+<tr>
+<td class="">🔌 MCP生态</td>
+<td class=""><strong>全生命周期MCP服务</strong>，首批50+种官方+第三方服务</td>
+<td class="">高德/无影/Notion/GitHub/Firecrawl等</td>
+<td class="gr">MCP市场免费接入</td>
+</tr>
+<tr>
+<td class="">💰 费用</td>
+<td class="gr">Pro版¥200/月(9万次)，按量后付，新人7000万免费tokens</td>
+<td class=""></td>
+<td class=""></td>
+</tr>
+</table></div>
+<p><strong>核心定位</strong>：一站式大模型服务平台，「模型调用+应用构建+工具集成」三位一体。</p>
+<p><strong>对中科领创的价值</strong>：· 生图/生视频能力成熟，可通过百炼应用直接调通义万相· MCP市场有50+服务，聚合度高· ❌ PPT功能需自行用Workflow编排，没有开箱即用的PPT生成工具· ❌ 小程序/网站需配合阿里云其他产品线</p>
+<hr>
+</div>
+<div class="card"><h3>B · 腾讯云 CloudBase AI CLI（tcb ai）—— 开发者效率平台，小程序/网站一键部署</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">能力维度</th>
+<th class="">具体能力</th>
+<th class="">关键模型/服务</th>
+<th class="">费用</th>
+</tr>
+<tr>
+<td class="">🖼️ 生图</td>
+<td class="">通过MCP集成外部生图工具</td>
+<td class="">非原生，靠生态</td>
+<td class="">-</td>
+</tr>
+<tr>
+<td class="">🎬 生视频</td>
+<td class="">无原生视频生成</td>
+<td class="">非重点方向</td>
+<td class="">-</td>
+</tr>
+<tr>
+<td class="">📄 PPT</td>
+<td class="">社区有AI生成PPT方案</td>
+<td class="">非平台原生能力</td>
+<td class="">-</td>
+</tr>
+<tr>
+<td class="">🗣️ 语音</td>
+<td class="">无原生语音服务</td>
+<td class="">-</td>
+<td class="">-</td>
+</tr>
+<tr>
+<td class="">📱 小程序/网站</td>
+<td class=""><strong>AI Builder一句话生成完整小程序/网站</strong>，一键部署到云开发</td>
+<td class="">腾讯云开发</td>
+<td class="gr"><strong>免费+100万tokens</strong></td>
+</tr>
+<tr>
+<td class="">🏗️ 复杂系统</td>
+<td class="">云函数/数据库/存储/托管全Serverless，AI辅助开发+自动部署</td>
+<td class="">CloudBase全栈</td>
+<td class="gr">免费额度+按量</td>
+</tr>
+<tr>
+<td class="">🔌 MCP生态</td>
+<td class="">CloudBase MCP Server，<strong>43个工具</strong>覆盖环境/数据库/函数/托管/小程序发布</td>
+<td class="">云开发全家桶</td>
+<td class="gr"><strong>免费</strong></td>
+</tr>
+<tr>
+<td class="">💰 费用</td>
+<td class="gr"><strong>完全免费</strong>（基础功能），新环境送100万tokens。超额按量</td>
+<td class=""></td>
+<td class=""></td>
+</tr>
+</table></div>
+<p><strong>核心定位</strong>：全栈AI应用开发平台，「从一行代码到部署上线」一条龙。</p>
+<p><strong>对中科领创的价值</strong>：· ✅ <strong>AI Builder一句话做网站/小程序</strong>——开箱即用，说需求就生成· ✅ <strong>免费</strong>，零成本试错· ✅ MCP工具链完整，43个工具覆盖全开发流程· ❌ 生图/生视频/PPT/语音——这些都不是CloudBase的强项· 本质是<strong>开发平台</strong>，不是AI能力平台</p>
+<hr>
+</div>
+<div class="card"><h3>C · 火山引擎 veCLI（vecli）—— 多模态创作最强，字节生态加持</h3>
+<div class="chart-wrap"><canvas id="chart_0586fba4"></canvas><div class="chart-label">多维度对比</div></div>
+<p><strong>核心定位</strong>：多模态创作最强+字节生态，「豆包模型+即梦创作+火山云」闭环。</p>
+<p><strong>对中科领创的价值</strong>：· ✅ <strong>生图+生视频最强</strong>——宣传片/产品图/营销素材一站搞定· ✅ <strong>语音能力强</strong>——声音复刻97.5%相似度，做公司语音播报/智能客服· ✅ 200+MCP服务，生态丰富· ❌ PPT/小程序/网站不是强项· ❌ 2026年收紧优惠，价格可能上涨</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-4"><h2>横向对比表</h2>
+<div class="card">
+<div class="chart-wrap"><canvas id="chart_8762f89f"></canvas><div class="chart-label">火山veCLI 对比</div></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-5"><h2>交叉分析：中科领创业务场景适配</h2>
+<div class="card"><h3>场景1：拍一个公司宣传片</h3>
+<pre style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-family:JetBrains Mono,monospace;font-size:11px;line-height:1.6;color:var(--text2);margin:6px 0"><code>你想要的：中科领创AIoT业务宣传片，带讲解配音
+</code></pre>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">步骤</th>
+<th class="">用阿里</th>
+<th class="">用腾讯</th>
+<th class="">用火山</th>
+</tr>
+<tr>
+<td class="">写脚本</td>
+<td class="hi">✅ 通义千问</td>
+<td class="">⚠️ 需外部工具</td>
+<td class="hi">✅ 豆包</td>
+</tr>
+<tr>
+<td class="">生成画面</td>
+<td class="hi">✅ 万相视频</td>
+<td class="">❌</td>
+<td class="hi">✅✅ 豆包视频（多镜头/运镜）</td>
+</tr>
+<tr>
+<td class="">配音讲解</td>
+<td class="hi">✅ CosyVoice</td>
+<td class="">❌</td>
+<td class="hi">✅✅ 声音复刻97.5%</td>
+</tr>
+<tr>
+<td class="">数字人出镜</td>
+<td class="hi">✅ 百炼数字人</td>
+<td class="">❌</td>
+<td class="">⚠️</td>
+</tr>
+<tr>
+<td class="">价格参考</td>
+<td class="">按量</td>
+<td class="">-</td>
+<td class="">\~¥19/62个视频</td>
+</tr>
+</table></div>
+<p><strong>结论</strong>：火山veCLI+豆包生态最适合，视频生成+声音复刻组合最强。阿里百炼是备选。腾讯CloudBase不适合。</p>
+</div>
+<div class="card"><h3>场景2：做一个公司产品展示小程序</h3>
+<pre style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-family:JetBrains Mono,monospace;font-size:11px;line-height:1.6;color:var(--text2);margin:6px 0"><code>你想要的：中科领创芯片代理产品展示小程序，客户在线查询
+</code></pre>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">步骤</th>
+<th class="">用阿里</th>
+<th class="">用腾讯</th>
+<th class="">用火山</th>
+</tr>
+<tr>
+<td class="">一句话生成</td>
+<td class="">❌</td>
+<td class="hi">✅✅ AI Builder</td>
+<td class="">❌</td>
+</tr>
+<tr>
+<td class="">后端数据库</td>
+<td class="">❌ 需单独ECS</td>
+<td class="hi">✅✅ 云数据库内置</td>
+<td class="">❌</td>
+</tr>
+<tr>
+<td class="">一键部署</td>
+<td class="">❌</td>
+<td class="hi">✅✅ 云开发托管</td>
+<td class="">❌ 需Trae</td>
+</tr>
+<tr>
+<td class="">费用</td>
+<td class="">-</td>
+<td class="gr"><strong>免费</strong></td>
+<td class="">-</td>
+</tr>
+</table></div>
+<p><strong>结论</strong>：腾讯CloudBase AI CLI是唯一合适的选择。AI Builder说句话就生成小程序/网站，一键部署免费。</p>
+</div>
+<div class="card"><h3>场景3：日常AI能力查询入口</h3>
+<pre style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-family:JetBrains Mono,monospace;font-size:11px;line-height:1.6;color:var(--text2);margin:6px 0"><code>你想要的：有需求时，先通过CLI快速了解各家能做什么、多少钱
+</code></pre>
+<ul><li><strong>三家都支持自然语言交互</strong>· 阿里百炼CLI <code>bl text chat --message "..."</code> 直接问· 腾讯CloudBase CLI <code>tcb ai</code> → 选择工具 → 自然语言交互· 火山veCLI <code>vecli</code> → 自然语言交互</li></ul>
+<p><strong>哪个最有用</strong>：阿里百炼CLI最合适——150+模型覆盖面最广，作为"能力目录"查询入口价值最高。想看某能力是否可用、什么价格，一行命令问百炼CLI最快。</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-6"><h2>💎 综合判断</h2>
+<div class="card">
+<p><strong>你之前说的"拍宣传片前先用三家CLI了解一下能力价格"这个思路是对的。</strong> 但不是三个都要装，更推荐按场景选：</p>
+<ul><li><strong>查能力目录/费用</strong> → 阿里百炼CLI（能力最全，覆盖面最广）· <strong>做小程序/网站</strong> → 腾讯CloudBase AI CLI（免费+一键部署）· <strong>做视频/图片/语音</strong> → 火山veCLI（豆包+即梦多模态最强）</li></ul>
+<p>但还有一个更简单的方案：<strong>这些云能力通过Hermes Agent直接调用API也能实现</strong>，不一定非得装CLI。比如你要豆包生图，直接在Hermes里配火山引擎API就行。CLI的价值在于<strong>快速交互式查询</strong>——像"通义万相文生视频多少钱"这种问题，打一行命令比翻官网快。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-7"><h2>💎 连接性分析</h2>
+<div class="card">
+<ul><li><strong>直接关联</strong>：中科领创做AIoT智能硬件方案商，日常需要产品图/宣传片/客户展示小程序，三家的能力正好覆盖· <strong>间接启发</strong>：MCP生态是关键词——阿里50+、腾讯43工具、火山200+服务。未来Agents的能力边界取决于能接入多少MCP服务，而不是模型本身· <strong>建议</strong>：可以先装<strong>阿里百炼CLI</strong>作为能力查询入口，有具体项目需求时再针对性用腾讯或火山。比去开源社区一个个翻效率高很多</li></ul>
+<hr>
+</div>
+<div class="sec reveal" id="s-8"><h2>⚠️ 风险提示</h2>
+<div class="card">
+<ul><li><strong>信源质量</strong>：官方公告+科技媒体+开发者社区，可信度较高· <strong>信息缺口</strong>：实际使用体验和稳定性（特别是高峰期）缺乏系统评测· <strong>时效性</strong>：云厂商能力更新快，费用政策可能随时调整· <strong>注意</strong>：CLI装三个会增加API Key管理和账单复杂度。建议先一个，用顺了再加</li></ul>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/Xe94dxIyzocr6txPzY3c6J2tnYe" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+<script>new Chart(document.getElementById("chart_0586fba4"),{type:"radar",data:{labels:["具体能力", "费用"],datasets:[{label:"🖼️ 生图",data:[4.54, 19200.0],borderColor:"#7170ff",backgroundColor:"#7170ff33",pointRadius:2,borderWidth:2},{label:"🎬 生视频",data:[31.0, 1962.0],borderColor:"#27a644",backgroundColor:"#27a64433",pointRadius:2,borderWidth:2},{label:"🗣️ 语音",data:[0, 20000.0],borderColor:"#d2991d",backgroundColor:"#d2991d33",pointRadius:2,borderWidth:2},{label:"🏗️ 复杂系统",data:[0, 9.9],borderColor:"#f85149",backgroundColor:"#f8514933",pointRadius:2,borderWidth:2},{label:"🔌 MCP生态",data:[200.0, 0],borderColor:"#39c5cf",backgroundColor:"#39c5cf33",pointRadius:2,borderWidth:2},{label:"💰 费用",data:[9.92026, 0],borderColor:"#8a8f98",backgroundColor:"#8a8f9833",pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#d0d6e0",font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:"多维度对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{r:{beginAtZero:true,ticks:{color:"#62666d",backdropColor:"transparent",font:{size:9}},grid:{color:"rgba(255,255,255,0.05)"},angleLines:{color:"rgba(255,255,255,0.05)"},pointLabels:{color:"#8a8f98",font:{size:10}}}}}});
+new Chart(document.getElementById("chart_8762f89f"),{type:"bar",data:{labels:["生图（产品图/海报）", "生视频（宣传片）", "PPT生成+数字人讲解", "语音/声音复刻", "小程序/网站开发", "复杂系统开发", "MCP服务聚合", "费用优势"],datasets:[{label:"火山veCLI",data:[4.54, 0, 0, 97.52, 0, 0, 200.0, 9.9],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"火山veCLI 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});</script>
+</body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>22款AI编程Agent全谱系深度横评 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #08090a; --panel: #0f1011; --surface: #191a1b; --surface2: #222326;
+    --text: #f7f8f8; --text2: #d0d6e0; --text3: #8a8f98; --text4: #62666d;
+    --accent: #5e6ad2; --accent-bright: #7170ff; --green: #27a644;
+    --orange: #d2991d; --red: #f85149; --cyan: #39c5cf;
+    --border: rgba(255,255,255,0.08); --border-subtle: rgba(255,255,255,0.05);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg); color: var(--text2);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6; overflow-x: hidden;
+  }
+  #particles { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.55; }
+  #glow { position: fixed; z-index:0; pointer-events:none; width:600px; height:600px; border-radius:50%; background: radial-gradient(circle, rgba(113,112,255,0.07) 0%, transparent 70%); transform: translate(-50%,-50%); transition: left 0.8s ease-out, top 0.8s ease-out; }
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  nav, .hero, .kpi-row, .sec, footer { position:relative; z-index:1; }
+
+  nav { position:sticky; top:0; z-index:100; background:rgba(15,16,17,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border-subtle); padding:0 24px; }
+  nav .inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:20px; height:52px; }
+  nav .logo { font-size:15px; font-weight:600; color:var(--text); white-space:nowrap; }
+  nav .logo span { color:var(--accent-bright); }
+  nav a { font-size:13px; font-weight:500; color:var(--text3); text-decoration:none; transition:color .15s; white-space:nowrap; }
+  nav a:hover { color:var(--text); }
+
+  .hero { max-width:1200px; margin:0 auto; padding:80px 24px 64px; text-align:center; }
+  .hero .badge { display:inline-block; background:rgba(94,106,210,0.12); color:var(--accent-bright); border:1px solid rgba(94,106,210,0.25); border-radius:999px; padding:4px 16px; font-size:12px; font-weight:500; margin-bottom:24px; }
+  .hero h1 { font-size:clamp(2rem,5vw,3.2rem); font-weight:600; letter-spacing:-0.04em; color:var(--text); line-height:1.15; margin-bottom:16px; }
+  .hero h1 span { color:var(--accent-bright); }
+  .hero p { font-size:1.05rem; color:var(--text3); max-width:700px; margin:0 auto; }
+
+  .kpi-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; max-width:1200px; margin:0 auto 72px; padding:0 24px; }
+  .kpi { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:22px; text-align:center; }
+  .kpi .val { font-size:2rem; font-weight:700; letter-spacing:-0.03em; color:var(--text); margin-bottom:4px; }
+  .kpi .val.accent { color:var(--accent-bright); }
+  .kpi .val.green { color:var(--green); }
+  .kpi .val.cyan { color:var(--cyan); }
+  .kpi .lbl { font-size:12px; color:var(--text3); }
+
+  .sec { max-width:1200px; margin:0 auto 64px; padding:0 24px; }
+  .sec h2 { font-size:1.4rem; font-weight:600; letter-spacing:-0.02em; color:var(--text); margin-bottom:6px; }
+  .sec .sub { font-size:13px; color:var(--text3); margin-bottom:28px; }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; margin-bottom:12px; transition:border-color .2s; }
+  .card:hover { border-color:rgba(255,255,255,0.14); }
+  .card h3 { font-size:15px; font-weight:600; color:var(--text); margin-bottom:10px; }
+  .card p, .card li { font-size:13px; color:var(--text2); }
+  .card li { padding:3px 0; }
+  ul { list-style:none; padding:0; }
+  li::before { content:"·"; color:var(--accent-bright); font-weight:700; margin-right:8px; }
+
+  .chart-wrap { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; margin-bottom:12px; }
+  .chart-wrap canvas { max-height:360px; }
+  .chart-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:768px) { .chart-row { grid-template-columns:1fr; } }
+
+  .tbl { width:100%; border-collapse:collapse; font-size:12px; }
+  .tbl th { text-align:left; padding:8px 12px; color:var(--text3); font-weight:500; font-size:10px; text-transform:uppercase; letter-spacing:0.04em; border-bottom:1px solid var(--border); }
+  .tbl td { padding:8px 12px; color:var(--text2); border-bottom:1px solid var(--border-subtle); }
+  .tbl tr:last-child td { border-bottom:none; }
+  .tbl .hi { color:var(--accent-bright); font-weight:600; }
+  .tbl .gr { color:var(--green); }
+  .tbl .or { color:var(--orange); }
+
+  .acc { margin-bottom:8px; }
+  .acc-hdr { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-size:14px; font-weight:600; color:var(--text); transition:border-color .15s; }
+  .acc-hdr:hover { border-color:rgba(255,255,255,0.15); }
+  .acc-hdr::after { content:"+"; font-size:16px; color:var(--text3); font-weight:400; }
+  .acc.open .acc-hdr::after { content:"−"; }
+  .acc-body { display:none; background:var(--surface); border:1px solid var(--border); border-top:none; border-radius:0 0 10px 10px; padding:20px; font-size:13px; color:var(--text2); }
+  .acc.open .acc-body { display:block; }
+
+  .insight { background:rgba(94,106,210,0.06); border:1px solid rgba(94,106,210,0.18); border-radius:10px; padding:20px 24px; font-size:13px; margin-bottom:12px; }
+  .insight strong { color:var(--accent-bright); }
+
+  .tag { display:inline-block; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:500; margin-right:4px; }
+  .tag.g { background:rgba(39,166,68,0.12); color:var(--green); border:1px solid rgba(39,166,68,0.2); }
+  .tag.p { background:rgba(94,106,210,0.12); color:var(--accent-bright); border:1px solid rgba(94,106,210,0.2); }
+  .tag.o { background:rgba(210,153,29,0.12); color:var(--orange); border:1px solid rgba(210,153,29,0.2); }
+  .tag.r { background:rgba(248,81,73,0.1); color:var(--red); border:1px solid rgba(248,81,73,0.18); }
+  .tag.c { background:rgba(57,197,207,0.12); color:var(--cyan); border:1px solid rgba(57,197,207,0.2); }
+
+  .note { font-size:11px; color:var(--text4); margin-top:6px; }
+  footer { text-align:center; padding:40px 24px; color:var(--text4); font-size:11px; border-top:1px solid var(--border-subtle); margin-top:64px; }
+  footer a { color:var(--text3); }
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+
+<canvas id="particles"></canvas>
+<div id="glow"></div>
+
+<nav>
+  <div class="inner">
+    <div class="logo"><span>◈</span> AI编程Agent全谱系调研</div>
+    <a href="#overview">总览</a>
+    <a href="#charts">数据</a>
+    <a href="#terminal">终端CLI</a>
+    <a href="#ide">IDE扩展</a>
+    <a href="#platform">平台型</a>
+    <a href="#verdict">结论</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="badge">2026.06 · 秘塔AI搜索 × 30+轮搜索 + 3篇精读</div>
+  <h1><span>22款AI编程Agent</span><br>全谱系深度横评</h1>
+  <p>终端CLI · IDE扩展 · 平台管家 · 框架轻量 · 特殊用途 —— 五大类别，数据可查，场景可落地</p>
+</header>
+
+<section class="kpi-row">
+  <div class="kpi"><div class="val accent">22</div><div class="lbl">覆盖工具总数</div></div>
+  <div class="kpi"><div class="val cyan">30+</div><div class="lbl">秘塔搜索轮次</div></div>
+  <div class="kpi"><div class="val">370K</div><div class="lbl">最高GitHub Stars (OpenClaw)</div></div>
+  <div class="kpi"><div class="val green">17/22</div><div class="lbl">开源可审计</div></div>
+  <div class="kpi"><div class="val">$0-200</div><div class="lbl">月费范围/月</div></div>
+</section>
+
+<!-- Section: 总览 -->
+<div class="sec reveal" id="overview">
+  <h2>📊 生态全貌</h2>
+  <p class="sub">22款工具分五大阵营——终端CLI Agent 13款 / IDE扩展 3款 / 平台型AI管家 5款 / 框架轻量 2款 / 特殊用途</p>
+
+  <div class="chart-row">
+    <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+  </div>
+
+  <div class="insight">
+    <strong>🔑 2026年三大趋势：</strong><br>
+    · <strong>MCP协议成为行业标准</strong>——几乎所有新工具都支持MCP，Agent能力从"内置功能"变为"可插拔扩展"，竞争从"谁功能多"转向"谁集成好"<br>
+    · <strong>模型-工具深度绑定瓦解</strong>——OpenCode 75+模型自由切换、Langcli 100%兼容Claude Code架构，闭源锁定模式正在被开源生态瓦解<br>
+    · <strong>DeepSeek生态爆发</strong>——DeepSeek-TUI (25.9k Stars)、Reasonix (9k+ Stars)、Deep Code (7k Stars)、Langcli (~15k Stars)，四款终端Agent全都围绕DeepSeek V4优化，形成"CN开源模型+开源工具"的完整技术栈
+  </div>
+</div>
+
+<!-- Section: 数据对比 -->
+<div class="sec reveal" id="charts">
+  <h2>📐 硬指标一览</h2>
+  <p class="sub">数据来源：GitHub仓库页面（2026年5-6月）、CSDN横评、阿里云开发者、掘金等</p>
+
+  <div style="overflow-x:auto">
+  <table class="tbl">
+    <tr><th>工具</th><th>类别</th><th>GitHub Stars</th><th>技术栈</th><th>开源</th><th>模型绑定</th><th>定价</th></tr>
+    <tr><td>OpenClaw</td><td>平台型</td><td class="hi">370K</td><td>Node.js</td><td class="gr">✅</td><td>15+模型自由</td><td>免费+API</td></tr>
+    <tr><td>OpenCode</td><td>终端CLI</td><td class="hi">158K</td><td>Go+TS</td><td class="gr">✅ MIT</td><td>75+模型自由</td><td>免费+API</td></tr>
+    <tr><td>Claude Code</td><td>终端CLI</td><td class="hi">122K</td><td>TypeScript</td><td>部分开源</td><td>Claude锁定</td><td>$20-200/月</td></tr>
+    <tr><td>Hermes Agent</td><td>平台型</td><td class="hi">102K</td><td>Python</td><td class="gr">✅ MIT</td><td>400+模型</td><td>免费+API</td></tr>
+    <tr><td>Codex CLI</td><td>终端CLI</td><td>81.5K</td><td>Rust 96%</td><td class="gr">✅ Apache-2.0</td><td>GPT锁定</td><td>$20+/月</td></tr>
+    <tr><td>LobeHub</td><td>框架型</td><td>76.7K</td><td>TypeScript</td><td class="gr">✅ MIT</td><td>多模型</td><td>免费自托管</td></tr>
+    <tr><td>Copilot CLI</td><td>终端CLI</td><td>~60K</td><td>—</td><td>闭源</td><td>Claude/GPT</td><td>$0-19/月</td></tr>
+    <tr><td>Cline</td><td>IDE扩展</td><td>58.2K</td><td>TypeScript</td><td class="gr">✅ Apache-2.0</td><td>多模型自由</td><td>免费+API</td></tr>
+    <tr><td>Pi</td><td>终端CLI</td><td>43K</td><td>TypeScript</td><td class="gr">✅ MIT</td><td>多模型</td><td>免费+API</td></tr>
+    <tr><td>Cherry Studio</td><td>平台型</td><td>32.7K</td><td>Electron</td><td class="gr">✅</td><td>300+模型</td><td>免费</td></tr>
+    <tr><td>DeepSeek-TUI</td><td>终端CLI</td><td>25.9K</td><td>Rust</td><td class="gr">✅ MIT</td><td>DeepSeek优先</td><td>免费+API</td></tr>
+    <tr><td>AstrBot</td><td>平台型</td><td>22.5K</td><td>Python</td><td class="gr">✅ AGPL</td><td>40+模型</td><td>免费</td></tr>
+    <tr><td>Langcli</td><td>终端CLI</td><td>~15K</td><td>TypeScript</td><td class="gr">✅</td><td>多模型</td><td>免费+API</td></tr>
+    <tr><td>Oh My Pi</td><td>终端CLI</td><td>11.1K</td><td>Rust+TS</td><td class="gr">✅ MIT</td><td>40+模型</td><td>免费+API</td></tr>
+    <tr><td>Reasonix</td><td>终端CLI</td><td>9K+</td><td>TypeScript</td><td class="gr">✅ MIT</td><td>DeepSeek纯</td><td>免费+API</td></tr>
+    <tr><td>Deep Code</td><td>终端CLI</td><td>~7K</td><td>Node.js</td><td class="gr">✅</td><td>DeepSeek优先</td><td>免费+API</td></tr>
+    <tr><td>Qwen Code</td><td>终端CLI</td><td>~6K</td><td>Python</td><td class="gr">✅ Apache-2.0</td><td>Qwen优先</td><td>免费+API</td></tr>
+    <tr><td>Crush</td><td>终端CLI</td><td>~4K</td><td>Go</td><td class="gr">✅</td><td>多模型</td><td>免费+API</td></tr>
+    <tr><td>Kilo Code</td><td>IDE+CLI</td><td>—</td><td>TypeScript</td><td class="gr">✅ Apache-2.0</td><td>400+模型</td><td>免费+$49/月云</td></tr>
+    <tr><td>CodeBuddy</td><td>IDE+CLI</td><td>—</td><td>—</td><td>闭源</td><td>混元+DS</td><td>免费</td></tr>
+    <tr><td>WorkBuddy</td><td>平台型</td><td>—</td><td>—</td><td>闭源</td><td>国内多模型</td><td>免费</td></tr>
+    <tr><td>nanobot</td><td>框架型</td><td>—</td><td>Python</td><td class="gr">✅</td><td>MCP任意</td><td>免费</td></tr>
+  </table>
+  </div>
+  <div class="note">* Stars数据来自GitHub仓库页面（2026年5-6月）。Copilot CLI为估算值，Kilo Code/CodeBuddy/WorkBuddy/nanobot无独立公开仓库。</div>
+</div>
+
+<!-- Section: 终端CLI Agent -->
+<div class="sec reveal" id="terminal">
+  <h2>💻 终端CLI Agent（13款）</h2>
+  <p class="sub">终端原生编程Agent——"不离开键盘"的极致效率工具</p>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Claude Code<span class="tag p" style="margin-left:8px">🏆 质量天花板</span></div>
+  <div class="acc-body">
+    <p><strong>122K Stars · TypeScript · Anthropic</strong></p>
+    <p style="margin-top:8px">终端里最强的编程Agent。锁定Claude家族模型，Plan/Agent双模式，2-16并行子代理，Esc Esc即时回滚，CLAUDE.md持久上下文。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>"放手让它干"的最佳选择——代码最优雅、bug最少。但模型锁定+国内高风险+成本最高（$20-200/月）。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>复杂架构重构、大型项目多文件修改、追求极致代码质量。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Codex CLI<span class="tag g" style="margin-left:8px">⚡ 速度引擎</span></div>
+  <div class="acc-body">
+    <p><strong>81.5K Stars · Rust 96.2% · OpenAI</strong></p>
+    <p style="margin-top:8px">Rust实现的极速终端Agent。云Sandbox+Docker+内核级安全沙箱，Token效率常省2-4x，Apache-2.0开源。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>终端里的赛车引擎——速度最快、Token最省、安全沙箱企业级最强。但模型选择有限。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>快速原型迭代、批量任务、CI/CD自动化、安全敏感项目。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">GitHub Copilot CLI<span class="tag o" style="margin-left:8px">🔗 GitHub原生</span></div>
+  <div class="acc-body">
+    <p><strong>~60K Stars · 微软/GitHub</strong></p>
+    <p style="margin-top:8px">与GitHub生态深度绑定的终端原生Agent。/fleet多模型并行（独门绝技）、/plan规划、/delegate一键PR。原生GitHub Issues/PR数据接口。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>GitHub生态的"原生公民"——直接读Issues/PR/分支，/fleet多模型并行是独门绝技。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>GitHub重度用户、CI/CD自动化、Issue→PR全自动流程。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">DeepSeek-TUI（途易）<span class="tag c" style="margin-left:8px">💎 国产性价比王</span></div>
+  <div class="acc-body">
+    <p><strong>25.9K Stars · Rust+ratatui · 独立开发者Hmbown</strong></p>
+    <p style="margin-top:8px">法学生手搓的爆款。Plan/Agent/YOLO三模式，RLM并行子代理（最多16个），1M上下文，MIT开源。成本仅Claude Sonnet的1/20。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>国产开发者首选终端Agent——$0.14-0.43/1M tokens极致低价、1M上下文、Rust单二进制、国内直连零封锁。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>DeepSeek重度用户、国内直连刚需、追求极致性价比、大项目1M上下文。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Langcli<span class="tag p" style="margin-left:8px">🔄 Claude Code完美替身</span></div>
+  <div class="acc-body">
+    <p><strong>~15K Stars · TypeScript · 开源社区</strong></p>
+    <p style="margin-top:8px">100%兼容Claude Code架构的开源替代品。LangRouter多模型调度，一键切换DeepSeek V4-Pro/V4-Flash/GLM 5.1/Kimi 2.6/Claude Opus 4.6/Ollama本地。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>适配DeepSeek V4最完美的CLI——零reasoning_content报错、开箱即用、多模型一键切换，不想被锁定者的最佳选择。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>想要Claude Code体验但不想被锁定、DeepSeek V4主力用户、追求稳定。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">OpenCode<span class="tag g" style="margin-left:8px">🔓 模型自由之王</span></div>
+  <div class="acc-body">
+    <p><strong>158K Stars · Go+TypeScript · Anomaly团队</strong></p>
+    <p style="margin-top:8px">75+模型提供商完全自由切换。唯一支持多会话并行的终端Agent，MIT开源，LSP集成，Undo-Redo，SQLite本地存储，100%本地隐私可选。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>AI编程界的"瑞士军刀"——75+模型自由切换、唯一支持多会话并行、100%本地隐私可选。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>需要模型灵活性、隐私敏感行业（医疗/金融/政府）、多Agent并行工作流。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Crush<span class="tag o" style="margin-left:8px">🎨 终端美学派</span></div>
+  <div class="acc-body">
+    <p><strong>~4K Stars · Go · Charmbracelet团队</strong></p>
+    <p style="margin-top:8px">Charmbracelet出品的精美终端TUI。LSP深度集成让AI不再盲改代码，Go语言原生性能，支持FreeBSD等BSD家族。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>终端里的"设计师品牌"——LSP深度集成+Lip Gloss UI框架，完美诠释终端也可以很美。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>终端发烧友、需要LSP级代码理解、BSD用户。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Pi + Oh My Pi<span class="tag c" style="margin-left:8px">⚙️ 框架极客</span></div>
+  <div class="acc-body">
+    <p><strong>Pi 43K Stars + Oh My Pi 11.1K Stars · TypeScript/Rust</strong></p>
+    <p style="margin-top:8px">Pi：仅4个工具（read/write/edit/bash），系统提示词<1000 tokens，Terminal Bench 2.0前五。Oh My Pi：Pi的武装加强版——Hashline编辑+LSP+调试器+40+模型供应商+32+内置工具。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>Pi是"少即是多"的极简哲学实践者；Oh My Pi把IDE能力搬进终端，Hashline编辑成功率提升10倍。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>Pi：喜欢完全掌控工作流、框架极客、需要高度定制化。Oh My Pi：需要IDE级别代码智能但工作在终端。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Reasonix<span class="tag r" style="margin-left:8px">💰 省钱大师</span></div>
+  <div class="acc-body">
+    <p><strong>9K+ Stars · TypeScript · esengine · MIT</strong></p>
+    <p style="margin-top:8px">DeepSeek原生终端编程Agent。Cache-First Loop (Append-Only)设计，缓存命中率81-99.82%，成本降低80-97%。R1思考提取、工具调用自修复、MCP、Skills、桌面端多tab、QQ远程通道。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>DeepSeek生态的"省钱大师"——append-only缓存让长会话成本暴降80%，缓存命中率99.82%逼近理论极限。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>DeepSeek重度用户、长会话开发任务、预算敏感。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Deep Code（深度代码）<span class="tag c" style="margin-left:8px">🎯 DeepSeek-V4专属</span></div>
+  <div class="acc-body">
+    <p><strong>~7K Stars · Node.js · vegamo</strong></p>
+    <p style="margin-top:8px">专为DeepSeek-V4优化的终端+VS Code双模AI编程助手。深度思考模式、推理强度控制、Agent Skills自动发现、1M上下文、配置共享于CLI和VS Code。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>DeepSeek-V4的"官方推荐客户端"——深度思考+推理强度控制+Agent Skills，CLI+VS Code配置共享。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>DeepSeek-V4用户、需要深度推理控制、CLI+IDE统一配置。</p>
+  </div></div>
+
+  <div class="acc"><div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Qwen Code（通义千问）<span class="tag p" style="margin-left:8px">🏢 阿里官方</span></div>
+  <div class="acc-body">
+    <p><strong>~6K Stars · Python · 阿里通义实验室 · Apache-2.0</strong></p>
+    <p style="margin-top:8px">阿里官方终端AI编程Agent。Qwen3-Coder系列优化，Qwen OAuth免费登录，阿里云百炼生态深度集成，支持DeepSeek。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>国内大厂的"官方出品"——阿里云生态深度集成，中文项目理解突出，但2026年4月免费额度从1000次/天调至100次/天。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>阿里云生态用户、Qwen模型粉丝、国内合规、中文代码项目。</p>
+  </div></div>
+</div>
+
+<!-- Section: IDE扩展 -->
+<div class="sec reveal" id="ide">
+  <h2>🧩 IDE扩展（3款）</h2>
+  <p class="sub">集成在编辑器内的AI编程Agent——所见即所得</p>
+
+  <div class="card">
+    <h3>Cline（原Claude Dev）<span class="tag g" style="margin-left:8px">🏆 IDE最强开源Agent</span></h3>
+    <p><strong>58.2K Stars · VS Code扩展 · Apache-2.0 · VS Code安装量304万</strong></p>
+    <p style="margin-top:8px">VS Code里最强大的开源自主Agent。Plan-Act两阶段，多文件编辑+终端+浏览器自动化，MCP Server市场，每步需确认的human-in-the-loop哲学。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>"人掌控方向盘"——每步需确认，透明可控，模型自由选择，58k Stars社区最活跃。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>注重安全和审计的开发者、团队协作、多模型灵活切换、VS Code用户。</p>
+  </div>
+
+  <div class="card">
+    <h3>GitHub Copilot（IDE插件）<span class="tag o" style="margin-left:8px">🟢 最易上手</span></h3>
+    <p><strong>微软/GitHub · Free/Pro($10)/Pro+/Business($19)/Enterprise</strong></p>
+    <p style="margin-top:8px">最广泛使用的IDE内AI编程助手。代码补全+聊天+Agent模式，VS Code/JetBrains/Visual Studio/Neovim全覆盖，2025年推出Coding Agent。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>最"易上手"的AI编程入口——零配置开箱即用，但自主Agent能力不及Claude Code/Cline。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>日常编码辅助、快速补全、GitHub生态深度用户、团队标准化工具。</p>
+  </div>
+
+  <div class="card">
+    <h3>Kilo Code（基洛代码）<span class="tag p" style="margin-left:8px">🚀 商业加强版Cline</span></h3>
+    <p><strong>Kilo-Org · 150万用户 · Apache-2.0 · $800万种子轮（2026年初）</strong></p>
+    <p style="margin-top:8px">融合Cline+Roo Code，Architect/Coder/Debugger多模式，VS Code+JetBrains+CLI+Slack全覆盖。400+模型（OpenRouter），$20免费信用额，KiloClaw云端代理$49/月。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>Cline的"商业加强版"——400+模型+多模式+JetBrains+CLI+云代理，2026年获800万美元融资。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>想要Cline功能但需要更好开箱即用体验、JetBrains用户、团队协作。</p>
+  </div>
+</div>
+
+<!-- Section: 平台型AI管家 -->
+<div class="sec reveal" id="platform">
+  <h2>🏗️ 平台型AI管家（5款）</h2>
+  <p class="sub">跨消息平台+自动化+24/7运行——把AI从"聊天工具"升级为"数字员工"</p>
+
+  <div class="card">
+    <h3>OpenClaw<span class="tag g" style="margin-left:8px">🌟 GitHub星标历史第一（370K）</span></h3>
+    <p>24/7个人AI助手平台。Gateway网关+Agent+Skills+Memory四层架构，15+消息平台（WhatsApp/Telegram/飞书/微信/钉钉/Slack），3000+社区Skills，持久记忆，Web控制台。成本优化策略可降API费用77%。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>2026年初的现象级开源项目——把AI从"聊天工具"升级为"数字员工"。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>个人AI助手、办公自动化、多渠道统一AI入口、24/7定时任务。</p>
+  </div>
+
+  <div class="card">
+    <h3>Hermes Agent（赫尔墨斯）<span class="tag p" style="margin-left:8px">🧬 自我进化</span></h3>
+    <p><strong>102K Stars · Python · Nous Research · MIT</strong></p>
+    <p>自我进化的AI Agent框架。四级分层记忆→技能自动生成→自我优化闭环。78内置Skills，16个消息平台，持久记忆（Honcho），定时任务，多模型路由。六周6.4万Stars增速是OpenClaw三倍。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>Agent赛道的"自我进化革命"——完成复杂任务后自动生成Skills沉淀经验，越用能力越强。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>希望Agent随使用成长、多平台统一AI入口、探索型编程/研究。</p>
+  </div>
+
+  <div class="card">
+    <h3>AstrBot<span class="tag c" style="margin-left:8px">🇨🇳 中国版OpenClaw</span></h3>
+    <p><strong>22.5K+ Stars · Python · AGPL-3.0</strong></p>
+    <p>面向IM平台的Agentic助手。近800个一键安装插件，40+大模型接口，10+平台（QQ/微信/飞书/钉钉/Telegram/Discord），多Bot同时部署+会话级配置隔离。2022年底立项至今三年半持续维护。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>国内插件生态最丰富的IM Agent——近800个插件一键安装，多Bot同时部署。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>群聊AI机器人、个人AI助手、插件生态重度用户、国内IM平台全覆盖。</p>
+  </div>
+
+  <div class="card">
+    <h3>Cherry Studio<span class="tag o" style="margin-left:8px">🖥️ 桌面AI客户端之王</span></h3>
+    <p><strong>32.7K Stars · Electron · 跨平台桌面</strong></p>
+    <p>多模型AI桌面客户端。300+预置助手，MCP+知识库（RAG），MCP Market，多模型同时对话，AI绘图/翻译，Markdown渲染，WebDAV同步。开发中HarmonyOS/Android/iOS。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>"AI客户端界的瑞士军刀"——300+模型聚合+MCP+知识库，非开发者也能用的低代码AI平台。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>多模型对比测试、MCP客户端、非技术用户、个人知识库问答。</p>
+  </div>
+
+  <div class="card">
+    <h3>WorkBuddy（腾讯）<span class="tag r" style="margin-left:8px">🏢 企业AI入口</span></h3>
+    <p><strong>腾讯 · 月访问量国内PC端AI办公智能体第一</strong></p>
+    <p>腾讯出品的全场景AI办公智能体。混元Hy3/DeepSeek-V4/GLM-5.1/Kimi-K2.6等国内主流模型。20+内置技能包，完全兼容OpenClaw Skills生态，企业微信远程操控，多窗口多Agent并行，国内合规。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>腾讯的"企业AI入口"——完全兼容OpenClaw Skills生态+国内合规+非技术人员零门槛。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>非技术岗位（产品/运营/HR/行政）、企业办公自动化、国内合规。</p>
+  </div>
+</div>
+
+<!-- Section: 框架型 -->
+<div class="sec reveal">
+  <h2>🛠️ 框架型/轻量Agent（2款）</h2>
+  <p class="sub">极简内核，快速原型，教学级实现</p>
+
+  <div class="card">
+    <h3>nanobot（纳米机器人）<span class="tag g" style="margin-left:8px">📚 教学级Agent内核</span></h3>
+    <p><strong>HKUDS香港大学 · Python · 仅4000行代码</strong></p>
+    <p>最小可用的AI Agent内核。4000行Python复现OpenClaw核心功能，MCP host应用，Markdown配置驱动，4个生产就绪Agent模板，Telegram/WhatsApp接入。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>用OpenClaw 1%的代码量复现核心能力——适合学习和快速原型。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>Agent学习研究、快速原型开发、个人小工具、教学演示。</p>
+  </div>
+
+  <div class="card">
+    <h3>LobeHub<span class="tag p" style="margin-left:8px">🤖 首席Agent运营官</span></h3>
+    <p><strong>76.7K Stars · TypeScript · MIT · LobeChat为核心产品</strong></p>
+    <p>CAO（首席Agent运营官）自主招募Agent组建团队。多Agent协作平台（Pages/Schedule/Project/Workspace），10000+ MCP技能，白盒记忆，CoT可视化，10+生态项目（UI/Icons/Charts/Editor/TTS等）。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>"AI管AI"的先行者——CAO自主招募Agent组建团队，10+生态项目覆盖完整AI应用开发栈。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>多Agent协作、AI应用快速搭建、开源生态贡献者。</p>
+  </div>
+</div>
+
+<!-- Section: 特殊用途 -->
+<div class="sec reveal">
+  <h2>🎯 特殊用途</h2>
+
+  <div class="card">
+    <h3>CodeBuddy（腾讯）<span class="tag r" style="margin-left:8px">🏭 腾讯内部AI编程水电煤</span></h3>
+    <p><strong>腾讯 · AI原生IDE+插件+CLI三形态 · 腾讯内部90%+工程师使用</strong></p>
+    <p>混元Turbo S + DeepSeek V3/R1（免费），腾讯生态知识库，信创兼容，私有化部署。AI生成代码占比超50%。国内版免费，企业版¥158/人/月。</p>
+    <p style="margin-top:8px"><strong>鲜明评述：</strong>腾讯内部的"AI编程水电煤"——90%+工程师在用，国内合规私有化部署。</p>
+    <p style="margin-top:8px"><strong>适用场景：</strong>国内企业研发团队、腾讯生态用户、信创合规需求。</p>
+  </div>
+</div>
+
+<!-- Section: 结论 -->
+<div class="sec reveal" id="verdict">
+  <h2>✅ 结论与推荐组合</h2>
+  <p class="sub">2026年不要找"一个最好的工具"，而是建立"你的工具组合"</p>
+
+  <div class="chart-wrap"><canvas id="verdictChart"></canvas></div>
+
+  <div class="insight" style="margin-top:12px">
+    <strong>🔑 选型逻辑框架：</strong>三个变量决定选哪款——①你主用什么模型？②核心需求是什么（速度vs质量vs灵活vs成本vs隐私）？③在什么环境中使用（国内vs海外）？
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>按开发者类型推荐</h3>
+
+    <p style="margin-top:12px"><strong>追求极致代码质量的个人开发者（海外/有稳定API）</strong></p>
+    <p>· 主力：Claude Code + Claude Opus 4.6（复杂任务/重构/架构）<br>· 支线：OpenCode + DeepSeek V4（日常省成本/灵活）</p>
+
+    <p style="margin-top:16px"><strong>追求性价比的国内个人开发者</strong></p>
+    <p>· 主力：OpenCode + DeepSeek V4-Pro（灵活+低成本+国内友好）<br>· 省钱方案：DeepSeek-TUI/Reasonix + DeepSeek V4-Flash（成本最低）<br>· Claude Code体验替代：Langcli + DeepSeek V4（零报错、开箱即用）</p>
+
+    <p style="margin-top:16px"><strong>终端极客/框架爱好者</strong></p>
+    <p>· 主力：Oh My Pi（LSP+调试器+MCP全集成）<br>· 学习框架：Pi（极简哲学，理解Agent本质）<br>· 补充：Reasonix（DeepSeek缓存极致优化）</p>
+
+    <p style="margin-top:16px"><strong>IDE重度用户</strong></p>
+    <p>· 主力：Cline（开源+自由）或 Kilo Code（商业+多平台）<br>· 补充：GitHub Copilot（日常补全+生态集成）</p>
+
+    <p style="margin-top:16px"><strong>国内企业研发团队（合规优先）</strong></p>
+    <p>· 编程：CodeBuddy（腾讯全链路+信创兼容+私有化）<br>· 非技术岗：WorkBuddy（兼容OpenClaw技能+企业微信+零门槛）<br>· 群聊AI：AstrBot（800插件+QQ/微信/飞书全覆盖）</p>
+
+    <p style="margin-top:16px"><strong>个人AI管家（24/7全天候）</strong></p>
+    <p>· 自进化路线：Hermes Agent（越用越聪明，技能自动沉淀）<br>· 社区生态路线：OpenClaw（3000+社区Skills，巨量用户基础）<br>· 轻量入门：Cherry Studio（桌面GUI，非技术用户友好）</p>
+  </div>
+
+  <div class="insight" style="margin-top:12px">
+    <strong>💡 核心原则：</strong>不要找"一个最好的工具"，而是建立"你的工具组合"——不同任务用不同工具，就像你不会用一把螺丝刀修所有东西。<br><br>
+    <strong>⚠️ 关键提醒：</strong>2026年MCP协议正在成为行业标准——几乎所有新工具都支持，这意味着Agent可以随时接入新能力，竞争从"谁功能多"转向"谁集成好"。选择支持MCP的工具，你的Agent生态才能持续生长。
+  </div>
+</div>
+
+<footer>
+  <p>调研时间：2026年6月14日 · 工具：秘塔AI搜索（30+轮搜索 + 3篇深度阅读 + 交叉验证）</p>
+  <p style="margin-top:4px">数据来源：GitHub仓库页面 · CSDN · 阿里云开发者 · 掘金 · 知乎 · 量子位 · 智东西 · 虎嗅 · Woshipm · 律动BlockBeats</p>
+  <p style="margin-top:4px"><a href="https://github.com/andy-zokelink/xincheng-report">GitHub 仓库</a> · <a href="index.html">返回门户首页</a></p>
+</footer>
+
+<script>
+(function() {
+  var c=document.getElementById('particles'), x=c.getContext('2d'), w, h, p=[], N=80, D=150;
+  function R(){ w=c.width=window.innerWidth; h=c.height=window.innerHeight; }
+  R(); window.addEventListener('resize',R);
+  for(var i=0;i<N;i++) p.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-0.5)*0.5,vy:(Math.random()-0.5)*0.5,r:Math.random()*2+0.8,o:Math.random()*0.5+0.2});
+  var mx=-100,my=-100;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+  function D2(){ x.clearRect(0,0,w,h);
+    for(var i=0;i<p.length;i++){
+      var a=p[i]; a.x+=a.vx; a.y+=a.vy;
+      if(a.x<-50||a.x>w+50)a.vx*=-1; if(a.y<-50||a.y>h+50)a.vy*=-1;
+      var dx=a.x-mx,dy=a.y-my,md=Math.sqrt(dx*dx+dy*dy);
+      if(md<200){a.vx+=dx/md*0.015;a.vy+=dy/md*0.015;}
+      var s=Math.sqrt(a.vx*a.vx+a.vy*a.vy); if(s>0.8){a.vx*=0.98;a.vy*=0.98;}
+      x.beginPath(); x.arc(a.x,a.y,a.r,0,Math.PI*2);
+      x.fillStyle='rgba(113,112,255,'+Math.min(a.o+(md<200?0.3:0),1)+')'; x.fill();
+      for(var j=i+1;j<p.length;j++){
+        var b=p[j],dx2=a.x-b.x,dy2=a.y-b.y,dist=Math.sqrt(dx2*dx2+dy2*dy2);
+        if(dist<D){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle='rgba(113,112,255,'+(0.1*(1-dist/D))+')';x.lineWidth=0.6;x.stroke();}
+      }
+    }
+    requestAnimationFrame(D2);
+  }
+  D2();
+})();
+
+(function(){
+  var g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;
+  document.addEventListener('mousemove',function(e){tx=e.clientX;ty=e.clientY;});
+  (function F(){cx+=(tx-cx)*0.06;cy+=(ty-cy)*0.06;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(F);})();
+})();
+
+(function(){
+  var o=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){en.target.classList.add('visible');o.unobserve(en.target);}});},{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){o.observe(el);});
+})();
+
+(function(){
+  var A=new Set();
+  var o=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting&&!A.has(en.target)){A.add(en.target);var v=en.target.querySelector('.val');if(!v)return;var t=v.textContent.trim(),n=parseFloat(t);if(isNaN(n))return;var s=t.replace(/[0-9.]/g,''),d=1200,st=performance.now();(function T(now){var p=Math.min((now-st)/d,1),e=1-Math.pow(1-p,3),c=n*e;v.textContent=Number.isInteger(n)?Math.round(c)+s:c.toFixed(1)+s;if(p<1)requestAnimationFrame(T);else v.textContent=t;})();}});},{threshold:0.3});
+  document.querySelectorAll('.kpi').forEach(function(el){o.observe(el);});
+})();
+
+new Chart(document.getElementById('radarChart'),{
+  type:'radar',
+  data:{
+    labels:['代码能力','模型灵活性','开源生态','中文支持','性价比','平台覆盖','社区活跃'],
+    datasets:[
+      {label:'Claude Code',data:[10,3,4,4,4,9,10],borderColor:'#7170ff',backgroundColor:'rgba(113,112,255,0.1)',pointRadius:2},
+      {label:'Codex CLI',data:[8,4,9,5,8,8,9],borderColor:'#27a644',backgroundColor:'rgba(39,166,68,0.1)',pointRadius:2},
+      {label:'OpenCode',data:[8,10,10,6,9,9,10],borderColor:'#d2991d',backgroundColor:'rgba(210,153,29,0.1)',pointRadius:2},
+      {label:'DeepSeek-TUI',data:[8,5,9,8,10,7,8],borderColor:'#39c5cf',backgroundColor:'rgba(57,197,207,0.1)',pointRadius:2},
+      {label:'Cline',data:[7,9,9,5,8,6,9],borderColor:'#8a8f98',backgroundColor:'rgba(138,143,152,0.1)',pointRadius:2},
+      {label:'Hermes Agent',data:[6,10,10,8,9,10,10],borderColor:'#f85149',backgroundColor:'rgba(248,81,73,0.1)',pointRadius:2, borderDash:[4,4]},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{
+      legend:{labels:{color:'#d0d6e0',font:{size:10},padding:12,usePointStyle:true}},
+      title:{display:true,text:'6款代表性工具 × 7维度雷达图',color:'#8a8f98',font:{size:12},padding:10}
+    },
+    scales:{r:{beginAtZero:true,max:10,ticks:{stepSize:2,color:'#62666d',backdropColor:'transparent',font:{size:9}},grid:{color:'rgba(255,255,255,0.06)'},angleLines:{color:'rgba(255,255,255,0.06)'},pointLabels:{color:'#8a8f98',font:{size:10}}}}
+  }
+});
+
+new Chart(document.getElementById('barChart'),{
+  type:'bar',
+  data:{
+    labels:['OpenClaw','OpenCode','Claude Code','Hermes','Codex CLI','LobeHub','Cline','Pi','CherryStudio','DeepSeekTUI','AstrBot','Langcli'],
+    datasets:[{
+      label:'GitHub Stars',
+      data:[370,158,122,102,81.5,76.7,58.2,43,32.7,25.9,22.5,15],
+      backgroundColor:['rgba(57,197,207,0.7)','rgba(210,153,29,0.7)','rgba(113,112,255,0.7)','rgba(248,81,73,0.7)','rgba(39,166,68,0.7)','rgba(113,112,255,0.5)','rgba(138,143,152,0.7)','rgba(210,153,29,0.5)','rgba(57,197,207,0.5)','rgba(39,166,68,0.5)','rgba(248,81,73,0.5)','rgba(138,143,152,0.5)'],
+      borderColor:['#39c5cf','#d2991d','#7170ff','#f85149','#27a644','#7170ff','#8a8f98','#d2991d','#39c5cf','#27a644','#f85149','#8a8f98'],
+      borderWidth:1,borderRadius:4
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,indexAxis:'y',
+    plugins:{legend:{display:false},title:{display:true,text:'GitHub Stars 排行（×1000）',color:'#8a8f98',font:{size:12},padding:10}},
+    scales:{x:{ticks:{color:'#62666d',callback:function(v){return (v/1000).toFixed(0)+'K'}},grid:{color:'rgba(255,255,255,0.06)'}},y:{ticks:{color:'#8a8f98',font:{size:9}},grid:{display:false}}}
+  }
+});
+
+new Chart(document.getElementById('verdictChart'),{
+  type:'bar',
+  data:{
+    labels:['代码质量','速度','模型自由','成本','隐私','易上手','企业合规'],
+    datasets:[
+      {label:'Claude Code',data:[10,6,3,4,5,7,5],backgroundColor:'rgba(113,112,255,0.7)',borderRadius:3},
+      {label:'Codex CLI',data:[7,10,4,6,6,8,6],backgroundColor:'rgba(39,166,68,0.7)',borderRadius:3},
+      {label:'OpenCode',data:[7,8,10,9,9,7,6],backgroundColor:'rgba(210,153,29,0.7)',borderRadius:3},
+      {label:'DeepSeek-TUI',data:[7,7,5,10,6,6,5],backgroundColor:'rgba(57,197,207,0.7)',borderRadius:3},
+      {label:'CodeBuddy',data:[5,6,4,10,5,9,10],backgroundColor:'rgba(248,81,73,0.7)',borderRadius:3},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#d0d6e0',font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:'5款代表性工具 × 7场景维度评分',color:'#8a8f98',font:{size:12},padding:10}},
+    scales:{y:{beginAtZero:true,max:10,ticks:{color:'#62666d'},grid:{color:'rgba(255,255,255,0.06)'}},x:{ticks:{color:'#8a8f98',font:{size:10}},grid:{display:false}}}
+  }
+});
+</script>
+</body>
+</html>

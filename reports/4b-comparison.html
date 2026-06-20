@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4B 级小模型深度调研 · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #08090a;
+    --panel: #0f1011;
+    --surface: #191a1b;
+    --surface2: #222326;
+    --text: #f7f8f8;
+    --text2: #d0d6e0;
+    --text3: #8a8f98;
+    --text4: #62666d;
+    --accent: #5e6ad2;
+    --accent-bright: #7170ff;
+    --green: #27a644;
+    --orange: #d2991d;
+    --red: #f85149;
+    --border: rgba(255,255,255,0.08);
+    --border-subtle: rgba(255,255,255,0.05);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text2);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv01','ss03';
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Particle canvas */
+  #particles {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none; opacity: 0.65;
+  }
+  /* Ambient glow orb */
+  #glow {
+    position: fixed; z-index: 0; pointer-events: none;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(113,112,255,0.07) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: left 0.8s ease-out, top 0.8s ease-out;
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Ensure content above particles */
+  nav, .hero, .kpi-row, .sec, footer { position: relative; z-index: 1; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,16,17,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 24px;
+  }
+  nav .inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 24px;
+    height: 52px;
+  }
+  nav .logo {
+    font-size: 15px; font-weight: 600; color: var(--text);
+    letter-spacing: -0.2px; white-space: nowrap;
+  }
+  nav .logo span { color: var(--accent-bright); }
+  nav a {
+    font-size: 13px; font-weight: 500; color: var(--text3);
+    text-decoration: none; transition: color .15s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero {
+    max-width: 1200px; margin: 0 auto;
+    padding: 80px 24px 64px;
+    text-align: center;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(94,106,210,0.12);
+    color: var(--accent-bright);
+    border: 1px solid rgba(94,106,210,0.25);
+    border-radius: 999px; padding: 4px 16px;
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 600; letter-spacing: -0.04em;
+    color: var(--text); line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent-bright); }
+  .hero p {
+    font-size: 1.1rem; color: var(--text3);
+    max-width: 640px; margin: 0 auto;
+    font-weight: 400;
+  }
+
+  /* KPI row */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+    gap: 16px;
+    max-width: 1200px; margin: 0 auto 80px;
+    padding: 0 24px;
+  }
+  .kpi {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; text-align: center;
+  }
+  .kpi .val {
+    font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .kpi .val.accent { color: var(--accent-bright); }
+  .kpi .val.green { color: var(--green); }
+  .kpi .lbl { font-size: 13px; color: var(--text3); }
+
+  /* Section container */
+  .sec {
+    max-width: 1200px; margin: 0 auto 72px;
+    padding: 0 24px;
+  }
+  .sec h2 {
+    font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .sec .sub {
+    font-size: 14px; color: var(--text3); margin-bottom: 32px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 16px; font-weight: 600; color: var(--text);
+    margin-bottom: 12px; letter-spacing: -0.01em;
+  }
+  .card p, .card li { font-size: 14px; color: var(--text2); }
+  .card li { padding: 4px 0; }
+  ul { list-style: none; padding: 0; }
+  li::before { content: "·"; color: var(--accent-bright); font-weight: 700; margin-right: 8px; }
+
+  /* Charts */
+  .chart-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 28px;
+    margin-bottom: 16px;
+  }
+  .chart-wrap canvas { max-height: 380px; }
+
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 768px) { .chart-row { grid-template-columns: 1fr; } }
+
+  /* Table styled */
+  .tbl {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  .tbl th {
+    text-align: left; padding: 10px 14px;
+    color: var(--text3); font-weight: 500; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--border);
+  }
+  .tbl td {
+    padding: 10px 14px; color: var(--text2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl .hi { color: var(--accent-bright); font-weight: 600; }
+  .tbl .lo { color: var(--text4); }
+  .tbl .cl { color: var(--red); }
+
+  /* Accordion */
+  .acc { margin-bottom: 16px; }
+  .acc-hdr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 24px;
+    cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; font-size: 15px; font-weight: 600;
+    color: var(--text); transition: border-color .15s;
+  }
+  .acc-hdr:hover { border-color: rgba(255,255,255,0.15); }
+  .acc-hdr::after { content: "+"; font-size: 18px; color: var(--text3); font-weight: 400; transition: transform .2s; }
+  .acc.open .acc-hdr::after { content: "−"; }
+  .acc-body {
+    display: none; background: var(--surface);
+    border: 1px solid var(--border); border-top: none;
+    border-radius: 0 0 10px 10px; padding: 24px;
+    font-size: 14px; color: var(--text2);
+  }
+  .acc.open .acc-body { display: block; }
+
+  /* Insight box */
+  .insight {
+    background: rgba(94,106,210,0.06);
+    border: 1px solid rgba(94,106,210,0.18);
+    border-radius: 10px; padding: 24px 28px;
+    font-size: 14px;
+  }
+  .insight strong { color: var(--accent-bright); }
+
+  /* Tags */
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 500; margin-right: 6px;
+  }
+  .tag.g { background: rgba(39,166,68,0.12); color: var(--green); border: 1px solid rgba(39,166,68,0.2); }
+  .tag.p { background: rgba(94,106,210,0.12); color: var(--accent-bright); border: 1px solid rgba(94,106,210,0.2); }
+  .tag.o { background: rgba(210,153,29,0.12); color: var(--orange); border: 1px solid rgba(210,153,29,0.2); }
+  .tag.r { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.18); }
+
+  /* Section nav pills */
+  .pills {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .pill {
+    padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border); color: var(--text3);
+    cursor: pointer; transition: all .15s; background: transparent;
+  }
+  .pill:hover, .pill.active {
+    background: rgba(94,106,210,0.1); color: var(--accent-bright);
+    border-color: rgba(94,106,210,0.3);
+  }
+
+  /* Tooltip-style note */
+  .note {
+    font-size: 12px; color: var(--text4); margin-top: 8px;
+  }
+
+  footer {
+    text-align: center; padding: 48px 24px;
+    color: var(--text4); font-size: 12px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: 80px;
+  }
+  footer a { color: var(--text3); }
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+
+<!-- Particle background -->
+<canvas id="particles"></canvas>
+<div id="glow"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="inner">
+    <div class="logo"><span>◈</span> 4B 模型深度调研</div>
+    <a href="#summary">总览</a>
+    <a href="#benchmarks">数据</a>
+    <a href="#models">模型</a>
+    <a href="#competitors">竞品</a>
+    <a href="#verdict">结论</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="badge">2026.06 · 秘塔AI搜索 × 15轮交叉验证</div>
+  <h1><span>5个4B级</span>小模型<br>深度交叉对比</h1>
+  <p>MiniCPM 3.0 · Phi-3.5-mini · Qwen3-4B · Gemma 4 E2B · 新程 Alpha —— 10个维度，数据可查，来源透明</p>
+</header>
+
+<!-- KPI -->
+<section class="kpi-row">
+  <div class="kpi">
+    <div class="val accent">36T</div>
+    <div class="lbl">最大训练数据量 (Qwen3)</div>
+  </div>
+  <div class="kpi">
+    <div class="val">156</div>
+    <div class="lbl">最快推理 t/s (Gemma 4)</div>
+  </div>
+  <div class="kpi">
+    <div class="val green">128K</div>
+    <div class="lbl">最长上下文 (Phi-3.5 / Gemma 4)</div>
+  </div>
+  <div class="kpi">
+    <div class="val">1.3GB</div>
+    <div class="lbl">最轻量部署 (Gemma 4 INT4)</div>
+  </div>
+  <div class="kpi">
+    <div class="val accent">4/5</div>
+    <div class="lbl">开源可验证 (新程 Alpha 除外)</div>
+  </div>
+</section>
+
+<!-- Section: 总览 -->
+<div class="sec reveal" id="summary">
+  <h2>📊 核心发现</h2>
+  <p class="sub">五款模型走三条路线：全科生、偏科生、另类专家</p>
+
+  <div class="chart-row">
+    <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+    <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>🔑 快速选型：</strong>
+    · 通用中文助手 → Qwen3-4B（双模推理，36T tokens，119语言）<br>
+    · 端侧多模态 → Gemma 4 E2B（156 t/s，树莓派可跑，唯一多模态）<br>
+    · 长文本处理 → Phi-3.5-mini（128K 原生上下文）<br>
+    · RAG/工具调用 → MiniCPM 3.0（Function Calling 接近 GPT-4o）<br>
+    · 群体智能决策 → 新程 Alpha（独特价值，但闭源待验证）
+  </div>
+</div>
+
+<!-- Section: Benchmarks -->
+<div class="sec reveal" id="benchmarks">
+  <h2>📐 硬指标对比</h2>
+  <p class="sub">数据来源：OpenLaboratory · gemma4-ai.com · llmtrust.com · NVIDIA · EmergentMind</p>
+
+  <div style="overflow-x:auto">
+  <table class="tbl">
+    <tr><th>指标</th><th>MiniCPM 3.0</th><th>Phi-3.5</th><th>Qwen2.5-3B</th><th>Qwen3-4B</th><th>Gemma 4 E2B</th><th>新程 Alpha</th></tr>
+    <tr><td>参数量</td><td>4B</td><td>3.8B</td><td>3.09B</td><td>4.0B</td><td>2.3B 有效</td><td class="lo">4B</td></tr>
+    <tr><td>上下文</td><td>32K/无限</td><td class="hi">128K 原生</td><td>32K</td><td>32K→131K</td><td class="hi">128K 原生</td><td class="lo">未公开</td></tr>
+    <tr><td>发布日期</td><td>2024.9</td><td>2024.8</td><td>2024</td><td>2025.4</td><td>2026.4</td><td>2026.6</td></tr>
+    <tr><td>MMLU</td><td>~68%</td><td>69.0%</td><td>65.6%</td><td class="hi">Redux 83.7</td><td>68.2%</td><td class="lo">未公开</td></tr>
+    <tr><td>C-Eval (中文)</td><td class="hi">强</td><td class="lo">弱</td><td>强</td><td class="hi">77.5</td><td>—</td><td class="lo">未公开</td></tr>
+    <tr><td>HumanEval</td><td>优异</td><td>60.4%</td><td>—</td><td>优异</td><td>54.3%</td><td class="lo">未公开</td></tr>
+    <tr><td>GSM8K</td><td>优异</td><td>—</td><td>—</td><td class="hi">Think 高</td><td>65.1%</td><td class="lo">未公开</td></tr>
+    <tr><td>训练数据</td><td>未公开</td><td>3.4T tokens</td><td>18T tokens</td><td class="hi">36T tokens</td><td>未公开</td><td class="lo">非传统</td></tr>
+    <tr><td>INT4 部署</td><td>~2GB</td><td>~2.2GB</td><td>~2-3GB</td><td>~3-4GB</td><td class="hi">1.3GB</td><td class="lo">未公开</td></tr>
+    <tr><td>推理速度</td><td>未公开</td><td>未公开</td><td>未公开</td><td>—</td><td class="hi">156 t/s</td><td class="lo">未公开</td></tr>
+    <tr><td>开源</td><td class="hi">✅ Apache</td><td class="hi">✅ MIT</td><td class="hi">✅ Apache</td><td class="hi">✅ Apache</td><td class="hi">✅ Apache</td><td class="cl">❌ 闭源</td></tr>
+  </table>
+  </div>
+  <div class="note">* MMLU-Redux 与经典 MMLU 计分方式不同，不可直接对比。新程 Alpha 无公开 benchmark 数据。</div>
+</div>
+
+<!-- Section: 模型详解 (Accordion) -->
+<div class="sec reveal" id="models">
+  <h2>🔍 逐模型深度解析</h2>
+  <p class="sub">点击展开每个模型的架构、训练方法、特色能力</p>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Qwen3-4B（阿里）<span class="tag g" style="margin-left:12px">🏆 综合最强</span></div>
+    <div class="acc-body">
+      <p><strong>架构：</strong>36层 Dense Transformer，GQA（32Q/8KV），SwiGLU，RMSNorm，RoPE+ABF，QK-Norm。<strong>双模推理</strong>是独有创新——同一 checkpoint 支持 Thinking / No-Thinking 动态切换。</p>
+      <p style="margin-top:12px"><strong>训练数据：</strong>36T tokens，119种语言，三阶段预训练（通用→推理→长文），strong-to-weak 蒸馏。</p>
+      <p style="margin-top:12px"><strong>中文：</strong>C-Eval 77.5，原生中文最强档。部署：GGUF Q4 约3-4GB。开源：Apache 2.0。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>中文通用对话、工具调用（Qwen-Agent）、需要快/深切换的推理任务。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">MiniCPM 3.0（面壁智能）<span class="tag p" style="margin-left:12px">RAG/Agent 专家</span></div>
+    <div class="acc-body">
+      <p><strong>架构：</strong>Dense Decoder-only + MLA注意力，自研LLMxMapReduce实现理论无限长文本。</p>
+      <p style="margin-top:12px"><strong>特色：</strong>RAG三件套（检索+重排序+生成），Function Calling 接近 GPT-4o（BFCL评测），自研CPM.cu推理框架。</p>
+      <p style="margin-top:12px"><strong>中文：</strong>基因级优势，CMMLU/CEVAL/AlignBench 均优。部署：GGUF Q4 约2GB。开源：Apache 2.0。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>中文RAG系统、端侧Agent、需要工具调用的场景。2024发布至今依然有竞争力。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Gemma 4 E2B（Google）<span class="tag g" style="margin-left:12px">端侧多模态王</span></div>
+    <div class="acc-body">
+      <p><strong>架构：</strong>Dense + PLE（逐层嵌入参数缓存），混合滑动/全局注意力（5:1），2.3B有效/5.1B含嵌入。唯一支持文本+图像+视频+原生音频的小参数模型。</p>
+      <p style="margin-top:12px"><strong>性能：</strong>MMLU 68.2%，MMLU Pro 60.0%，MT-Bench 6.89。RTX 4090 <strong>156 t/s</strong>，M2 Ultra 124 t/s，树莓派5 7.6 t/s 解码。INT4 仅1.3GB，手机端1.1GB。</p>
+      <p style="margin-top:12px"><strong>中文：</strong>MMLU 63.1%，支持但不主攻。开源：Apache 2.0（Gemma系列首次）。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>IoT/手机端侧多模态、语音助手、需要极低延迟的实时推理。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">Phi-3.5-mini（微软）<span class="tag o" style="margin-left:12px">128K 长文王</span></div>
+    <div class="acc-body">
+      <p><strong>架构：</strong>Dense Decoder-only，标准Transformer，3.4T tokens合成数据+筛选网页训练，512×H100耗时10天。</p>
+      <p style="margin-top:12px"><strong>最大卖点：</strong>128K 原生上下文（同级别最长），MMLU 69.0%，HumanEval 60.4%。MIT许可开源。</p>
+      <p style="margin-top:12px"><strong>中文：</strong>最弱——纯英文模型，无C-Eval/CMMLU公开数据。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>英文长文档QA/摘要、微软Azure生态集成、不需要中文的场景。</p>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="acc-hdr" onclick="this.parentElement.classList.toggle('open')">新程 Alpha（明日新程）<span class="tag r" style="margin-left:12px">认知模型 · 闭源</span></div>
+    <div class="acc-body">
+      <p><strong>路线：</strong>行业首个"认知模型"——基于开源推理模型做RL，将知识记忆与认知能力解耦。团队梳理220年学术论文方法论指导训练。</p>
+      <p style="margin-top:12px"><strong>性能声明：</strong>群体智能任务对标GPT-5.4，算力仅千亿模型1/250，MacBook可跑。但——无开源权重、无标准benchmark、无第三方验证。</p>
+      <p style="margin-top:12px"><strong>使用方式：</strong>仅通过团子平台（mytuanzi.com）体验，API未开放。创始人李笛（微软小冰之父），创新工场+奇绩创坛联合押注。</p>
+      <p style="margin-top:12px"><strong>推荐场景：</strong>相信认知模型路线、愿意等待开源验证的前瞻性关注。不适合需要当下可用的生产场景。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section: 竞品格局 -->
+<div class="sec reveal" id="competitors">
+  <h2>⚡ 竞品格局</h2>
+  <p class="sub">三条赛道，不同对手——框架层 vs 模型层 是核心区分</p>
+
+  <div class="card">
+    <h3>🧠 群体智能赛道（新程 Alpha 核心战场）</h3>
+    <table class="tbl">
+      <tr><th>选手</th><th>层级</th><th>关键信息</th></tr>
+      <tr><td><strong>Isara</strong></td><td>框架层</td><td>OpenAI 参投，$94M融资，$6.5B估值，2000 Agent协同预测金价。不训模型，依赖GPT/Claude作为Agent大脑。与新程 Alpha 上下游关系。</td></tr>
+      <tr><td><strong>AutoGen（微软）</strong></td><td>框架层</td><td>对话式多Agent协作，编排已有模型</td></tr>
+      <tr><td><strong>CrewAI</strong></td><td>框架层</td><td>角色分工+快速开发，初创友好</td></tr>
+      <tr><td><strong>LangGraph</strong></td><td>框架层</td><td>图状工作流+状态管理，生产级</td></tr>
+      <tr><td><strong>OpenAI Harness</strong></td><td>框架+模型</td><td>2026.2发布，用最强通用模型做多智能体引擎。Nextie 最大潜在对手</td></tr>
+    </table>
+    <div class="note" style="margin-top:12px">关键区分：Isara/AutoGen等是框架层（编排已有模型），新程 Alpha是模型层（改变模型内部的认知架构）。不构成直接替代，但如果框架+GPT-5.4效果超过团子+新程 Alpha，Nextie壁垒就会被削弱。</div>
+  </div>
+
+  <div class="card">
+    <h3>📱 端侧国产竞品</h3>
+    <table class="tbl">
+      <tr><th>选手</th><th>定位</th><th>差异</th></tr>
+      <tr><td><strong>面壁 MiniCPM 系列</strong></td><td>All in 端侧通用智能</td><td>0.5B~9B全覆盖，下载量破千万，不专注认知模型</td></tr>
+      <tr><td><strong>商汤 SenseChat-Lite</strong></td><td>行业解决方案</td><td>"模型+芯片适配"一体化，安防/车载落地</td></tr>
+      <tr><td><strong>RockAI 岩芯数智</strong></td><td>群体智能概念</td><td>2024.9发声，产品化深度不及Nextie</td></tr>
+    </table>
+  </div>
+
+  <div class="insight">
+    <strong>🔑 核心结论：</strong>新程 Alpha 在"认知模型"品类里目前没有直接竞品。但日常4B端侧任务有大量成熟替代（MiniCPM/Phi/Qwen/Gemma全开源）——选实用还是选前瞻，取决于需求。
+  </div>
+</div>
+
+<!-- Section: 结论 -->
+<div class="sec reveal" id="verdict">
+  <h2>✅ 结论与建议</h2>
+  <p class="sub">基于10个维度的综合评估</p>
+
+  <div class="chart-wrap"><canvas id="radarVerdict"></canvas></div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>一人一句</h3>
+    <ul>
+      <li><strong>Qwen3-4B</strong> — 2025年4B新标杆，双模推理是杀手锏，通用场景首选</li>
+      <li><strong>Gemma 4 E2B</strong> — 端侧多模态之王，2.3B做到4B级能力，速度碾压全场</li>
+      <li><strong>MiniCPM 3.0</strong> — 端侧老牌劲旅，中文好、FC强，RAG+工具调用场景首选</li>
+      <li><strong>Phi-3.5-mini</strong> — 128K长文独门绝技，英文场景专用</li>
+      <li><strong>新程 Alpha</strong> — 认知模型路线独特，但闭源无验证；信其价值，需等开源</li>
+    </ul>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <strong>⚠️ 使用建议：</strong>五个模型里四个可以今天下载跑起来验证，一个只能信PR。<br>
+    生产落地选前四个（开源、成熟、有社区）；前瞻研究关注新程 Alpha 的认知模型路线能否被第三方验证。
+  </div>
+</div>
+
+<footer>
+  <p>调研时间：2026年6月11日 · 工具：秘塔AI搜索（15次搜索 + 4篇深度阅读）</p>
+  <p style="margin-top:4px">数据来源：OpenLaboratory · gemma4-ai.com · GitHub OpenBMB · Azure AI · llmtrust.com · NVIDIA · EmergentMind · 量子位/新智元</p>
+  <p style="margin-top:4px"><a href="https://github.com/andy-zokelink/xincheng-report">GitHub 仓库</a></p>
+</footer>
+
+<script>
+// ── Particle Network Background ──
+(function() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const PARTICLE_COUNT = 90;
+  const CONNECT_DIST = 160;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      r: Math.random() * 2 + 0.8,
+      o: Math.random() * 0.6 + 0.2
+    });
+  }
+
+  let mouseX = -100, mouseY = -100;
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX; mouseY = e.clientY;
+  });
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -50 || p.x > w + 50) p.vx *= -1;
+      if (p.y < -50 || p.y > h + 50) p.vy *= -1;
+
+      // Slight attraction to mouse
+      const mdx = p.x - mouseX, mdy = p.y - mouseY;
+      const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+      if (mdist < 200) {
+        p.vx += (mdx / mdist) * 0.015;
+        p.vy += (mdy / mdist) * 0.015;
+      }
+      // Cap speed
+      const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+      if (speed > 0.8) { p.vx *= 0.98; p.vy *= 0.98; }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(113,112,255,${Math.min(p.o + (mdist < 200 ? 0.3 : 0), 1)})`;
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x, dy = p.y - q.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECT_DIST) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(113,112,255,${0.1 * (1 - dist / CONNECT_DIST)})`;
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Mouse Glow Orb ──
+(function() {
+  const glow = document.getElementById('glow');
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', function(e) {
+    tx = e.clientX; ty = e.clientY;
+  });
+  function follow() {
+    cx += (tx - cx) * 0.06;
+    cy += (ty - cy) * 0.06;
+    glow.style.left = cx + 'px';
+    glow.style.top = cy + 'px';
+    requestAnimationFrame(follow);
+  }
+  follow();
+})();
+
+// ── Scroll Reveal ──
+(function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+})();
+
+// ── KPI Counter Animation ──
+(function() {
+  const animated = new Set();
+  const kpiObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !animated.has(entry.target)) {
+        animated.add(entry.target);
+        const valEl = entry.target.querySelector('.val');
+        if (!valEl) return;
+        const text = valEl.textContent.trim();
+        const num = parseFloat(text);
+        if (isNaN(num)) return;
+        const suffix = text.replace(/[0-9.]/g, '');
+        const duration = 1200;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = num * eased;
+          valEl.textContent = Number.isInteger(num) ? Math.round(current) + suffix : current.toFixed(1) + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+          else valEl.textContent = text;
+        }
+        requestAnimationFrame(tick);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.kpi').forEach(function(el) { kpiObserver.observe(el); });
+})();
+
+// ── Radar: Multi-dimension comparison (subjective scores based on research data)
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['通用能力', '中文能力', '代码能力', '上下文', '多模态', '部署轻量', '推理速度', '成熟度', '开源可验'],
+    datasets: [
+      { label:'Qwen3-4B', data:[9.0,9.5,9.0,5.5,0,6.5,6.0,8.0,10], borderColor:'#7170ff', backgroundColor:'rgba(113,112,255,0.1)', pointRadius:2 },
+      { label:'MiniCPM 3.0', data:[8.0,9.0,7.5,5.0,0,8.0,6.0,8.5,10], borderColor:'#27a644', backgroundColor:'rgba(39,166,68,0.1)', pointRadius:2 },
+      { label:'Gemma 4 E2B', data:[6.5,5.0,6.0,9.0,10,10,10,7.0,10], borderColor:'#d2991d', backgroundColor:'rgba(210,153,29,0.1)', pointRadius:2 },
+      { label:'Phi-3.5', data:[7.5,2.0,7.0,10,0,7.5,6.0,8.0,10], borderColor:'#8a8f98', backgroundColor:'rgba(138,143,152,0.1)', pointRadius:2 },
+      { label:'新程 Alpha', data:[0,5.0,0,0,0,5.0,5.0,2.0,0], borderColor:'#f85149', backgroundColor:'rgba(248,81,73,0.1)', pointRadius:2, borderDash:[4,4] },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color:'#d0d6e0', font:{size:11}, padding:16, usePointStyle:true } },
+      title: { display:true, text:'多维度雷达图（基于调研数据综合评分）', color:'#8a8f98', font:{size:13}, padding:12 }
+    },
+    scales: {
+      r: {
+        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#62666d', backdropColor:'transparent', font:{size:10} },
+        grid: { color:'rgba(255,255,255,0.06)' },
+        angleLines: { color:'rgba(255,255,255,0.06)' },
+        pointLabels: { color:'#8a8f98', font:{size:11} }
+      }
+    }
+  }
+});
+
+// Bar: MMLU comparison
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Qwen3-4B\n(Redux)', 'Phi-3.5', 'MiniCPM 3.0', 'Gemma 4 E2B', 'Qwen2.5-3B'],
+    datasets: [{
+      label: 'MMLU 得分 (%)',
+      data: [83.7, 69.0, 68.0, 68.2, 65.6],
+      backgroundColor: ['#7170ff', '#8a8f98', '#27a644', '#d2991d', '#62666d'],
+      borderRadius: 4, borderSkipped: false,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display:false },
+      title: { display:true, text:'MMLU 得分对比（越高越好）', color:'#8a8f98', font:{size:13}, padding:12 }
+    },
+    scales: {
+      y: { beginAtZero:false, min:60, max:90, ticks: { color:'#8a8f98', font:{size:11} }, grid: { color:'rgba(255,255,255,0.05)' } },
+      x: { ticks: { color:'#8a8f98', font:{size:10} }, grid: { display:false } }
+    }
+  }
+});
+
+// Radar: Verdict summary - weighted scores
+new Chart(document.getElementById('radarVerdict'), {
+  type: 'radar',
+  data: {
+    labels: ['通用能力', '中文能力', '代码', '上下文', '多模态', '部署轻量', '推理速度', '工具/Agent', '开源可验', '成熟度'],
+    datasets: [
+      { label:'Qwen3-4B', data:[9,9.5,9,5.5,0,6.5,6,8.5,10,8], borderColor:'#7170ff', backgroundColor:'rgba(113,112,255,0.12)', pointRadius:2 },
+      { label:'Gemma 4 E2B', data:[6.5,5,6,9,10,10,10,5,10,7], borderColor:'#d2991d', backgroundColor:'rgba(210,153,29,0.12)', pointRadius:2 },
+      { label:'MiniCPM 3.0', data:[8,9,7.5,5,0,8,6,9,10,8.5], borderColor:'#27a644', backgroundColor:'rgba(39,166,68,0.12)', pointRadius:2 },
+      { label:'Phi-3.5', data:[7.5,2,7,10,0,7.5,6,5,10,8], borderColor:'#8a8f98', backgroundColor:'rgba(138,143,152,0.12)', pointRadius:2 },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color:'#d0d6e0', font:{size:11}, padding:16, usePointStyle:true } },
+      title: { display:true, text:'开源四模型综合评分雷达图', color:'#8a8f98', font:{size:13}, padding:12 }
+    },
+    scales: {
+      r: {
+        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#62666d', backdropColor:'transparent', font:{size:10} },
+        grid: { color:'rgba(255,255,255,0.06)' },
+        angleLines: { color:'rgba(255,255,255,0.06)' },
+        pointLabels: { color:'#8a8f98', font:{size:11} }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>

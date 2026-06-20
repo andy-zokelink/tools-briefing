@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面壁智能硬件产品调研：松果派 & EdgeClaw Box · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">📦 AI硬件 · feishu</div><h1>面壁智能硬件产品调研：松果派 & EdgeClaw Box</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">275</div><div class="lbl">则"从模型到硬件的落地。</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>EdgeClaw框架</strong>（基于OpenClaw优化开源）：</div></div><div class="sec reveal" id="s-0"><h2>面壁智能硬件产品调研：松果派 & EdgeClaw Box</h2>
+<div class="card">
+<blockquote>调研时间：2026年5月29日 · 数据源：秘塔AI搜索（Metaso MCP）</blockquote>
+<hr>
+</div>
+<div class="sec reveal" id="s-1"><h2>一、松果派（Pinea Pi）—— 面壁智能首款AI硬件</h2>
+<div class="acc"><div class="acc-hdr">1.1 基本信息</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">发布</td>
+<td class="">2026年2月官宣，预计2026年年中量产上市</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="">AI原生（AI Native）端侧智能开发板</td>
+</tr>
+<tr>
+<td class="">理念</td>
+<td class="">"Agent原生" + "自然语言直驱"</td>
+</tr>
+<tr>
+<td class="">命名灵感</td>
+<td class="">出自《三体》，寓意更高维度+全能力推动智能发展</td>
+</tr>
+<tr>
+<td class="">目标用户</td>
+<td class="">开发者、极客、AI硬件爱好者</td>
+</tr>
+<tr>
+<td class="">开发门槛</td>
+<td class="">无技术背景也可快速上手开发</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">1.2 硬件规格</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">硬件平台</td>
+<td class="">NVIDIA Jetson系列模组</td>
+</tr>
+<tr>
+<td class="">算力</td>
+<td class="">275 TOPS（INT8）</td>
+</tr>
+<tr>
+<td class="">传感器</td>
+<td class="">内置麦克风、摄像头</td>
+</tr>
+<tr>
+<td class="">接口</td>
+<td class="">丰富的扩展接口（具体接口类型待量产确认）</td>
+</tr>
+<tr>
+<td class="">电源</td>
+<td class="">适配端侧低功耗场景</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">1.3 软件与模型</div><div class="acc-body">
+<ul><li><strong>预装模型</strong>：MiniCPM-o 4.5全模态大模型（语音/视频/文本同步交互）</li><li><strong>软件栈</strong>：系统优化 + 本地推理引擎 + 模型量化工具 + 智能中枢 + 开发者工具</li><li><strong>运行模式</strong>：全链路离线运行，数据不出设备，隐私安全，断网可用</li><li><strong>开发方式</strong>：自然语言直驱，降低传统嵌入式开发门槛</li></ul>
+</div>
+<div class="acc"><div class="acc-hdr">1.4 目标应用场景</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">场景</th>
+<th class="">说明</th>
+</tr>
+<tr>
+<td class="">离线多模态个人知识助理</td>
+<td class="">本地处理文档/图片/语音，不依赖云端</td>
+</tr>
+<tr>
+<td class="">具身智能</td>
+<td class="">机器人/机械臂等硬件的端侧AI大脑</td>
+</tr>
+<tr>
+<td class="">编程与教学</td>
+<td class="">教育场景的AI交互开发平台</td>
+</tr>
+<tr>
+<td class="">智能家居</td>
+<td class="">本地AI中控，隐私安全</td>
+</tr>
+<tr>
+<td class="">工业边缘计算</td>
+<td class="">数据敏感场景的离线AI推理</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">1.5 总结定位</div><div class="acc-body">
+<p>松果派是面壁智能"密度法则"从模型到硬件的落地。275 TOPS算力+MiniCPM全模态模型+全离线运行，对标NVIDIA Jetson生态但更强调AI原生和自然语言交互。目前尚未公布定价。</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-2"><h2>二、EdgeClaw Box（龙虾盒子）</h2>
+<div class="acc"><div class="acc-hdr">2.1 基本信息</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">内容</th>
+</tr>
+<tr>
+<td class="">发布</td>
+<td class="">2026年3月19日正式发布</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="">安全可控、开箱即用的"AI智能体一体机"</td>
+</tr>
+<tr>
+<td class="">核心卖点</td>
+<td class="">插电即用，一个盒子=一个数字员工团队</td>
+</tr>
+<tr>
+<td class="">售价状态</td>
+<td class="">企业版已开启预售，松果派版即将开放众筹</td>
+</tr>
+<tr>
+<td class="">目标用户</td>
+<td class="">OPC群体（非技术业务人员）+ 数据敏感型企业</td>
+</tr>
+<tr>
+<td class="">发布方</td>
+<td class="">面壁智能 + 清华大学 + OpenBMB社区 + 中国人民大学高瓴AI学院</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">2.2 核心架构</div><div class="acc-body">
+<p><strong>EdgeClaw框架</strong>（基于OpenClaw优化开源）：</p>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">特性</th>
+<th class="">说明</th>
+</tr>
+<tr>
+<td class="">基座</td>
+<td class="">OpenClaw（开源智能体框架，昵称"龙虾"）</td>
+</tr>
+<tr>
+<td class="">改进点</td>
+<td class="">弥补OpenClaw在本地部署、数据安全上的不足</td>
+</tr>
+<tr>
+<td class="">模型支持</td>
+<td class="">主流云端模型 + 面壁MiniCPM端侧模型</td>
+</tr>
+<tr>
+<td class="">运行模式</td>
+<td class="">端云协同，支持离线运行</td>
+</tr>
+<tr>
+<td class="">开源状态</td>
+<td class="">联合清华大学、OpenBMB社区开源</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">2.3 隐私安全设计：隐私路由中间件</div><div class="acc-body">
+<p>EdgeClaw Box最核心的技术创新——<strong>自研隐私路由中间件</strong>，实现信息分级处理：</p>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">数据类型</th>
+<th class="">处理方式</th>
+<th class="">模型</th>
+<th class="">Token消耗</th>
+</tr>
+<tr>
+<td class="">敏感数据</td>
+<td class="">本地处理</td>
+<td class="">MiniCPM系列离线运行</td>
+<td class="">零Token消耗</td>
+</tr>
+<tr>
+<td class="">非敏感数据</td>
+<td class="">脱敏后调用云端</td>
+<td class="">主流云端大模型</td>
+<td class="">按需计费</td>
+</tr>
+</table></div>
+<p><strong>双轨记忆机制</strong>：敏感记忆存本地，非敏感记忆可上云，防止隐私泄露。</p>
+</div>
+<div class="acc"><div class="acc-hdr">2.4 硬件适配</div><div class="acc-body">
+<div class="chart-wrap"><canvas id="chart_efa550f9"></canvas><div class="chart-label">算力 对比</div></div>
+<p>EdgeClaw Box已适配市面上主流硬件：</p>
+</div>
+<div class="acc"><div class="acc-hdr">2.5 用户价值</div><div class="acc-body">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">痛点</th>
+<th class="">EdgeClaw Box方案</th>
+</tr>
+<tr>
+<td class="">部署门槛高（配环境/装Docker）</td>
+<td class="">插电即用，零部署</td>
+</tr>
+<tr>
+<td class="">Token消耗价格过高</td>
+<td class="">本地任务零Token，断网也能跑</td>
+</tr>
+<tr>
+<td class="">数据不安全</td>
+<td class="">隐私路由中间件，敏感数据不出本地</td>
+</tr>
+<tr>
+<td class="">非技术人员不会用</td>
+<td class="">自然语言交互，OPC也能操作</td>
+</tr>
+</table></div>
+</div>
+<div class="acc"><div class="acc-hdr">2.6 总结定位</div><div class="acc-body">
+<p>EdgeClaw Box不只是一个硬件，而是"硬件+框架+模型+安全"的一体化解决方案。它的核心价值在于降低AI智能体的部署门槛和数据安全顾虑，让企业无需技术团队也能拥有自己的私有AI员工团队。</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-3"><h2>三、两款产品的关系</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">松果派（Pinea Pi）</th>
+<th class="">EdgeClaw Box</th>
+</tr>
+<tr>
+<td class="">发布日</td>
+<td class="">2026年2月官宣</td>
+<td class="">2026年3月19日</td>
+</tr>
+<tr>
+<td class="">定位</td>
+<td class="">AI开发板</td>
+<td class="">AI智能体一体机</td>
+</tr>
+<tr>
+<td class="">目标用户</td>
+<td class="">开发者/极客</td>
+<td class="">企业/非技术用户</td>
+</tr>
+<tr>
+<td class="">硬件平台</td>
+<td class="">NVIDIA Jetson</td>
+<td class="">多平台（DGX/Mac Mini/松果派）</td>
+</tr>
+<tr>
+<td class="">核心能力</td>
+<td class="">端侧AI推理硬件</td>
+<td class="">智能体框架+硬件一体机</td>
+</tr>
+<tr>
+<td class="">软件层次</td>
+<td class="">模型运行层</td>
+<td class="">智能体应用层</td>
+</tr>
+<tr>
+<td class="">开放程度</td>
+<td class="">开发板</td>
+<td class="">开源框架+预装硬件</td>
+</tr>
+</table></div>
+<p>两者可独立使用，也可组合：EdgeClaw Box已适配松果派作为硬件载体之一。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-4"><h2>四、对面壁智能战略布局的意义</h2>
+<div class="card">
+<p>面壁智能形成了"端侧模型（MiniCPM）→ 理论（密度法则）→ 硬件（松果派）→ 智能体框架（EdgeClaw）→ 开源社区（OpenBMB）"的全链路布局：</p>
+<p>1. <strong>松果派</strong>提供端侧AI推理的硬件底座 2. <strong>EdgeClaw Box</strong>提供即插即用的企业级智能体方案 3. <strong>MiniCPM系列</strong>提供轻量高效的端侧模型能力 4. <strong>隐私路由中间件</strong>解决企业最关心的数据安全问题 5. 两条腿走路：开发者用松果派做原型，企业用EdgeClaw Box做落地</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-5"><h2>五、与中科领创的业务关联思考</h2>
+<div class="card">
+<p>1. <strong>存储配套机会</strong>：松果派基于NVIDIA Jetson，康盈半导体/普冉半导体的存储芯片可作为配套方案切入 2. <strong>边缘计算场景</strong>：中科领创的AIoT智能硬件方案 + EdgeClaw Box的边缘AI能力，可打包面向工业客户 3. <strong>国产替代空间</strong>：松果派定价未公布，若有国产化替代需求，可关注是否有适配国产算力平台的版本 4. <strong>本地化AI中控</strong>：EdgeClaw Box的"隐私AI智能体"概念，适合中科领创客户中对数据安全有高要求的场景（如军工/政务/金融）</p>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/AkJIdFiWdoyKv6xBjc3cO90Wnvg" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+<script>new Chart(document.getElementById("chart_efa550f9"),{type:"bar",data:{labels:["英伟达DGX Spark", "苹果Mac Mini", "松果派（Pinea Pi）"],datasets:[{label:"算力",data:[1000.0, 0, 275.0],backgroundColor:["#7170ff", "#27a644", "#d2991d"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"算力 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});</script>
+</body>
+</html>

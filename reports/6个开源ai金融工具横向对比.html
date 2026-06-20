@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6个开源AI金融工具横向对比 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">📈 金融工具 · feishu</div><h1>6个开源AI金融工具横向对比</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">6</div><div class="lbl">开给你的</div></div><div class="kpi"><div class="val ">5</div><div class="lbl">es上做A股回测），其余</div></div><div class="kpi"><div class="val ">10.61</div><div class="lbl">pSeek收益率最高(+</div></div><div class="kpi"><div class="val ">4.03</div><div class="lbl">)，Claude第二(+</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong>开给你的6个工具清单里，只有Vibe-Trading值得你现在装（装Hermes上做A股回测），其余5个要么不适合你的场景，要么你没法用。</div></div><div class="sec reveal" id="s-0"><h2>交叉调研报告：6个开源AI金融工具横向对比</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-29 | 对象类型：工具/软件 | 调研人：阿爪</blockquote>
+</div>
+<div class="sec reveal" id="s-1"><h2>一句话结论</h2>
+<div class="card">
+<p>开给你的6个工具清单里，只有Vibe-Trading值得你现在装（装Hermes上做A股回测），其余5个要么不适合你的场景，要么你没法用。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>各对象速览</h2>
+<div class="acc"><div class="acc-hdr">1. HKUDS/AI-Trader (star 18.4k) · 比赛擂台，不是工具</div><div class="acc-body">
+<p><strong>核心数据</strong>：港大数据科学实验室 · 2025年10月开源<strong>定位</strong>：让5个AI模型各拿\$10,000在纳斯达克100里PK交易的比赛平台。实测DeepSeek收益率最高(+10.61%)，Claude第二(+4.03%)。<strong>结论</strong>：你用不上。它是研究"AI模型谁交易更强"用的，不是你做A股的工具。需要Alpha Vantage + Jina AI两套API Key。</p>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">2. Vibe-Trading (star 4k+) · 真正能用的零代码量化工作台 [推荐]</div><div class="acc-body">
+<p><strong>核心数据</strong>：港大实验室30天做出 · 2026年4月开源<strong>定位</strong>：自然语言驱动的AI多智能体金融工作台。你说"写一个MACD金叉回测"，它自动写代码、跑回测、出报告。<strong>核心能力</strong>：</p>
+<ul><li>71个金融技能分7大类（数据源/策略/分析/资产/加密货币/资金流/工具）</li><li>29个预设专家团队（投资委员会/量化策略组/风控委员会等）</li><li>7种回测引擎 + 跨市场组合回测</li><li>支持A股/港股/美股/加密货币/期货/外汇</li><li>AKShare免费数据开箱即用</li><li>一键导出到TradingView/通达信/同花顺/MT5</li><li>pip install即可安装，支持Docker</li><li>自带MCP Server可集成到Hermes<strong>风险</strong>：AI生成的策略底层逻辑可能不透明，用户需理解杠杆、回撤等概念。有案例显示回测亮眼的策略一年后实盘暴跌58%。<strong>结论</strong>：最值得装的。A股AKShare免费直连，自然语言驱动，不用写代码就能跑策略回测。配合DeepSeek V3.2成本极低。</li></ul>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">3. TradingAgents (star 53k+) · 华尔街团队模拟器</div><div class="acc-body">
+<p><strong>核心数据</strong>：TauricResearch（清华+MIT背景） · 2024年12月开源<strong>定位</strong>：5.3万星标的超爆款。模拟华尔街交易团队——基本面分析师+情绪分析师+新闻分析师+技术分析师→多空辩论→交易员→风控→基金经理审批。<strong>核心能力</strong>：</p>
+<ul><li>5层角色架构：分析师团队(4人) → 研究团队(辩论) → 交易员 → 风控 → 基金经理</li><li>基于LangGraph多智能体编排</li><li>苹果股票模拟交易实现+26.6%回报<strong>门槛</strong>：需要FinnHub API Key + OpenAI API Key。框架API调用量大，成本不低。A股不直接支持。<strong>结论</strong>：研究价值高，但门槛高。不适合你的日常A股场景。</li></ul>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">4. Dexter (star 9.8k) · 财报深度研究Agent</div><div class="acc-body">
+<p><strong>核心数据</strong>：virattt · TypeScript+Bun运行时<strong>定位</strong>："金融领域的Claude Code"——自动分解复杂金融问题→规划→执行→自我验证。核心创新是LLM-as-judge自我纠错。<strong>核心能力</strong>：</p>
+<ul><li>多Agent架构：规划Agent→执行Agent→验证Agent→回答Agent</li><li>自动检查工作质量，不满足条件继续迭代</li><li>数据源：Financial Datasets API<strong>门槛</strong>：Bun运行时Windows打包麻烦。数据源Financial Datasets API以美股为主，A股覆盖不明确。需要OpenAI + Financial Datasets + Exa三套API Key。<strong>结论</strong>：美股财报研究工具，对A股场景不适用。</li></ul>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">5. anthropics/financial-services · 华尔街投行工具包</div><div class="acc-body">
+<p><strong>核心数据</strong>：Anthropic官方 · 2026年5月发布 · 10个Agent + 41个技能<strong>定位</strong>：为投行/私募/股权研究/财富管理/基金行政设计的AI Agent工具集。<strong>核心能力</strong>：</p>
+<ul><li>10个Agent：Pitch Agent、Market Researcher、Earnings Reviewer、Model Builder、GL Reconciler、KYC Screener等</li><li>11个专业数据源连接器（Daloopa/Morningstar/S&P Global/FactSet/Moody's/LSEG/PitchBook等，每个需单独付费订阅）</li><li>两种部署：Claude Cowork插件或Managed Agents API<strong>结论</strong>：不装。华尔街投行专用，数据源全是机构级付费服务，A股完全不支持。需要Claude生态。</li></ul>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">6. anthropics/knowledge-work-plugins (star 17.8k) · 通用知识工作者插件</div><div class="acc-body">
+<p><strong>核心数据</strong>：Anthropic官方 · 11个插件<strong>定位</strong>：Claude Cowork/Code的插件包。里面有个finance插件能做账目对账/财务报表/审计支持。<strong>核心能力</strong>：</p>
+<ul><li>11个插件：productivity/sales/customer-support/product-management/marketing/legal/finance/data等</li><li>finance插件：记账分录、账目对账、财务报表、差异分析、月度结账、审计支持</li><li>连接Snowflake/Databricks/BigQuery等企业数据仓库<strong>结论</strong>：需要Claude Code才能装。如果你在用Claude Code，finance和data插件值得装来对接金蝶ERP做财务分析。Hermes不兼容。</li></ul>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-3"><h2>横向对比表</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class="">Vibe-Trading</th>
+<th class="">AI-Trader</th>
+<th class="">TradingAgents</th>
+<th class="">Dexter</th>
+<th class="">anthropics/financial</th>
+<th class="">anthropics/knowledge</th>
+</tr>
+<tr>
+<td class="">你的A股能用</td>
+<td class="gr">是(AKShare免费)</td>
+<td class="">否(仅纳斯达克100)</td>
+<td class="">需自配数据</td>
+<td class="">否(美股为主)</td>
+<td class="">否(华尔街数据商)</td>
+<td class="">否(Hermes不兼容)</td>
+</tr>
+<tr>
+<td class="">安装复杂度</td>
+<td class="">低(pip install 5分钟)</td>
+<td class="">中(3个API+1个Key)</td>
+<td class="">中(FinnHub+OpenAI)</td>
+<td class="">中(Bun+3个API)</td>
+<td class="">高(需Claude生态)</td>
+<td class="">中(需Claude生态)</td>
+</tr>
+<tr>
+<td class="">自然语言驱动</td>
+<td class="">是(一句话出策略)</td>
+<td class="">否(配置文件模式)</td>
+<td class="">命令行参数</td>
+<td class="">问题问答</td>
+<td class="">命令触发</td>
+<td class="">slash命令</td>
+</tr>
+<tr>
+<td class="">回测能力</td>
+<td class="">7引擎+跨市场组合</td>
+<td class="">历史回放回测</td>
+<td class="">模拟交易</td>
+<td class="">不做交易</td>
+<td class="">只做文档工作</td>
+<td class="">通用不交易</td>
+</tr>
+<tr>
+<td class="">适合平台</td>
+<td class="hi">Hermes(最佳)</td>
+<td class="">独立项目</td>
+<td class="">独立项目</td>
+<td class="">Hermes</td>
+<td class="">Claude Cowork</td>
+<td class="">Claude Code</td>
+</tr>
+<tr>
+<td class="">实盘/研究</td>
+<td class="">回测</td>
+<td class="">研究</td>
+<td class="">研究</td>
+<td class="">研究</td>
+<td class="">文档自动化</td>
+<td class="">文档自动化</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-4"><h2>综合判断</h2>
+<div class="card">
+<p><strong>只推荐装一个：Vibe-Trading</strong>。理由：</p>
+<ul><li>A股数据源开箱即用（AKShare免费，tushare可选）</li><li>自然语言驱动，你不用写代码</li><li>pip install 5分钟，Hermes可以直接当MCP工具用</li><li>跟DeepSeek V3.2搭配成本极低（官方推荐配置）</li><li>回测后能导出到通达信/同花顺格式，接A股券商没问题</li></ul>
+<p><strong>其他5个不装的原因</strong>：</p>
+<ul><li>AI-Trader：比赛平台，你不需要知道AI之间谁交易更强</li><li>TradingAgents：研究价值高但门槛高（FinnHub+OpenAI Key），A股不直连，成本不便宜</li><li>Dexter：美股财报分析，Bun运行时Windows打包麻烦，Financial Datasets API不确认支持A股</li><li>anthropics/financial-services：华尔街投行专用，每个数据连接器都要付费订阅</li><li>anthropics/knowledge-work-plugins：Claude Code专属插件，你没有Claude Code的话用不了</li></ul>
+<hr>
+</div>
+<div class="sec reveal" id="s-5"><h2>数据源统计</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">数据源</th>
+<th class="">类型</th>
+<th class="">可信度</th>
+</tr>
+<tr>
+<td class="">GitHub (各仓库README)</td>
+<td class="">官方</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">AI-Bot.cn</td>
+<td class="">工具导航</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">新浪财经/36氪/雪球</td>
+<td class="">财经媒体</td>
+<td class="">中高</td>
+</tr>
+<tr>
+<td class="">知乎/CSDN</td>
+<td class="">技术社区</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">cnblogs技术博客</td>
+<td class="">开发者博客</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">BAAI学术平台</td>
+<td class="">学术</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">Wundertrading</td>
+<td class="">交易社区</td>
+<td class="">中</td>
+</tr>
+</table></div>
+</div>
+<div class="sec reveal" id="s-6"><h2>风险提示</h2>
+<div class="card">
+<ul><li>Vibe-Trading的策略回测结果和实盘表现可能有显著差异，AI生成策略需理解底层逻辑</li><li>各工具数据均来自公开信源，不构成投资建议</li><li>信源以中文财经媒体和GitHub为主，部分工具可能已有版本更新</li></ul>
+</div>
+<div class="sec reveal" id="s-7"><h2>下一步动作</h2>
+<div class="card">
+<p>建议先装Vibe-Trading做A股回测验证。如效果满意，再考虑是否装anthropics/knowledge-work-plugins的finance插件(需Claude Code)。</p>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/ZqgwdhLgForuuhx56L7c7x59nog" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+
+</body>
+</html>

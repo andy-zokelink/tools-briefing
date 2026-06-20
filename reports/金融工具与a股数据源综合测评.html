@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金融工具与A股数据源综合测评 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">📈 金融工具 · feishu</div><h1>金融工具与A股数据源综合测评</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">5</div><div class="lbl">MCP可做可选升级，其余</div></div><div class="kpi"><div class="val ">4</div><div class="lbl">可选升级，其余5个工具和</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>Vibe-Trading + AKShare（内置）是目前唯一适合你的组合，无需安装任何其他数据源。</strong> Tushare Pro MCP可做可选升级，其余5个工具和4个数据源对你当前场景均不适用。</div></div><div class="sec reveal" id="s-0"><h2>综合测评报告：AI金融工具 + A股数据源选型</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-30 | 对象类型：工具+数据源 | 调研人：阿爪</blockquote>
+</div>
+<div class="sec reveal" id="s-1"><h2>一句话结论</h2>
+<div class="card">
+<p><strong>Vibe-Trading + AKShare（内置）是目前唯一适合你的组合，无需安装任何其他数据源。</strong> Tushare Pro MCP可做可选升级，其余5个工具和4个数据源对你当前场景均不适用。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>调研框架</h2>
+<div class="card">
+<p>本次测评回答一个核心问题：<strong>作为中科领创的老板（A股关注者、Hermes用户、无GPU环境），用什么工具+什么数据源组合，能最低成本地做A股行情分析/策略回测？</strong></p>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">对比维度</th>
+<th class="">判断标准</th>
+</tr>
+<tr>
+<td class="">A股支持</td>
+<td class="">必须直接支持A股行情/数据</td>
+</tr>
+<tr>
+<td class="">安装即用</td>
+<td class="">在Windows+GitBash环境下无需深层配置</td>
+</tr>
+<tr>
+<td class="">自然语言驱动</td>
+<td class="">不用写代码，说人话就出结果</td>
+</tr>
+<tr>
+<td class="">Hermes兼容</td>
+<td class="">可作为MCP工具或CLI直接集成到Hermes</td>
+</tr>
+<tr>
+<td class="">成本</td>
+<td class="gr">免费或极低（不使用API付费调用）</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-3"><h2>各工具速览</h2>
+<div class="card"><h3>AI交易层（6个工具）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">工具</th>
+<th class="">定位</th>
+<th class="">核心数据源</th>
+<th class="">A股支持</th>
+<th class="">安装</th>
+</tr>
+<tr>
+<td class=""><strong>Vibe-Trading</strong> (4k star)</td>
+<td class="">零代码量化工作台</td>
+<td class="">AKShare(内置) + yfinance + OKX</td>
+<td class="">是</td>
+<td class="">pip install</td>
+</tr>
+<tr>
+<td class="">HKUDS/AI-Trader (18k star)</td>
+<td class="">AI交易比赛平台</td>
+<td class="">Alpha Vantage + Jina AI</td>
+<td class="">否(仅纳斯达克100)</td>
+<td class="">git clone+3个API</td>
+</tr>
+<tr>
+<td class="">TradingAgents (53k star)</td>
+<td class="">华尔街团队模拟器</td>
+<td class="">FinnHub</td>
+<td class="">否(需自配)</td>
+<td class="">git clone+FinnHub+OpenAI</td>
+</tr>
+<tr>
+<td class="">Dexter (10k star)</td>
+<td class="">财报深度研究Agent</td>
+<td class="">Financial Datasets API</td>
+<td class="">否(美股财报)</td>
+<td class="">Bun+3个API</td>
+</tr>
+<tr>
+<td class="">anthropics/financial-services</td>
+<td class="">华尔街投行工具包</td>
+<td class="">Daloopa/Morningstar/S&P等</td>
+<td class="">否(机构付费数据)</td>
+<td class="">Claude生态</td>
+</tr>
+<tr>
+<td class="">anthropics/knowledge-work-plugins (18k star)</td>
+<td class="">通用知识工作者插件</td>
+<td class="">Snowflake/Databricks/企业系统</td>
+<td class="">否(Hermes不兼容)</td>
+<td class="">Claude生态</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>数据源层（Python开源库）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">数据源</th>
+<th class="">数据覆盖</th>
+<th class="">实时性</th>
+<th class="">A股完善度</th>
+<th class="">安装</th>
+</tr>
+<tr>
+<td class=""><strong>AKShare</strong></td>
+<td class="">股票/基金/期货/宏观/加密货币</td>
+<td class="">中等(\~500ms延迟)</td>
+<td class="">全</td>
+<td class="">pip install</td>
+</tr>
+<tr>
+<td class=""><strong>Tushare Pro</strong></td>
+<td class="">A股/港股/美股/期货/宏观/龙虎榜</td>
+<td class="">高</td>
+<td class="">全(需积分)</td>
+<td class="">pip install+Token</td>
+</tr>
+<tr>
+<td class="">efinance</td>
+<td class="">A股实时行情</td>
+<td class="">高</td>
+<td class="">基础行情</td>
+<td class="">pip install</td>
+</tr>
+<tr>
+<td class="">qstock</td>
+<td class="">A股行情/选股/回测</td>
+<td class="">中</td>
+<td class="">中(部分需付费)</td>
+<td class="">pip install</td>
+</tr>
+<tr>
+<td class="">adata</td>
+<td class="">A股行情/概念/北向资金</td>
+<td class="">中</td>
+<td class="">A股专精</td>
+<td class="">pip install</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>数据源层（MCP协议）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">MCP服务</th>
+<th class="">数据源</th>
+<th class="">A股覆盖</th>
+<th class="">费用</th>
+<th class="">集成难度</th>
+</tr>
+<tr>
+<td class=""><strong>Tushare Pro MCP Server</strong></td>
+<td class="">Tushare Pro</td>
+<td class="">A股/港股/美股/宏观</td>
+<td class="gr">免费版有频控</td>
+<td class="">直接配config.yaml</td>
+</tr>
+<tr>
+<td class="">Stock Data MCP (AKShare)</td>
+<td class="">AKShare</td>
+<td class="">A股/期货/基金</td>
+<td class="gr">免费</td>
+<td class="">需找MCP封装</td>
+</tr>
+<tr>
+<td class="">Finance Agent MCP</td>
+<td class="">全球市场</td>
+<td class="">国际</td>
+<td class="gr">免费</td>
+<td class="">需找MCP封装</td>
+</tr>
+<tr>
+<td class="">China Stock MCP</td>
+<td class="">A股</td>
+<td class="">行情+基本面</td>
+<td class="gr">免费</td>
+<td class="">需找MCP封装</td>
+</tr>
+</table></div>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-4"><h2>交叉分析</h2>
+<div class="card"><h3>核心发现1：AKShare一拖三满足所有A股需求</h3>
+<p>AKShare是当前A股开源数据源的"事实标准"：</p>
+<ul><li>GitHub 8000+ star，持续更新超过5年</li><li>覆盖A股/期货/基金/债券/宏观全品类</li><li>数据来源：东方财富+新浪财经+同花顺等多源融合</li><li>Vibe-Trading内置AKShare作为数据源，无需额外配置</li></ul>
+<p><strong>唯一短板</strong>：实时接口延迟约500ms，不适合高频交易。但对于你做策略回测、趋势判断、量价分析来说完全够用。</p>
+</div>
+<div class="card"><h3>核心发现2：Vibe-Trading是唯一能把这些数据用起来的工具</h3>
+<p>Vibe-Trading是HKUDS系列里唯一面向终端用户的工具，不同于AI-Trader（比赛平台）和TradingAgents（研究框架）：</p>
+<ul><li>自然语言驱动：你说"写一个MACD金叉回测" → 自动写代码+跑回测+出报告</li><li>71个金融技能：策略生成/因子分析/回测/跨市场组合/风控</li><li>29个专家团队：投资委员会/量化策略组/风控组等</li><li>7大回测引擎：A股/港股/美股/加密货币/期货/外汇全覆盖</li><li>一键导出到通达信/同花顺格式</li><li>自带MCP Server可直接集成到Hermes</li></ul>
+</div>
+<div class="card"><h3>核心发现3：数据源选型的马太效应</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">数据源</th>
+<th class="">安装量</th>
+<th class="">社区活跃度</th>
+<th class="">维护频率</th>
+<th class="">综合评价</th>
+</tr>
+<tr>
+<td class=""><strong>AKShare</strong></td>
+<td class="hi">最高</td>
+<td class="">最活跃</td>
+<td class="">持续更新</td>
+<td class="">⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td class=""><strong>Tushare Pro</strong></td>
+<td class="">高</td>
+<td class="">活跃</td>
+<td class="">持续</td>
+<td class="">⭐⭐⭐⭐（付费限制）</td>
+</tr>
+<tr>
+<td class="">efinance</td>
+<td class="">中</td>
+<td class="">低</td>
+<td class="">低频</td>
+<td class="">⭐⭐⭐</td>
+</tr>
+<tr>
+<td class="">qstock</td>
+<td class="">中低</td>
+<td class="">低</td>
+<td class="">低频</td>
+<td class="">⭐⭐⭐</td>
+</tr>
+<tr>
+<td class="">adata</td>
+<td class="">低</td>
+<td class="">低</td>
+<td class="">低频</td>
+<td class="">⭐⭐⭐</td>
+</tr>
+</table></div>
+<p>AKShare和Tushare Pro是唯二值得考虑的。efinance/qstock/adata社区太小，数据源单一（大多也只爬东方财富），出问题没人解决。</p>
+</div>
+<div class="card"><h3>核心发现4：MCP数据源 vs 工具内置数据源</h3>
+<p>你当前在Hermes上，理论上Tushare Pro MCP Server可以直配到config.yaml，让Hermes直接调A股数据。但这<strong>不如用Vibe-Trading</strong>，因为：</p>
+<ul><li>Vibe-Trading自带AKShare，天然支持A股</li><li>你不需要额外装Tushare Pro MCP + 申请Token + 管理积分</li><li>Vibe-Trading还有回测引擎、策略生成、多Agent团队等能力</li><li>Vibe-Trading本身也暴露MCP工具给Hermes，一箭双雕</li></ul>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-5"><h2>场景推荐</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">场景</th>
+<th class="">推荐组合</th>
+<th class="">理由</th>
+</tr>
+<tr>
+<td class="">A股行情查看与量价分析</td>
+<td class=""><strong>Vibe-Trading</strong> (内置AKShare)</td>
+<td class="">一句话出结果，不用写代码</td>
+</tr>
+<tr>
+<td class="">A股策略回测</td>
+<td class=""><strong>Vibe-Trading</strong> (7大回测引擎)</td>
+<td class="">自然语言驱动，免编程</td>
+</tr>
+<tr>
+<td class="">每日市场扫描</td>
+<td class=""><strong>现有VPC量价罗盘</strong></td>
+<td class="">已跑通，无需变更</td>
+</tr>
+<tr>
+<td class="">深度财务分析</td>
+<td class=""><strong>Kimi会员+同花顺</strong>（已有资源）</td>
+<td class="gr">免费，自然语言查财报</td>
+</tr>
+<tr>
+<td class="">需要更精准的A股数据</td>
+<td class=""><strong>Vibe-Trading + Tushare Pro MCP</strong>（可选升级）</td>
+<td class="">AKShare做日常，Tushare做精确验证</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-6"><h2>综合判断</h2>
+<div class="card">
+<p><strong>装一个Vibe-Trading就够了。</strong> 它自带A股数据源（AKShare），自然语言驱动，pip install 5分钟，能回测能分析能导出，还剩了你去配Tushare Token/积分/频控的麻烦。其他工具和数据源要么不支持A股，要么需要你装Claude生态，要么社区太小没人维护。</p>
+<p><strong>一步行动建议</strong>：pip install vibe-trading-ai，跑一个A股回测验证效果。验证通过后，把Hermes的MCP配置指向Vibe-Trading，日常A股分析直接在Hermes里完成。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-7"><h2>数据源统计</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">数据源</th>
+<th class="">类型</th>
+<th class="">可信度</th>
+</tr>
+<tr>
+<td class="">GitHub (各项目README)</td>
+<td class="">官方</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">juejin.cn技术文章</td>
+<td class="">技术社区</td>
+<td class="">中高</td>
+</tr>
+<tr>
+<td class="">blog.gitcode.com</td>
+<td class="">技术博客</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">gitee.com</td>
+<td class="">代码托管</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">ai-bot.cn</td>
+<td class="">工具导航</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">同花顺/新浪财经</td>
+<td class="">财经媒体</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">bilibili</td>
+<td class="">视频平台</td>
+<td class="">中低</td>
+</tr>
+</table></div>
+</div>
+<div class="sec reveal" id="s-8"><h2>风险提示</h2>
+<div class="card">
+<ul><li>AKShare的实时数据有约500ms延迟，不影响回测/趋势判断，影响高频交易</li><li>Tushare免费版有频率限制（100次/分钟），需注意调用节奏</li><li>Vibe-Trading是2026年4月新项目，仍在快速迭代中，可能有API变化</li><li>所有AI生成的策略策略回测结果和实盘表现可能有差异</li></ul>
+</div>
+<div class="sec reveal" id="s-9"><h2>下一步动作</h2>
+<div class="card">
+<p>建议pip install vibe-trading-ai做A股回测验证。如OK，再考虑是否升级Tushare Pro MCP。</p>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/AjCQdagY5oiYi2xmFUvceAHAnAc" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+
+</body>
+</html>

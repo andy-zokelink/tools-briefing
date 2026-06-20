@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe-Trading竞品横向对比 · AI 调研中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
+  #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
+  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+  nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+  nav .logo span{color:var(--accent-bright)}
+  nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
+  .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
+  .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center}
+  .kpi .val{font-size:1.8rem;font-weight:700;letter-spacing:-.03em;color:var(--text);margin-bottom:3px}
+  .kpi .val.accent{color:var(--accent-bright)}.kpi .val.green{color:var(--green)}
+  .kpi .lbl{font-size:11px;color:var(--text3)}
+  .sec{max-width:1100px;margin:0 auto 56px;padding:0 24px}
+  .sec h2{font-size:1.3rem;font-weight:600;letter-spacing:-.02em;color:var(--text);margin-bottom:6px}
+  .sec .sub{font-size:12px;color:var(--text3);margin-bottom:20px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:12px}
+  .card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px}
+  .card p,.card li{font-size:13px;color:var(--text2)}
+  ul{list-style:none;padding:0}li{padding:3px 0 3px 16px;color:var(--text2);font-size:13px;position:relative}
+  li::before{content:"·";color:var(--accent-bright);font-weight:700;position:absolute;left:0}
+  .tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .tbl th{text-align:left;padding:7px 10px;color:var(--text3);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--border)}
+  .tbl td{padding:7px 10px;color:var(--text2);border-bottom:1px solid var(--border-subtle)}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
+  .acc{margin-bottom:12px}
+  .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
+  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
+  .acc.open .acc-hdr::after{content:"−"}
+  .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
+  .acc.open .acc-body{display:block}
+  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight strong{color:var(--accent-bright)}
+  .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
+  .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
+  .chart-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
+  .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
+  .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
+  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
+  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
+  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
+  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
+  a{color:var(--accent-bright);text-decoration:none}
+  hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
+  footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
+  ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
+  .chart-label{font-size:11px;color:var(--text4);text-align:center;margin-top:8px;font-weight:500}
+
+/* Injected top-banner offset */
+body { padding-top: 40px; }
+nav { top: 40px; }
+
+</style>
+</head>
+<body>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
+  <span style="color:rgba(255,255,255,0.08)">|</span>
+  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+</div>
+
+<canvas id="particles"></canvas><div id="glow"></div>
+<nav><div class="inner"><a href="index.html" style="text-decoration:none"><div class="logo"><span>◈</span> AI 调研中心</div></a><a href="index.html">← 目录</a></div></nav>
+<header class="hero"><div class="badge">📈 金融工具 · feishu</div><h1>Vibe-Trading竞品横向对比</h1><p><span class="tag p">飞书</span> </p></header>
+<section class="kpi-row"><div class="kpi"><div class="val ">64</div><div class="lbl">**一句话**：</div></div><div class="kpi"><div class="val ">10</div><div class="lbl">loomberg替代"，</div></div><div class="kpi"><div class="val ">53</div><div class="lbl">adingAgents（</div></div><div class="kpi"><div class="val ">4</div><div class="lbl">ibe-Trading（</div></div></section><div class="sec reveal"><div class="insight"><strong>💡 核心结论：</strong><strong>Vibe-Trading是当前最适合你的AI量化工具，没有之一。</strong> 同类工具要么不支持A股（Alphabench/Composer），要么太偏数据终端而非策略生成（OpenBB/FinceptTerminal），要么门槛太高（TradingAgents/QuantConnect）。</div></div><div class="sec reveal" id="s-0"><h2>横向对比报告：Vibe-Trading vs 同类AI量化工具</h2>
+<div class="card">
+<blockquote>调研日期：2026-05-30 | 对象类型：工具 | 调研人：阿爪</blockquote>
+</div>
+<div class="sec reveal" id="s-1"><h2>一句话结论</h2>
+<div class="card">
+<p><strong>Vibe-Trading是当前最适合你的AI量化工具，没有之一。</strong> 同类工具要么不支持A股（Alphabench/Composer），要么太偏数据终端而非策略生成（OpenBB/FinceptTerminal），要么门槛太高（TradingAgents/QuantConnect）。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-2"><h2>竞品全景扫描</h2>
+<div class="card"><h3>第一梯队：零代码自然语言量化（最直接的竞品）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">工具</th>
+<th class="">定位</th>
+<th class="">开源</th>
+<th class="">A股</th>
+<th class="">自然语言</th>
+<th class="">回测</th>
+<th class="">安装方式</th>
+<th class="">Star</th>
+</tr>
+<tr>
+<td class=""><strong>Vibe-Trading</strong></td>
+<td class="">AI多智能体金融工作台</td>
+<td class="">是</td>
+<td class="">AKShare</td>
+<td class="">是</td>
+<td class="">7引擎</td>
+<td class="">pip install</td>
+<td class="">4k</td>
+</tr>
+<tr>
+<td class="">Alphabench</td>
+<td class="">AI原生量化研究平台</td>
+<td class="">是</td>
+<td class="">否(美股为主)</td>
+<td class="">是</td>
+<td class="">有</td>
+<td class="">pip install</td>
+<td class="">较新</td>
+</tr>
+<tr>
+<td class="">Composer</td>
+<td class="">零代码量化策略平台</td>
+<td class="">否</td>
+<td class="">否(美股/ETF)</td>
+<td class="">拖拽式</td>
+<td class="">有</td>
+<td class="">网页SaaS</td>
+<td class="">商业产品</td>
+</tr>
+</table></div>
+</div>
+<div class="card"><h3>第二梯队：开源金融终端（侧重数据而非策略）</h3>
+<div class="chart-wrap"><canvas id="chart_703ead31"></canvas><div class="chart-label">Star 对比</div></div>
+</div>
+<div class="card"><h3>第三梯队：专业量化框架（门槛高，需编程）</h3>
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">工具</th>
+<th class="">定位</th>
+<th class="">开源</th>
+<th class="">A股</th>
+<th class="">自然语言</th>
+<th class="">回测</th>
+<th class="">安装方式</th>
+<th class="">Star</th>
+</tr>
+<tr>
+<td class="">TradingAgents</td>
+<td class="">多Agent交易框架</td>
+<td class="">是</td>
+<td class="">需自配</td>
+<td class="">否</td>
+<td class="">模拟交易</td>
+<td class="">git clone</td>
+<td class="">53k</td>
+</tr>
+<tr>
+<td class="">QuantConnect</td>
+<td class="">云端量化平台</td>
+<td class="">部分</td>
+<td class="">需自配</td>
+<td class="">否</td>
+<td class="">Lean引擎</td>
+<td class="">网页SaaS</td>
+<td class="">商业</td>
+</tr>
+<tr>
+<td class="">NautilusTrader</td>
+<td class="">高性能算法交易</td>
+<td class="">是</td>
+<td class="">需自配</td>
+<td class="">否</td>
+<td class="">事件驱动</td>
+<td class="">pip install</td>
+<td class="">高</td>
+</tr>
+</table></div>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-3"><h2>各竞品深度画像</h2>
+<div class="acc"><div class="acc-hdr">1. Alphabench — 最像Vibe-Trading但缺A股</div><div class="acc-body">
+<p><strong>一句话</strong>：AI原生量化研究平台，说人话出策略跑回测，和Vibe-Trading思路最接近。</p>
+<p><strong>核心能力</strong>：</p>
+<ul><li>自然语言→策略描述→自动获取历史数据→回测→出专业分析报告</li><li>号称"all in under a minute"</li><li>同样是Python生态，pip install</li></ul>
+<p><strong>差距</strong>：</p>
+<ul><li>没有A股数据源（主要支持美股）</li><li>没有多Agent团队协作功能</li><li>社区远小于Vibe-Trading</li><li>没有MCP Server，不能直接集成到Hermes</li></ul>
+<p><strong>结论</strong>：思路一致但A股不支持，不用。</p>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">2. Composer — 商业化最成熟但锁美股</div><div class="acc-body">
+<p><strong>一句话</strong>：美国最火的零代码量化SaaS平台，拖拽式策略构建器。</p>
+<p><strong>核心能力</strong>：</p>
+<ul><li>拖拽式策略构建器（像搭积木）</li><li>集成回测和自动执行</li><li>实时监控和再平衡</li></ul>
+<p><strong>差距</strong>：</p>
+<ul><li>商业产品，付费（\$29-99/月）</li><li>仅支持美股和ETF</li><li>拖拽式不如自然语言灵活</li><li>不开源，不能本地部署</li><li>闭源，不能自定义扩展</li></ul>
+<p><strong>结论</strong>：A股不支持+付费+闭源，不用。</p>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">3. OpenBB ⭐64k — 最成熟的开源金融数据平台</div><div class="acc-body">
+<p><strong>一句话</strong>：64k星标的开源金融数据平台，定位是Bloomberg Terminal的开源替代，不是策略工具。</p>
+<p><strong>核心能力</strong>：</p>
+<ul><li>统一金融数据接口（股票/期权/加密货币/宏观）</li><li>自带AI Copilot做分析</li><li>模块化架构，可扩展</li><li>64k star，社区极活跃</li></ul>
+<p><strong>差距</strong>：</p>
+<ul><li>定位是<strong>数据平台</strong>，不是策略生成器</li><li>回测需要自己写代码或集成Backtrader</li><li>A股数据源需要自己配</li><li>没有自然语言→策略的能力</li><li>学习曲线比Vibe-Trading陡</li></ul>
+<p><strong>但</strong>：OpenBB的AI Copilot可以做金融数据分析、报告生成。如果你的需求是"查数据+做分析"而非"写策略跑回测"，OpenBB + AI Copilot是更强的选择。</p>
+<p><strong>结论</strong>：和Vibe-Trading不完全是竞品，各做各的事。OpenBB做数据层，Vibe-Trading做策略层。</p>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">4. FinceptTerminal ⭐10k — 免费的Bloomberg杀手</div><div class="acc-body">
+<p><strong>一句话</strong>：C++20开发的开源金融终端，标榜"免费Bloomberg替代"，10k star。</p>
+<p><strong>核心能力</strong>：</p>
+<ul><li>C++20原生高性能</li><li>实时市场数据、新闻聚合</li><li>AI驱动研究</li><li>文本终端界面（TUI）</li></ul>
+<p><strong>差距</strong>：</p>
+<ul><li>纯终端界面，没有Web UI</li><li>不面向A股</li><li>偏数据展示，不偏策略生成</li><li>安装配置比Vibe-Trading复杂</li><li>C++生态，扩展门槛高</li></ul>
+<p><strong>结论</strong>：你用不上。Bloomberg替代品是给机构交易员用的，跟你做A股策略不是一回事。</p>
+<hr>
+</div>
+<div class="acc"><div class="acc-hdr">5. dailystockanalysis — A股能用但太简陋</div><div class="acc-body">
+<p><strong>一句话</strong>：覆盖A股/港股/美股的自动股票分析器，每天自动生成决策仪表盘。</p>
+<p><strong>核心能力</strong>：</p>
+<ul><li>覆盖A股/港股/美股</li><li>每天自动生成决策仪表盘</li><li>通过GitHub Actions推送到微信/Telegram/邮箱</li><li>免费</li></ul>
+<p><strong>差距</strong>：</p>
+<ul><li>比Vibe-Trading简陋太多</li><li>预置分析逻辑，不能自定义策略</li><li>没有自然语言交互</li><li>不能回测</li><li>不能导出到交易平台</li></ul>
+<p><strong>结论</strong>：能用但太简单，跟Vibe-Trading不在一个量级。</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-4"><h2>横向对比总表</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">维度</th>
+<th class=""><strong>Vibe-Trading</strong></th>
+<th class="">Alphabench</th>
+<th class="">Composer</th>
+<th class="">OpenBB</th>
+<th class="">FinceptTerminal</th>
+<th class="">TradingAgents</th>
+</tr>
+<tr>
+<td class=""><strong>你的A股能用</strong></td>
+<td class="">是(AKShare)</td>
+<td class="">否(美股)</td>
+<td class="">否(美股/ETF)</td>
+<td class="">需自配</td>
+<td class="">需自配</td>
+<td class="">需自配</td>
+</tr>
+<tr>
+<td class=""><strong>自然语言驱动</strong></td>
+<td class="">是</td>
+<td class="">是</td>
+<td class="">拖拽式</td>
+<td class="">Copilot辅助</td>
+<td class="">有限</td>
+<td class="">否</td>
+</tr>
+<tr>
+<td class=""><strong>零代码</strong></td>
+<td class="">是</td>
+<td class="">是</td>
+<td class="">是</td>
+<td class="">需编程</td>
+<td class="">需编程</td>
+<td class="">需编程</td>
+</tr>
+<tr>
+<td class=""><strong>回测引擎</strong></td>
+<td class="">7种+蒙特卡洛</td>
+<td class="">有</td>
+<td class="">有</td>
+<td class="">需集成</td>
+<td class="">有限</td>
+<td class="">模拟交易</td>
+</tr>
+<tr>
+<td class=""><strong>多Agent团队</strong></td>
+<td class="">29个预设</td>
+<td class="">无</td>
+<td class="">无</td>
+<td class="">无</td>
+<td class="">无</td>
+<td class="">5层角色</td>
+</tr>
+<tr>
+<td class=""><strong>Hermes兼容</strong></td>
+<td class="">MCP Server</td>
+<td class="">无</td>
+<td class="">无</td>
+<td class="">API</td>
+<td class="">无</td>
+<td class="">无</td>
+</tr>
+<tr>
+<td class=""><strong>安装门槛</strong></td>
+<td class="">pip 5分钟</td>
+<td class="">pip</td>
+<td class="">网页注册</td>
+<td class="">pip</td>
+<td class="">git clone</td>
+<td class="">git clone</td>
+</tr>
+<tr>
+<td class=""><strong>A股导出</strong></td>
+<td class="">通达信/同花顺</td>
+<td class="">无</td>
+<td class="">无</td>
+<td class="">需自配</td>
+<td class="">无</td>
+<td class="">无</td>
+</tr>
+<tr>
+<td class=""><strong>价格</strong></td>
+<td class="gr">免费开源</td>
+<td class="gr">免费开源</td>
+<td class="">\$29-99/月</td>
+<td class="gr">免费+企业版</td>
+<td class="gr">免费开源</td>
+<td class="gr">免费开源</td>
+</tr>
+<tr>
+<td class=""><strong>社区热度</strong></td>
+<td class="">4k star</td>
+<td class="">较新</td>
+<td class="">商业</td>
+<td class="">64k star</td>
+<td class="">10k star</td>
+<td class="">53k star</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-5"><h2>交叉分析</h2>
+<div class="card"><h3>关键发现1：Vibe-Trading在A股场景下没有直接竞品</h3>
+<p>所有零代码自然语言驱动工具（Alphabench、Composer）都只支持美股/ETF，不支持A股。支持A股的工具（dailystockanalysis）又太简陋。<strong>Vibe-Trading是唯一把"自然语言+零代码+回测+A股导出"串起来的产品。</strong></p>
+</div>
+<div class="card"><h3>关键发现2：OpenBB是唯一值得关注的补充</h3>
+<p>OpenBB（64k star）在数据层碾压Vibe-Trading——统一的数据接口、AI Copilot分析、极活跃的社区。但它定位是数据平台不是策略工具。<strong>Vibe-Trading做策略，OpenBB做数据，两者互补。</strong> 不过你现在有Kimi+同花顺做数据查询，所以OpenBB暂时也不需要装。</p>
+</div>
+<div class="card"><h3>关键发现3：TradingAgents是Vibe-Trading的"学术版"</h3>
+<p>同一个领域，TradingAgents（53k star）走学术路线——多角色模拟、论文支撑、研究框架。Vibe-Trading（4k star）走产品路线——开箱即用、自然语言、Web UI。两者不直接竞争，Vibe-Trading更适合你的场景。</p>
+<hr>
+</div>
+</div>
+<div class="sec reveal" id="s-6"><h2>场景推荐</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">你的需求</th>
+<th class="">推荐</th>
+<th class="">不推荐</th>
+</tr>
+<tr>
+<td class="">A股策略回测</td>
+<td class=""><strong>Vibe-Trading</strong></td>
+<td class="">其他都不支持A股</td>
+</tr>
+<tr>
+<td class="">每日市场数据采集</td>
+<td class=""><strong>现有VPC（量价罗盘）</strong></td>
+<td class="">不需要换</td>
+</tr>
+<tr>
+<td class="">深度金融数据查询</td>
+<td class=""><strong>Kimi+同花顺（已有）</strong></td>
+<td class="">OpenBB（等下再考虑）</td>
+</tr>
+<tr>
+<td class="">查A股新闻/公告</td>
+<td class=""><strong>秘塔搜索（已有）</strong></td>
+<td class="">FinceptTerminal</td>
+</tr>
+<tr>
+<td class="">复杂量化研究</td>
+<td class=""><strong>Vibe-Trading</strong></td>
+<td class="">Alphabench（缺A股）</td>
+</tr>
+</table></div>
+<hr>
+</div>
+<div class="sec reveal" id="s-7"><h2>综合判断</h2>
+<div class="card">
+<p><strong>Vibe-Trading在A股零代码量化场景下没有真正的竞品。</strong> 其他工具要么不支持A股，要么太偏数据终端而非策略生成，要么门槛太高需要编程。你已经选对了——装Vibe-Trading跑起来是最优解。</p>
+<p>如果你想拓宽能力边界，下一步可以考虑OpenBB（数据层）+ Vibe-Trading（策略层）的组合。但那是以后的事，先跑通Vibe-Trading再说。</p>
+<hr>
+</div>
+<div class="sec reveal" id="s-8"><h2>信源追溯</h2>
+<div class="card">
+<div style="overflow-x:auto"><table class="tbl">
+<tr>
+<th class="">信息</th>
+<th class="">来源</th>
+<th class="">可信度</th>
+</tr>
+<tr>
+<td class="">Vibe-Trading能力</td>
+<td class="">GitHub README</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">Alphabench</td>
+<td class="">官网+GitHub</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">Composer</td>
+<td class="">ventureburn.com</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">OpenBB 64k star</td>
+<td class="">新浪财经/官网</td>
+<td class="">高</td>
+</tr>
+<tr>
+<td class="">FinceptTerminal 10k star</td>
+<td class="">掘金/Product Hunt</td>
+<td class="">中</td>
+</tr>
+<tr>
+<td class="">TradingAgents 53k star</td>
+<td class="">GitHub</td>
+<td class="">高</td>
+</tr>
+</table></div>
+</div>
+<footer><p>AI 调研中心 · Hermes Agent + 秘塔 AI 搜索 + 飞书 Drive</p><p class="note"><a href="index.html">返回目录</a> · <a href="https://zcnytfl3vf1r.feishu.cn/docx/Xk4PdPzyxoGJB4xGImlcbmpbndf" target="_blank">飞书原文</a></p></footer>
+<script>
+// Particles
+(function(){const c=document.getElementById('particles'),x=c.getContext('2d');let w,h,ps=[],mx=-100,my=-100;function rs(){w=c.width=innerWidth;h=c.height=innerHeight}rs();addEventListener('resize',rs);for(let i=0;i<60;i++)ps.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+.5,o:Math.random()*.4+.1});addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});(function d(){x.clearRect(0,0,w,h);for(let i=0;i<ps.length;i++){let p=ps[i];p.x+=p.vx;p.y+=p.vy;if(p.x<-50||p.x>w+50)p.vx*=-1;if(p.y<-50||p.y>h+50)p.vy*=-1;let dx=p.x-mx,dy=p.y-my,md=Math.sqrt(dx*dx+dy*dy);if(md<180){p.vx+=dx/md*.01;p.vy+=dy/md*.01}let sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>.7){p.vx*=.98;p.vy*=.98}x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(113,112,255,${Math.min(p.o+(md<180?.2:0),1)})`;x.fill();for(let j=i+1;j<ps.length;j++){let q=ps[j],x2=p.x-q.x,y2=p.y-q.y,dt=Math.sqrt(x2*x2+y2*y2);if(dt<130){x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.strokeStyle=`rgba(113,112,255,${.07*(1-dt/130)})`;x.lineWidth=.5;x.stroke()}}}requestAnimationFrame(d)})()})();
+// Glow
+(function(){let g=document.getElementById('glow'),tx=0,ty=0,cx=0,cy=0;addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});(function f(){cx+=(tx-cx)*.05;cy+=(ty-cy)*.05;g.style.left=cx+'px';g.style.top=cy+'px';requestAnimationFrame(f)})()})();
+// Reveal
+(function(){let o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');o.unobserve(e.target)}}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))})();
+// KPI CountUp
+(function(){const animated=new Set();const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&!animated.has(e.target)){animated.add(e.target);const valEl=e.target.querySelector('.val');if(!valEl)return;const text=valEl.textContent.trim();const num=parseFloat(text);if(isNaN(num))return;const suffix=text.replace(/[0-9.]/g,'');const d=1200,s=performance.now();function t(n){const p=Math.min((n-s)/d,1);const eased=1-Math.pow(1-p,3);valEl.textContent=Number.isInteger(num)?Math.round(num*eased)+suffix:(num*eased).toFixed(1)+suffix;if(p<1)requestAnimationFrame(t);else valEl.textContent=text}requestAnimationFrame(t)}}),{threshold:.3});document.querySelectorAll('.kpi').forEach(el=>obs.observe(el))})();
+// Accordion
+document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
+</script>
+<script>new Chart(document.getElementById("chart_703ead31"),{type:"bar",data:{labels:["**OpenBB**", "**FinceptTermin", "dailystockanaly"],datasets:[{label:"Star",data:[64.0, 10.0, 0],backgroundColor:["#7170ff", "#27a644", "#d2991d"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"Star 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});</script>
+</body>
+</html>
