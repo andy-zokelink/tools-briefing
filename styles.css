@@ -58,6 +58,22 @@
   /* Misc */
   --navbar-text-color: #fff;
   --navbar-height: 56px;
+
+  /* === 兼容旧版变量名（报告页等仍引用） === */
+  --bg-card: var(--board-bg-color);
+  --bg-secondary: var(--board-bg-color);
+  --bg: var(--body-bg-color);
+  --text: var(--text-color);
+  --text-secondary: var(--sec-text-color);
+  --text-tertiary: #8a9aaa;
+  --primary: var(--navbar-bg-color);
+  --primary-dark: #1a2a3a;
+  --primary-light: #3d546e;
+  --accent: #29d;
+  --accent-dark: #0077b6;
+  --border: var(--line-color);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --radius: 8px;
 }
 
 /* ===== Reset & Base ===== */
