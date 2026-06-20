@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第29期 · Token 压缩工业化 · MCP 成为基础设施 — 趁手工具推荐榜</title>
 <meta name="description" content="headroom（38K⭐）和 context-mode（17K⭐）代表上下文优化从 nice-to-have 变成 agent 工程必选项。MCP 获 Google/Microsoft/Unreal 三方官方背书，从社区协议升级为基础设施标准。NVIDIA SkillSpector 代表 agent 安全成为独立赛道。">
+<title>第29期 · Token 压缩工业化 · MCP 成为基础设施 — 趁手工具推荐榜</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,36 +12,26 @@
 </head>
 <body>
 
-<div class="app-layout">
-  <!-- === Left Sidebar === -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
-    <nav class="sidebar-nav">
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">浏览</div>
-        <a href="index.html">所有简报</a>
-        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
-        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">往期</div>
-        <a href="2026-06-19.html" class="active">第29期<span class="count">06-19</span></a>
-        <a href="2026-06-17.html">第28期<span class="count">06-17</span></a>
-        <a href="2026-06-15.html">第27期<span class="count">06-15</span></a>
-        <a href="2026-06-12.html">第26期<span class="count">06-12</span></a>
-        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">关于</div>
-        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
-      </div>
-    </nav>
-    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
-  </aside>
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
 
-  <!-- === Article === -->
-  <main class="main">
-    <article class="article-page">
+<!-- === Navbar === -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
+    <button class="navbar-toggler" onclick="document.getElementById('navbarMenu').classList.toggle('show')" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<article class="article-page">
       <a href="index.html" class="article-back">← 所有简报</a>
 
       <h1>Token 压缩工业化 · MCP 成为基础设施</h1>
@@ -271,12 +261,16 @@ open https://github.com/microsoft/mcp</code></pre>
         <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
       </div>
     </article>
-  </main>
-</div>
+
+</main>
 
 <footer class="site-footer">
   <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+  <p style="margin-top:0.3rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新</p>
 </footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 
 <!-- AI Chat Widget -->
 <div class="ai-chat-widget">
@@ -298,6 +292,17 @@ open https://github.com/microsoft/mcp</code></pre>
     </div>
   </div>
 </div>
+
+<script>
+// Loading bar animation
+(function(){var b=document.getElementById('loadingBar');if(!b)return;var w=0;var t=setInterval(function(){if(w<85){w+=Math.random()*8+2;b.style.width=w+'%'}else{clearInterval(t)}},120);window.addEventListener('load',function(){b.style.width='100%';setTimeout(function(){b.style.opacity='0';setTimeout(function(){b.remove()},400)},200)})})();
+
+// Navbar scroll effect
+window.addEventListener('scroll',function(){var n=document.getElementById('navbar');if(n)n.classList.toggle('scrolled',window.scrollY>50);var s=document.getElementById('scrollTopBtn');if(s)s.classList.toggle('visible',window.scrollY>400)});
+
+// Close mobile menu on link click
+document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show')})});
+</script>
 
 <script src="chat.js"></script>
 </body>

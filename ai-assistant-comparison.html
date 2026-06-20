@@ -4,35 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 助手对比 · 趁手工具推荐榜</title>
+<link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root {
-    --bg: #ffffff;
-    --bg-secondary: #f7f6f3;
-    --bg-warm: #fef9f0;
-    --text: #1a1a1a;
-    --text-secondary: #6b6b6b;
-    --text-tertiary: #9b9b9b;
-    --border: #e8e7e4;
-    --warm: #b97509;
-    --warm-light: #fdf3e0;
-    --warm-border: #f0d9a8;
-    --accent: #5e6ad2;
-    --accent-light: rgba(94,106,210,0.08);
-    --green: #27a644;
-    --radius: 8px;
-  }
+  /* CSS variables now inherited from styles.css */
   * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, sans-serif;
-    line-height: 1.6;
-    padding: 2rem;
-  }
-  .container { max-width: 960px; margin: 0 auto; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; padding-top: 56px; }
+  .comparison-container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
 
   /* Header */
   .header {
@@ -43,9 +23,9 @@
   }
   .header .badge {
     display: inline-block;
-    background: var(--warm-light);
-    color: var(--warm);
-    border: 1px solid var(--warm-border);
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 1px solid rgba(0,153,221,0.2);
     border-radius: 999px;
     padding: 4px 14px;
     font-size: 12px;
@@ -58,7 +38,7 @@
     letter-spacing: -0.02em;
     margin-bottom: 4px;
   }
-  .header h1 span { color: var(--warm); }
+  .header h1 span { color: var(--accent); }
   .header p { color: var(--text-tertiary); font-size: 14px; }
 
   /* Two Column Cards */
@@ -142,8 +122,8 @@
   }
   .tag-partial {
     display: inline-block;
-    background: var(--warm-light);
-    color: var(--warm);
+    background: var(--accent-light);
+    color: var(--accent);
     padding: 1px 8px;
     border-radius: 4px;
     font-size: 11px;
@@ -213,7 +193,7 @@
   }
   .flow-node.browser { background: var(--bg-secondary); border: 1px solid var(--border); }
   .flow-node.cloud { background: var(--accent-light); border: 1px solid rgba(94,106,210,0.2); color: var(--accent); }
-  .flow-node.api { background: var(--warm-light); border: 1px solid var(--warm-border); color: var(--warm); }
+  .flow-node.api { background: var(--accent-light); border: 1px solid rgba(0,153,221,0.2); color: var(--accent); }
   .flow-node.local { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); }
   .flow-arrow {
     text-align: center;
@@ -267,8 +247,8 @@
 
   /* Verdict */
   .verdict {
-    background: var(--warm-light);
-    border: 1px solid var(--warm-border);
+    background: var(--accent-light);
+    border: 1px solid rgba(0,153,221,0.2);
     border-radius: var(--radius);
     padding: 20px 24px;
     display: flex;
@@ -287,11 +267,31 @@
     text-decoration: none;
     margin-top: 8px;
   }
-  .back-link:hover { color: var(--warm); }
+  .back-link:hover { color: var(--accent); }
 </style>
 </head>
 <body>
-<div class="container">
+
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- === Navbar === -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
+    <button class="navbar-toggler" onclick="document.getElementById('navbarMenu').classList.toggle('show')" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<div class="comparison-container">
 
   <div class="header">
     <div class="badge">项目审计</div>

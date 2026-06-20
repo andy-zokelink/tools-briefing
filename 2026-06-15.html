@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ponytail 3天15K星证明 Agent Skills 可以病毒式传播，Skills 从">
 <title>第27期 · Agent Skills 病毒传播 · Agent 可靠性护栏时代 — 趁手工具推荐榜</title>
-<meta name="description" content="ponytail 3天15K星证明 Agent Skills 可以病毒式传播，Skills 从"功能附加"进入"行为设计"时代。HN #1 Forge 用 RL 护栏让 8B 模型 agentic 准确率 53%→99%，agent 可靠性不再依赖更大模型。Anthropic-Cybersecurity-Skills 发布 754 结构化安全技能。">
 <link rel="stylesheet" href="styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,35 +12,26 @@
 </head>
 <body>
 
-<div class="app-layout">
-  <!-- === Left Sidebar === -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">🔧 趁手工具推荐榜</div>
-    <nav class="sidebar-nav">
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">浏览</div>
-        <a href="index.html">所有简报</a>
-        <a href="#">🔥 值得马上试 <span class="count">2</span></a>
-        <a href="#">⚡ 值得关注 <span class="count">8</span></a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">往期</div>
-        <a href="2026-06-15.html" class="active">第27期<span class="count">06-15</span></a>
-        <a href="2026-06-12.html">第26期<span class="count">06-12</span></a>
-        <a href="2026-06-10.html">第25期<span class="count">06-10</span></a>
-        <a href="2026-06-08.html">第24期<span class="count">06-08</span></a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-section-title">关于</div>
-        <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub →</a>
-      </div>
-    </nav>
-    <div class="sidebar-footer">由 Hermes Agent 驱动<br>每周一三五更新</div>
-  </aside>
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
 
-  <!-- === Article === -->
-  <main class="main">
-    <article class="article-page">
+<!-- === Navbar === -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
+    <button class="navbar-toggler" onclick="document.getElementById('navbarMenu').classList.toggle('show')" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<article class="article-page">
       <a href="index.html" class="article-back">← 所有简报</a>
 
       <h1>Agent Skills 病毒传播 · Agent 可靠性护栏时代</h1>
@@ -266,12 +257,16 @@ cd Anthropic-Cybersecurity-Skills
         <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
       </div>
     </article>
-  </main>
-</div>
+
+</main>
 
 <footer class="site-footer">
   <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
+  <p style="margin-top:0.3rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新</p>
 </footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 
 <!-- AI Chat Widget -->
 <div class="ai-chat-widget">
@@ -284,7 +279,7 @@ cd Anthropic-Cybersecurity-Skills
     <div class="ai-chat-messages" id="chatMessages">
       <div class="ai-chat-msg assistant">
         <div class="label">AI 助理</div>
-        你好！我是工具推荐助手。可以问我关于本期推荐的工具、Agent Skills 生态趋势，或者帮你找适合你场景的开发工具。
+        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。
       </div>
     </div>
     <div class="ai-chat-input-row">
@@ -293,6 +288,17 @@ cd Anthropic-Cybersecurity-Skills
     </div>
   </div>
 </div>
+
+<script>
+// Loading bar animation
+(function(){var b=document.getElementById('loadingBar');if(!b)return;var w=0;var t=setInterval(function(){if(w<85){w+=Math.random()*8+2;b.style.width=w+'%'}else{clearInterval(t)}},120);window.addEventListener('load',function(){b.style.width='100%';setTimeout(function(){b.style.opacity='0';setTimeout(function(){b.remove()},400)},200)})})();
+
+// Navbar scroll effect
+window.addEventListener('scroll',function(){var n=document.getElementById('navbar');if(n)n.classList.toggle('scrolled',window.scrollY>50);var s=document.getElementById('scrollTopBtn');if(s)s.classList.toggle('visible',window.scrollY>400)});
+
+// Close mobile menu on link click
+document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show')})});
+</script>
 
 <script src="chat.js"></script>
 </body>
