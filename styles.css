@@ -1330,6 +1330,13 @@ img {
 .ai-chat-msg.assistant ul,
 .ai-chat-msg.assistant ol { margin: 3px 0; padding-left: 18px; }
 .ai-chat-msg.assistant li { margin: 1px 0; }
+.ai-chat-msg.error {
+  align-self: flex-start;
+  background: rgba(244,67,54,0.15);
+  border: 1px solid rgba(244,67,54,0.3);
+  color: #f4a09a;
+  border-bottom-left-radius: 4px;
+}
 
 /* 输入中动画 */
 .ai-chat-typing {
