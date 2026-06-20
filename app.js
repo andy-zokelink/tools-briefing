@@ -60,7 +60,7 @@
     var alpha = this.opacity * pulse;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(74, 158, 255, ' + alpha + ')';
+    ctx.fillStyle = 'rgba(37, 99, 235, ' + alpha + ')';
     ctx.fill();
   };
 
@@ -91,7 +91,7 @@
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(0, 212, 255, ' + alpha + ')';
+          ctx.strokeStyle = 'rgba(8, 145, 178, ' + alpha + ')';
           ctx.lineWidth = 0.5;
           ctx.stroke();
         }
