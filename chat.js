@@ -1,30 +1,32 @@
 // === 工具推荐 AI 助理 ===
-// 架构：前端 → Cloudflare Worker（代理）→ SiliconFlow API
-// UX 设计参考阿森版：暗色玻璃面板 + 在线状态指示 + 离线降级 + 键盘操作
+// 直连 SiliconFlow API (OpenAI 兼容接口)
+// UX：暗色玻璃面板 + 在线状态指示 + 离线降级 + 键盘操作
 (function() {
   // ════════════ 配置 ════════════
-  const API_URL = 'https://tools-briefing-ai.andy-132.workers.dev';
-  const HEALTH_URL = API_URL;  // 健康检查复用 Worker（OPTIONS 可达）
-  const FETCH_TIMEOUT_MS = 45000;
-  const HEALTH_TIMEOUT_MS = 5000;
-  const MAX_RETRIES = 2;
+  var API_URL  = 'https://api.siliconflow.cn/v1/chat/completions';
+  var API_KEY  = 'sk-nvfaozgpfzdrmvyonmrrkrltfohwuytczuijlobdaieynzar';
+  var MODEL    = 'deepseek-ai/DeepSeek-R1-0528-Qwen3-8B';
+  var HEALTH_URL = 'https://api.siliconflow.cn/v1/models';
+  var FETCH_TIMEOUT_MS = 45000;
+  var HEALTH_TIMEOUT_MS = 5000;
+  var MAX_RETRIES = 2;
 
   // DOM 引用
-  const panel = document.getElementById('chatPanel');
-  const messages = document.getElementById('chatMessages');
-  const input = document.getElementById('chatInput');
-  const sendBtn = document.getElementById('chatSend');
-  const toggleBtn = document.getElementById('chatBtn');
-  const closeBtn = document.getElementById('chatClose');
-  const dot = document.getElementById('chatDot');
-  const indicator = document.getElementById('chatIndicator');
-  const statusText = document.getElementById('chatStatusText');
+  var panel = document.getElementById('chatPanel');
+  var messages = document.getElementById('chatMessages');
+  var input = document.getElementById('chatInput');
+  var sendBtn = document.getElementById('chatSend');
+  var toggleBtn = document.getElementById('chatBtn');
+  var closeBtn = document.getElementById('chatClose');
+  var dot = document.getElementById('chatDot');
+  var indicator = document.getElementById('chatIndicator');
+  var statusText = document.getElementById('chatStatusText');
 
   // 状态
-  let isOpen = false;
-  let isTyping = false;
-  let isOnline = false;  // 健康检查确认后才为 true
-  let messageHistory = [];
+  var isOpen = false;
+  var isTyping = false;
+  var isOnline = false;
+  var messageHistory = [];
 
   // ── 开关面板 ──
   function toggleChat() {
@@ -36,33 +38,43 @@
       panel.classList.remove('open');
     }
   }
-  toggleBtn.addEventListener('click', toggleChat);
-  closeBtn.addEventListener('click', toggleChat);
+  if (toggleBtn) toggleBtn.addEventListener('click', toggleChat);
+  if (closeBtn) closeBtn.addEventListener('click', toggleChat);
 
   // ── 键盘操作 ──
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && panel.classList.contains('open')) {
+    if (e.key === 'Escape' && panel && panel.classList.contains('open')) {
       toggleChat();
     }
   });
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
-  sendBtn.addEventListener('click', sendMessage);
+  if (input) {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+  }
+  if (sendBtn) sendBtn.addEventListener('click', sendMessage);
 
   // ── 在线状态切换 ──
   function setOnline(online) {
     isOnline = online;
-    const method = online ? 'remove' : 'add';
+    var method = online ? 'remove' : 'add';
     if (dot) dot.classList[method]('offline');
     if (indicator) indicator.classList[method]('offline');
     if (statusText) {
       statusText.textContent = online ? 'AI 在线' : '离线模式';
       statusText.style.color = online ? '#4caf50' : '#f44336';
     }
+    console.log('[AI Chat] 状态:', online ? '在线 ✅' : '离线 ❌');
+  }
+
+  // ── 构建 System Prompt ──
+  function buildSystemPrompt() {
+    return '你是「趁手工具推荐榜」的 AI 助理，帮助用户了解 AI 开发者工具、Agent Skills 生态和研究报告。\n' +
+      '知识范围：每周简报（AI 开发者工具、GitHub Trending）、28份研究报告（Agent全谱系、大模型对比、金融工具等）。\n' +
+      '风格：简洁直接、中文回答、有具体建议。不知道就说不知道，不要编造。';
   }
 
   // ── 简易 Markdown → HTML ──
@@ -79,7 +91,8 @@
 
   // ── 添加消息气泡 ──
   function addMessage(role, content) {
-    const div = document.createElement('div');
+    if (!messages) return;
+    var div = document.createElement('div');
     div.className = 'ai-chat-msg ' + role;
     if (role === 'assistant') {
       div.innerHTML = renderMarkdown(content);
@@ -94,7 +107,8 @@
   // ── 输入中动画 ──
   function showTyping() {
     isTyping = true;
-    const el = document.createElement('div');
+    if (!messages) return;
+    var el = document.createElement('div');
     el.className = 'ai-chat-typing';
     el.id = 'typingIndicator';
     el.innerHTML = '<span></span><span></span><span></span>';
@@ -103,13 +117,13 @@
   }
   function hideTyping() {
     isTyping = false;
-    const el = document.getElementById('typingIndicator');
+    var el = document.getElementById('typingIndicator');
     if (el) el.remove();
   }
 
   // ── 离线兜底回复 ──
   function getMockReply(msg) {
-    const lower = msg.toLowerCase();
+    var lower = msg.toLowerCase();
     if (lower.indexOf('你好') !== -1 || lower.indexOf('hello') !== -1) {
       return '你好！我是工具推荐 AI 助手，当前处于**离线模式**。\n\n网络恢复后可以问我：\n- 本期推荐了哪些工具\n- MCP 生态最新动态\n- 适合我场景的开发工具';
     }
@@ -123,17 +137,18 @@
   }
 
   // ── 发送消息（核心）──
-  async function sendMessage() {
+  function sendMessage() {
     if (isTyping) return;
-    const text = (input.value || '').trim();
+    if (!input) return;
+    var text = (input.value || '').trim();
     if (!text) return;
 
     input.value = '';
-    sendBtn.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
     addMessage('user', text);
     messageHistory.push({ role: 'user', content: text });
 
-    // 保留对话上下文（前 2 条 + 后 12 条）
+    // 保留对话上下文
     if (messageHistory.length > 14) {
       messageHistory = messageHistory.slice(0, 2).concat(messageHistory.slice(-12));
     }
@@ -145,112 +160,125 @@
       setTimeout(function() {
         hideTyping();
         addMessage('assistant', getMockReply(text));
-        sendBtn.disabled = false;
-        input.focus();
-      }, 700 + Math.random() * 500);
+        if (sendBtn) sendBtn.disabled = false;
+        if (input) input.focus();
+      }, 500 + Math.random() * 500);
       return;
     }
 
-    // 在线 → 带重试的 Worker 调用
-    let lastError = null;
-    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-      if (attempt > 0) {
-        // 更新输入中提示
-        const typingEl = document.getElementById('typingIndicator');
-        if (typingEl) {
-          typingEl.innerHTML = '<span style="font-size:0.72rem;color:#6a8090">重试中 (' + (attempt + 1) + '/' + (MAX_RETRIES + 1) + ')...</span>';
-        }
-        await new Promise(function(r) { setTimeout(r, attempt * 1500); });
-      }
+    // 在线 → 直连 SiliconFlow
+    doApiCall(0);
+  }
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(function() { controller.abort(); }, FETCH_TIMEOUT_MS);
-
-      try {
-        const response = await fetch(API_URL, {
-          method: 'POST',
-          mode: 'cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: messageHistory }),
-          signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-          const errMsg = 'HTTP ' + response.status;
-          throw new Error(errMsg);
-        }
-
-        const data = await response.json();
-        const reply = data.reply || '（AI 未返回内容，请重试）';
-
-        hideTyping();
-        addMessage('assistant', reply);
-        messageHistory.push({ role: 'assistant', content: reply });
-
-        sendBtn.disabled = false;
-        input.focus();
-        return;  // 成功
-
-      } catch (err) {
-        clearTimeout(timeoutId);
-        lastError = err;
-        console.warn('[AI Chat] 尝试 ' + (attempt + 1) + '/' + (MAX_RETRIES + 1) + ' 失败:', err.message);
-
-        if (err.name === 'AbortError' || err.message === 'Failed to fetch') {
-          continue;  // 重试
-        }
-        break;  // 其他错误不重试
+  function doApiCall(attempt) {
+    if (attempt > 0) {
+      var typingEl = document.getElementById('typingIndicator');
+      if (typingEl) {
+        typingEl.innerHTML = '<span style="font-size:0.72rem;color:#6a8090">重试中 (' + (attempt + 1) + '/' + (MAX_RETRIES + 1) + ')...</span>';
       }
     }
 
-    // 重试用尽 → 切离线
-    hideTyping();
-    console.warn('[AI Chat] Worker 不可达，切换离线模式:', lastError ? lastError.message : '');
-    setOnline(false);
-    addMessage('assistant', getMockReply(text));
-    sendBtn.disabled = false;
-    input.focus();
-  }
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function() { controller.abort(); }, FETCH_TIMEOUT_MS);
 
-  // ── 健康检查 ──
-  let healthCheckedOnce = false;
-  function healthCheck() {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(function() { controller.abort(); }, HEALTH_TIMEOUT_MS);
+    console.log('[AI Chat] 请求 SiliconFlow (尝试 ' + (attempt + 1) + '/' + (MAX_RETRIES + 1) + ')...');
 
-    // 用 OPTIONS 请求测 Worker 可达性（轻量，不消耗 token）
-    fetch(HEALTH_URL, {
-      method: 'OPTIONS',
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_KEY
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          { role: 'system', content: buildSystemPrompt() },
+          { role: 'user', content: messageHistory[messageHistory.length - 1].content }
+        ],
+        max_tokens: 1024,
+        temperature: 0.7
+      }),
       signal: controller.signal
     })
     .then(function(res) {
       clearTimeout(timeoutId);
-      const online = res.ok || res.status === 204;
+      console.log('[AI Chat] 响应状态:', res.status);
+      if (!res.ok) {
+        return res.text().then(function(t) { throw new Error('HTTP ' + res.status + ': ' + t.slice(0, 200)); });
+      }
+      return res.json();
+    })
+    .then(function(data) {
+      hideTyping();
+      var reply = '';
+      if (data.choices && data.choices[0] && data.choices[0].message) {
+        reply = data.choices[0].message.content || '';
+      }
+      if (!reply) reply = '（AI 未返回内容，请重试）';
+      addMessage('assistant', reply);
+      messageHistory.push({ role: 'assistant', content: reply });
+      if (sendBtn) sendBtn.disabled = false;
+      if (input) input.focus();
+      console.log('[AI Chat] ✅ 成功 (' + reply.length + ' 字符)');
+    })
+    .catch(function(err) {
+      clearTimeout(timeoutId);
+      console.error('[AI Chat] 尝试 ' + (attempt + 1) + ' 失败:', err.message);
+
+      // 重试
+      if (attempt < MAX_RETRIES && (err.name === 'AbortError' || err.message.indexOf('Failed to fetch') !== -1)) {
+        setTimeout(function() { doApiCall(attempt + 1); }, (attempt + 1) * 1500);
+        return;
+      }
+
+      // 重试用尽 → 切离线
+      hideTyping();
+      console.warn('[AI Chat] 切离线模式');
+      setOnline(false);
+      addMessage('assistant', getMockReply(messageHistory[messageHistory.length - 1].content));
+      if (sendBtn) sendBtn.disabled = false;
+      if (input) input.focus();
+    });
+  }
+
+  // ── 健康检查 ──
+  var healthCheckedOnce = false;
+  function healthCheck() {
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function() { controller.abort(); }, HEALTH_TIMEOUT_MS);
+
+    console.log('[AI Chat] 健康检查...');
+    fetch(HEALTH_URL, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + API_KEY },
+      signal: controller.signal
+    })
+    .then(function(res) {
+      clearTimeout(timeoutId);
+      var online = res.ok;
+      console.log('[AI Chat] 健康检查结果:', online ? 'OK' : 'FAIL (HTTP ' + res.status + ')');
       setOnline(online);
-      // 首次连通后显示欢迎消息
       if (online && !healthCheckedOnce) {
         healthCheckedOnce = true;
-        if (messages.children.length === 0) {
+        if (messages && messages.children.length === 0) {
           addMessage('assistant', '👋 你好！我是**趁手工具推荐榜**的 AI 助理。\n\n可以问我：\n- 本期推荐了哪些工具\n- MCP / Agent Skills 最新动态\n- 适合我场景的开发工具\n- 站内 28 份研究报告的要点');
         }
       }
     })
     .catch(function(err) {
       clearTimeout(timeoutId);
+      console.warn('[AI Chat] 健康检查失败:', err.message);
       setOnline(false);
-      // 首次检查失败也标记，避免反复显示离线欢迎
       if (!healthCheckedOnce) healthCheckedOnce = true;
     });
   }
 
   // ── 初始化 ──
+  console.log('[AI Chat] 初始化...');
   healthCheck();
-  // 每 30 秒重新检查一次
   setInterval(healthCheck, 30000);
 
-  // 暴露 toggleChat 到全局（供 HTML onclick 使用）
+  // 暴露到全局
   window.toggleChat = toggleChat;
   window.sendMessage = sendMessage;
 })();
