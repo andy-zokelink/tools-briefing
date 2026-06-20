@@ -2,56 +2,69 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="theme-color" content="#2f4154">
+<meta name="description" content="追踪 AI 开发者工具与 Agent Skills 生态的最新动态">
+<meta property="og:title" content="趁手工具推荐榜 × Skills Watch">
+<meta property="og:description" content="AI 开发者工具周报 — 每周一三五更新">
+<meta property="og:image" content="og-image.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <title>趁手工具推荐榜 × Skills Watch</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="stylesheet" href="styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Loading Bar -->
+<!-- NProgress-style loading bar -->
 <div class="loading-bar" id="loadingBar"></div>
 
-<!-- === Navbar === -->
+<!-- ===== Navbar (Fluid spec: transparent → solid on scroll) ===== -->
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
     <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">
       <a href="index.html" class="active">首页</a>
-      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
-      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+      <a href="reports/">📋 研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
     </div>
   </div>
 </nav>
 
-<!-- === Banner === -->
+<!-- ===== Banner (Fluid full-height hero) ===== -->
 <section class="banner">
   <div class="banner-content">
     <h1>AI 开发者工具周报</h1>
-    <p class="subtitle">追踪 AI 开发者工具与 Agent Skills 生态的最新动态，每周一三五更新</p>
+    <p class="subtitle">追踪 AI 开发者工具与 Agent Skills 生态的最新动态<br>每周一三五更新 · 深度调研 · 数据驱动</p>
     <div class="banner-stats">
       <div class="banner-stat"><b>29</b><span>期简报</span></div>
       <div class="banner-stat"><b>28</b><span>研究报告</span></div>
-      <div class="banner-stat"><b>20</b><span>工具追踪</span></div>
+      <div class="banner-stat"><b>20+</b><span>工具追踪</span></div>
       <div class="banner-stat"><b>14</b><span>MCP Server</span></div>
       <div class="banner-stat"><b>3</b><span>趋势洞察</span></div>
     </div>
   </div>
+  <!-- Fluid-style scroll-down indicator -->
+  <div class="scroll-down-bar" onclick="document.querySelector('.board').scrollIntoView({behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+    </svg>
+  </div>
 </section>
 
-<!-- === Main Content === -->
-<main class="main">
+<!-- ===== Board (Fluid's floating white card overlapping banner) ===== -->
+<div class="board">
   <div class="container">
 
     <!-- === 研究报告入口 === -->
-    <div style="margin-bottom:2.5rem">
-      <h2 style="font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem;letter-spacing:-0.01em;">📋 研究报告</h2>
-      <a href="reports/" class="article-card reports-entry">
+    <div style="margin-bottom:2rem">
+      <div class="section-title">📋 研究报告</div>
+      <div class="reports-entry">
         <div class="meta-row">
           <span class="pill pill-new">28 份</span>
           <span>AI 深度调研</span>
@@ -59,15 +72,14 @@
           <span>持续更新</span>
           <span class="read-time">查看全部 →</span>
         </div>
-        <h2>AI 深度调研报告目录</h2>
-        <p class="excerpt">
+        <h2 style="font-size:1.15rem;font-weight:600;margin-bottom:0.35rem">AI 深度调研报告目录</h2>
+        <p class="excerpt" style="-webkit-line-clamp:2">
           覆盖 AI 工具与平台、大模型与趋势、AI 硬件与边缘计算、金融工具与量化、云厂商 CLI 工具、工具生态与简报、教育应用等 7 大分类。秘塔搜索 × 飞书归档 × 交叉验证。
         </p>
         <div class="card-nums">
           <span class="card-num fire"><span class="cn-val">28</span><span class="cn-label">报告总数</span></span>
           <span class="card-num"><span class="cn-val">7</span><span class="cn-label">分类维度</span></span>
           <span class="card-num"><span class="cn-val">22款Agent</span><span class="cn-label">全谱系横评</span></span>
-          <span class="card-num"><span class="cn-val">Vibe-Trading</span><span class="cn-label">量化调研</span></span>
           <span class="card-num"><span class="cn-val">龙虾盒子</span><span class="cn-label">硬件全景</span></span>
         </div>
         <div class="card-takeaways">
@@ -76,7 +88,7 @@
           <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">推荐</span>Vibe-Trading深度调研报告</span>
         </div>
         <div class="card-action">
-          浏览全部 28 份报告 <span class="arrow">→</span>
+          <a href="reports/" style="color:inherit;text-decoration:none">浏览全部 28 份报告 <span class="arrow">→</span></a>
         </div>
         <div class="tags-row">
           <span class="tag">Agent 横评</span>
@@ -85,257 +97,248 @@
           <span class="tag">云厂商</span>
           <span class="tag">边缘硬件</span>
         </div>
-      </a>
+      </div>
     </div>
 
-    <!-- ===== 往期简报列表 ===== -->
-    <h2 style="font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:0.8rem;letter-spacing:-0.01em;">📰 往期简报</h2>
+    <!-- === 往期简报列表 === -->
+    <div class="section-title">📰 往期简报</div>
 
     <!-- 第29期 -->
     <a href="2026-06-19.html" class="article-card">
-      <div class="meta-row">
-        <span class="pill pill-new">NEW</span>
-        <span>第29期</span>
-        <span class="dot"></span>
-        <span>2026年6月19日</span>
-        <span class="read-time">4 min read</span>
-      </div>
-      <h2>Token 压缩工业化 · MCP 成为基础设施</h2>
-      <p class="excerpt">
-        headroom（38K⭐）和 context-mode（17K⭐）合计 55K+ 星，上下文优化从 nice-to-have 变成 agent 工程必选项。MCP 获 Google/Microsoft/Unreal 三方官方背书，从社区协议升级为基础设施标准。NVIDIA SkillSpector 代表 agent 安全成为独立赛道。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>Agent 工具链的「降本」进入实战阶段——headroom + context-mode 让 token 压缩成为标配。MCP 获大厂背书升级为基础设施。Agent 安全三足鼎立，从 hobby 走向赛道。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">38,185⭐</span><span class="cn-label">headroom</span></span>
-        <span class="card-num"><span class="cn-val">17,784⭐</span><span class="cn-label">context-mode</span></span>
-        <span class="card-num"><span class="cn-val">8,231⭐</span><span class="cn-label">SkillSpector</span></span>
-        <span class="card-num"><span class="cn-val">103</span><span class="cn-label">采集仓库</span></span>
-        <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>headroom 省 60-95% token</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 大厂背书升级</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent 安全赛道成型</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">Token 压缩</span>
-        <span class="tag">MCP 基础设施</span>
-        <span class="tag">Agent 安全</span>
-        <span class="tag">headroom</span>
-        <span class="tag">SkillSpector</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #1a2a3a 0%, #2f4154 50%, #30a9de 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">29</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span class="pill pill-new">NEW</span>
+          <span>第29期</span>
+          <span class="dot"></span>
+          <span>2026年6月19日</span>
+          <span class="read-time">4 min read</span>
+        </div>
+        <h2>Token 压缩工业化 · MCP 成为基础设施</h2>
+        <p class="excerpt">headroom（38K⭐）和 context-mode（17K⭐）合计 55K+ 星，上下文优化从 nice-to-have 变成 agent 工程必选项。MCP 获 Google/Microsoft/Unreal 三方官方背书，从社区协议升级为基础设施标准。NVIDIA SkillSpector 代表 agent 安全成为独立赛道。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>Agent 工具链的「降本」进入实战阶段——headroom + context-mode 让 token 压缩成为标配。MCP 获大厂背书升级为基础设施。Agent 安全三足鼎立，从 hobby 走向赛道。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">38,185⭐</span><span class="cn-label">headroom</span></span>
+          <span class="card-num"><span class="cn-val">17,784⭐</span><span class="cn-label">context-mode</span></span>
+          <span class="card-num"><span class="cn-val">8,231⭐</span><span class="cn-label">SkillSpector</span></span>
+          <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>headroom 省 60-95% token</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 大厂背书升级</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent 安全赛道成型</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">Token 压缩</span>
+          <span class="tag">MCP 基础设施</span>
+          <span class="tag">Agent 安全</span>
+          <span class="tag">headroom</span>
+        </div>
       </div>
     </a>
 
     <!-- 第28期 -->
     <a href="2026-06-17.html" class="article-card">
-      <div class="meta-row">
-        <span>第28期</span>
-        <span class="dot"></span>
-        <span>2026年6月17日</span>
-        <span class="read-time">4 min read</span>
-      </div>
-      <h2>Skills 操作系统化 · Agent 基础设施工业化</h2>
-      <p class="excerpt">
-        compass-skills（司南）将 Agent Skills 从单任务能力升级为个人工作流 OS。agent-harness-generator 让创建 agent harness 像脚手架一样简单。NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全。Skills 正从 function 走向 platform，Agent 开发进入标准化阶段。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>Agent Skills 正从"单点能力"走向"操作系统"——compass-skills 把 Skills 升级为个人工作流 OS。同时 Agent 基础设施进入"脚手架时代"——agent-harness-generator 让创建 harness 像 npm create 一样简单。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">7,407⭐</span><span class="cn-label">SkillSpector</span></span>
-        <span class="card-num"><span class="cn-val">260⭐</span><span class="cn-label">compass-skills</span></span>
-        <span class="card-num"><span class="cn-val">156⭐</span><span class="cn-label">harness-gen</span></span>
-        <span class="card-num"><span class="cn-val">103</span><span class="cn-label">采集仓库</span></span>
-        <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>agent-harness-generator 脚手架</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>compass-skills 任务总控 OS</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>NVIDIA Skills 安全进场</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">Agent Skills</span>
-        <span class="tag">司南</span>
-        <span class="tag">Harness</span>
-        <span class="tag">NVIDIA</span>
-        <span class="tag">基础设施</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #1a5276 0%, #2e86c1 50%, #85c1e9 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">28</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span>第28期</span>
+          <span class="dot"></span>
+          <span>2026年6月17日</span>
+          <span class="read-time">4 min read</span>
+        </div>
+        <h2>Skills 操作系统化 · Agent 基础设施工业化</h2>
+        <p class="excerpt">compass-skills（司南）将 Agent Skills 从单任务能力升级为个人工作流 OS。agent-harness-generator 让创建 agent harness 像脚手架一样简单。NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>Agent Skills 正从"单点能力"走向"操作系统"——compass-skills 把 Skills 升级为个人工作流 OS。Agent 基础设施进入"脚手架时代"。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">7,407⭐</span><span class="cn-label">SkillSpector</span></span>
+          <span class="card-num"><span class="cn-val">260⭐</span><span class="cn-label">compass-skills</span></span>
+          <span class="card-num"><span class="cn-val">156⭐</span><span class="cn-label">harness-gen</span></span>
+          <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>agent-harness-generator 脚手架</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>compass-skills 任务总控 OS</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>NVIDIA Skills 安全进场</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">Agent Skills</span>
+          <span class="tag">司南</span>
+          <span class="tag">Harness</span>
+          <span class="tag">NVIDIA</span>
+        </div>
       </div>
     </a>
 
     <!-- 第27期 -->
     <a href="2026-06-15.html" class="article-card">
-      <div class="meta-row">
-        <span>第27期</span>
-        <span class="dot"></span>
-        <span>2026年6月15日</span>
-        <span class="read-time">4 min read</span>
-      </div>
-      <h2>Agent Skills 病毒传播 · 可靠性护栏时代</h2>
-      <p class="excerpt">
-        ponytail 3天15K星——Agent Skills 首次病毒式传播。Forge（HN #1）用 RL 护栏让 8B 模型 agentic 准确率 53%→99%。Anthropic-Cybersecurity-Skills 发布 754 结构化安全技能。Skills 从"功能附加"进入"行为设计"时代。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>Agent Skills 正在经历"App Store 时刻"——ponytail 3天15K星是分水岭信号。同时 agent 可靠性进入"护栏时代"：小模型+护栏 > 大模型裸奔。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">15,313⭐</span><span class="cn-label">ponytail</span></span>
-        <span class="card-num"><span class="cn-val">15,813⭐</span><span class="cn-label">安全 Skills</span></span>
-        <span class="card-num"><span class="cn-val">53%→99%</span><span class="cn-label">Forge 护栏</span></span>
-        <span class="card-num"><span class="cn-val">754</span><span class="cn-label">安全技能数</span></span>
-        <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>ponytail 让 agent 学会"懒"</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label try">试试</span>754 安全 Skills 武器库</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent Skills 的 App Store 时刻</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">Agent Skills</span>
-        <span class="tag">ponytail</span>
-        <span class="tag">护栏</span>
-        <span class="tag">安全 Skills</span>
-        <span class="tag">病毒传播</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #6c3483 0%, #a569bd 50%, #d7bde2 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">27</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span>第27期</span>
+          <span class="dot"></span>
+          <span>2026年6月15日</span>
+          <span class="read-time">4 min read</span>
+        </div>
+        <h2>Agent Skills 病毒传播 · 可靠性护栏时代</h2>
+        <p class="excerpt">ponytail 3天15K星——Agent Skills 首次病毒式传播。Forge（HN #1）用 RL 护栏让 8B 模型 agentic 准确率 53%→99%。Anthropic-Cybersecurity-Skills 发布 754 结构化安全技能。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>Agent Skills 正在经历"App Store 时刻"——ponytail 3天15K星是分水岭信号。同时 agent 可靠性进入"护栏时代"：小模型+护栏 > 大模型裸奔。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">15,313⭐</span><span class="cn-label">ponytail</span></span>
+          <span class="card-num"><span class="cn-val">15,813⭐</span><span class="cn-label">安全 Skills</span></span>
+          <span class="card-num"><span class="cn-val">53%→99%</span><span class="cn-label">Forge 护栏</span></span>
+          <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>ponytail 让 agent 学会"懒"</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label try">试试</span>754 安全 Skills 武器库</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent Skills 的 App Store 时刻</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">Agent Skills</span>
+          <span class="tag">ponytail</span>
+          <span class="tag">护栏</span>
+          <span class="tag">安全 Skills</span>
+        </div>
       </div>
     </a>
 
     <!-- 第26期 -->
     <a href="2026-06-12.html" class="article-card">
-      <div class="meta-row">
-        <span>第26期</span>
-        <span class="dot"></span>
-        <span>2026年6月12日</span>
-        <span class="read-time">4 min read</span>
-      </div>
-      <h2>Apple Xcode Skills · MCP 安全军备竞赛</h2>
-      <p class="excerpt">
-        Apple 从 Xcode 27 导出官方 Agent Skills——平台级 Skills 有了第二个锚点。MCP 安全一周内涌入腾讯、NVIDIA、Snyk 三大厂商，agent-gate + Spanly 填补运行时防护和可观测空白。MCP 安全从"扫描"到"军备竞赛"。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>Apple 入局 Agent Skills + MCP 安全进入军备竞赛——平台级 Skills 有了第二个锚点，MCP 安全从"有人做"变成"正在打"。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">75⭐</span><span class="cn-label">xcode27-skills</span></span>
-        <span class="card-num"><span class="cn-val">225,907⭐</span><span class="cn-label">superpowers</span></span>
-        <span class="card-num"><span class="cn-val">7+</span><span class="cn-label">MCP 安全工具</span></span>
-        <span class="card-num"><span class="cn-val">3,882⭐</span><span class="cn-label">AI-Infra-Guard</span></span>
-        <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>Apple Xcode Agent Skills</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 安全军备竞赛</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>MCP 2026-07 规范变更</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">Apple Skills</span>
-        <span class="tag">MCP 安全</span>
-        <span class="tag">Xcode</span>
-        <span class="tag">军备竞赛</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #1b4f72 0%, #2980b9 50%, #aed6f1 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">26</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span>第26期</span>
+          <span class="dot"></span>
+          <span>2026年6月12日</span>
+          <span class="read-time">4 min read</span>
+        </div>
+        <h2>Apple Xcode Skills · MCP 安全军备竞赛</h2>
+        <p class="excerpt">Apple 从 Xcode 27 导出官方 Agent Skills——平台级 Skills 有了第二个锚点。MCP 安全一周内涌入腾讯、NVIDIA、Snyk 三大厂商，agent-gate + Spanly 填补运行时防护和可观测空白。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>Apple 入局 Agent Skills + MCP 安全进入军备竞赛——平台级 Skills 有了第二个锚点，MCP 安全从"有人做"变成"正在打"。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">75⭐</span><span class="cn-label">xcode27-skills</span></span>
+          <span class="card-num"><span class="cn-val">225,907⭐</span><span class="cn-label">superpowers</span></span>
+          <span class="card-num"><span class="cn-val">7+</span><span class="cn-label">MCP 安全工具</span></span>
+          <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>Apple Xcode Agent Skills</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 安全军备竞赛</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>MCP 2026-07 规范变更</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">Apple Skills</span>
+          <span class="tag">MCP 安全</span>
+          <span class="tag">Xcode</span>
+          <span class="tag">军备竞赛</span>
+        </div>
       </div>
     </a>
 
     <!-- 第25期 -->
     <a href="2026-06-10.html" class="article-card">
-      <div class="meta-row">
-        <span>第25期</span>
-        <span class="dot"></span>
-        <span>2026年6月10日</span>
-        <span class="read-time">4 min read</span>
-      </div>
-      <h2>MCTS · Agent Manager · MCP 安全元年</h2>
-      <p class="excerpt">
-        MCTS 首个 MCP 安全扫描器填补生态空白。Agent Manager 桌面端 GUI 管理 Agent 和 MCP。MCP 安全从真空到元年，agent 工具从 CLI 走向桌面。taste-skill 两日续涨 20%。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>MCP 生态从"野蛮生长"进入"安全治理"，Agent 工具从 CLI 走向桌面 GUI——两条线同时出现，标志 agent 基础设施正在向下沉淀，从"能跑"走向"可信、可管、可看"。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">40,501⭐</span><span class="cn-label">taste-skill</span></span>
-        <span class="card-num"><span class="cn-val">148,968⭐</span><span class="cn-label">Anthropic Skills</span></span>
-        <span class="card-num"><span class="cn-val">MCTS</span><span class="cn-label">首个 MCP 安全扫描器</span></span>
-        <span class="card-num"><span class="cn-val">136⭐</span><span class="cn-label">Agent_Manager</span></span>
-        <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>MCTS 扫描 MCP 安全</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 安全元年赛道形成</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent 工具桌面化趋势</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">MCP 安全</span>
-        <span class="tag">Agent 桌面化</span>
-        <span class="tag">MCTS</span>
-        <span class="tag">MCP</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #0e6251 0%, #1abc9c 50%, #a3e4d7 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">25</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span>第25期</span>
+          <span class="dot"></span>
+          <span>2026年6月10日</span>
+          <span class="read-time">4 min read</span>
+        </div>
+        <h2>MCTS · Agent Manager · MCP 安全元年</h2>
+        <p class="excerpt">MCTS 首个 MCP 安全扫描器填补生态空白。Agent Manager 桌面端 GUI 管理 Agent 和 MCP。MCP 安全从真空到元年，agent 工具从 CLI 走向桌面。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>MCP 生态从"野蛮生长"进入"安全治理"，Agent 工具从 CLI 走向桌面 GUI——标志 agent 基础设施向下沉淀，从"能跑"走向"可信、可管、可看"。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">40,501⭐</span><span class="cn-label">taste-skill</span></span>
+          <span class="card-num"><span class="cn-val">148,968⭐</span><span class="cn-label">Anthropic Skills</span></span>
+          <span class="card-num"><span class="cn-val">MCTS</span><span class="cn-label">首个 MCP 安全扫描器</span></span>
+          <span class="card-num"><span class="cn-val">2 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>MCTS 扫描 MCP 安全</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label watch">关注</span>MCP 安全元年赛道形成</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>Agent 工具桌面化趋势</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">MCP 安全</span>
+          <span class="tag">Agent 桌面化</span>
+          <span class="tag">MCTS</span>
+          <span class="tag">MCP</span>
+        </div>
       </div>
     </a>
 
     <!-- 第24期 -->
     <a href="2026-06-08.html" class="article-card">
-      <div class="meta-row">
-        <span>第24期</span>
-        <span class="dot"></span>
-        <span>2026年6月8日</span>
-        <span class="read-time">5 min read</span>
-      </div>
-      <h2>headroom · harness · Agent Skills 元技能时代</h2>
-      <p class="excerpt">
-        headroom 省 60-95% token 登顶 #1 Trending。harness 让 agent 为自己生成技能。GitHub 正被 AI Agent 压垮——Claude Code 单工具占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。
-      </p>
-      <div class="card-viewpoint">
-        <span class="cv-icon">💡</span><strong>核心观点：</strong>Agent Skills 正在从「手工创作」进入「工业化生成」。上下文压缩方案集中爆发，meta-skill 让技能生产自动化——Skills 生态的供给侧正在从人到机器迁移。
-      </div>
-      <div class="card-nums">
-        <span class="card-num fire"><span class="cn-val">14,148⭐</span><span class="cn-label">headroom</span></span>
-        <span class="card-num"><span class="cn-val">6,096⭐</span><span class="cn-label">harness</span></span>
-        <span class="card-num"><span class="cn-val">10,000+</span><span class="cn-label">MCP Server</span></span>
-        <span class="card-num"><span class="cn-val">2.75 亿</span><span class="cn-label">周提交</span></span>
-        <span class="card-num"><span class="cn-val">3 条</span><span class="cn-label">趋势洞察</span></span>
-      </div>
-      <div class="card-takeaways">
-        <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>headroom 压缩 60-95% token</span>
-        <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label try">试试</span>harness 自动生成 skills</span>
-        <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>GitHub 被 AI Agent 压垮</span>
-      </div>
-      <div class="card-action">
-        打开阅读全文 <span class="arrow">→</span>
-      </div>
-      <div class="tags-row">
-        <span class="tag">上下文压缩</span>
-        <span class="tag">元技能</span>
-        <span class="tag">MCP</span>
-        <span class="tag">Agent Skills</span>
+      <div class="card-img" style="background: linear-gradient(135deg, #7b241c 0%, #e74c3c 50%, #f5b7b1 100%); display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);font-size:2rem;font-weight:700">24</div>
+      <div class="card-body">
+        <div class="meta-row">
+          <span>第24期</span>
+          <span class="dot"></span>
+          <span>2026年6月8日</span>
+          <span class="read-time">5 min read</span>
+        </div>
+        <h2>headroom · harness · Agent Skills 元技能时代</h2>
+        <p class="excerpt">headroom 省 60-95% token 登顶 #1 Trending。harness 让 agent 为自己生成技能。GitHub 正被 AI Agent 压垮——Claude Code 单工具占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。</p>
+        <div class="card-viewpoint">
+          <strong>💡 核心观点：</strong>Agent Skills 正在从「手工创作」进入「工业化生成」。上下文压缩方案集中爆发，meta-skill 让技能生产自动化——Skills 生态的供给侧正在从人到机器迁移。
+        </div>
+        <div class="card-nums">
+          <span class="card-num fire"><span class="cn-val">14,148⭐</span><span class="cn-label">headroom</span></span>
+          <span class="card-num"><span class="cn-val">6,096⭐</span><span class="cn-label">harness</span></span>
+          <span class="card-num"><span class="cn-val">10,000+</span><span class="cn-label">MCP Server</span></span>
+          <span class="card-num"><span class="cn-val">3 条</span><span class="cn-label">趋势洞察</span></span>
+        </div>
+        <div class="card-takeaways">
+          <span class="card-takeaway"><span class="ct-num">01</span><span class="ct-label try">试试</span>headroom 压缩 60-95% token</span>
+          <span class="card-takeaway"><span class="ct-num">02</span><span class="ct-label try">试试</span>harness 自动生成 skills</span>
+          <span class="card-takeaway"><span class="ct-num">03</span><span class="ct-label watch">关注</span>GitHub 被 AI Agent 压垮</span>
+        </div>
+        <div class="card-action">打开阅读全文 <span class="arrow">→</span></div>
+        <div class="tags-row">
+          <span class="tag">上下文压缩</span>
+          <span class="tag">元技能</span>
+          <span class="tag">MCP</span>
+          <span class="tag">Agent Skills</span>
+        </div>
       </div>
     </a>
 
-    <p style="text-align:center; padding:3rem 0; color:var(--text-tertiary); font-size:0.9rem">
-      下期简报将于周五自动发布
+    <p style="text-align:center;padding:3rem 0 1rem;color:var(--sec-text-color);font-size:0.88rem">
+      下期简报将于周五自动发布 · 由 <a href="https://hermes-agent.nousresearch.com" style="color:inherit">Hermes Agent</a> 驱动
     </p>
   </div>
-</main>
+</div>
 
+<!-- ===== Footer (Fluid exact styling) ===== -->
 <footer class="site-footer">
-  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
-  <p style="margin-top:0.3rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新</p>
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div class="statistics">
+    <span>29 期简报</span>·
+    <span>28 份研究报告</span>·
+    <span>103 仓库追踪</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新 · © 2026</div>
 </footer>
 
 <!-- Scroll to Top -->
-<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
 
 <!-- AI Chat Widget -->
 <div class="ai-chat-widget">
@@ -359,14 +362,55 @@
 </div>
 
 <script>
-// Loading bar animation
+// === NProgress-style loading bar ===
 (function(){var b=document.getElementById('loadingBar');if(!b)return;var w=0;var t=setInterval(function(){if(w<85){w+=Math.random()*8+2;b.style.width=w+'%'}else{clearInterval(t)}},120);window.addEventListener('load',function(){b.style.width='100%';setTimeout(function(){b.style.opacity='0';setTimeout(function(){b.remove()},400)},200)})})();
 
-// Navbar scroll effect
-window.addEventListener('scroll',function(){document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);document.getElementById('scrollTopBtn').classList.toggle('visible',window.scrollY>400)});
+// === Navbar scroll effect (Fluid: transparent → solid + backdrop-filter) ===
+window.addEventListener('scroll',function(){
+  var navbar=document.getElementById('navbar');
+  var scrollBtn=document.getElementById('scrollTopBtn');
+  if(window.scrollY>50){
+    navbar.classList.add('scrolled');
+    scrollBtn.classList.add('visible');
+  } else {
+    navbar.classList.remove('scrolled');
+    scrollBtn.classList.remove('visible');
+  }
+});
 
-// Close mobile menu on link click + reset hamburger
-document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show');var t=document.getElementById('navbarToggler');if(t)t.classList.remove('active')})});
+// === Mobile menu toggle (Fluid animated hamburger) ===
+document.getElementById('navbarToggler').addEventListener('click',function(){
+  this.classList.toggle('active');
+  document.getElementById('navbarMenu').classList.toggle('show');
+});
+
+// === Close mobile menu on link click ===
+document.querySelectorAll('#navbarMenu a').forEach(function(a){
+  a.addEventListener('click',function(){
+    document.getElementById('navbarMenu').classList.remove('show');
+    document.getElementById('navbarToggler').classList.remove('active');
+  });
+});
+
+// === Scroll to top ===
+document.getElementById('scrollTopBtn').addEventListener('click',function(){
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// === Scroll-triggered fade animations ===
+(function(){
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  },{threshold:0.1});
+
+  document.querySelectorAll('.fade-in').forEach(function(el){
+    observer.observe(el);
+  });
+})();
 </script>
 
 <script src="chat.js"></script>

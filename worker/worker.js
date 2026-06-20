@@ -56,8 +56,9 @@ export default {
         body: JSON.stringify({
           model: MODEL,
           messages: trimmed,
-          max_tokens: 2048,
+          max_tokens: 1024,
           temperature: 0.7,
+          stream: false,
         }),
       });
 

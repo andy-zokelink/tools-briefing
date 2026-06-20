@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#2f4154">
+<title>404 — 趁手工具推荐榜</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .error-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--body-bg-color);
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Floating background elements */
+  .error-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .error-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.12;
+    animation: orbFloat 8s ease-in-out infinite;
+  }
+
+  .error-orb:nth-child(1) {
+    width: 300px; height: 300px;
+    background: #30a9de;
+    top: 10%; left: -5%;
+    animation-delay: 0s;
+  }
+
+  .error-orb:nth-child(2) {
+    width: 250px; height: 250px;
+    background: #2f4154;
+    top: 60%; right: -5%;
+    animation-delay: 3s;
+  }
+
+  .error-orb:nth-child(3) {
+    width: 200px; height: 200px;
+    background: #e74c3c;
+    bottom: 10%; left: 40%;
+    animation-delay: 5s;
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(20px, -30px) scale(1.1); }
+    66% { transform: translate(-15px, 20px) scale(0.9); }
+  }
+
+  /* Main content */
+  .error-content {
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+  }
+
+  .error-icon {
+    font-size: 5rem;
+    margin-bottom: 0.5rem;
+    animation: iconWiggle 3s ease-in-out infinite;
+  }
+
+  @keyframes iconWiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+
+  .error-code {
+    font-size: 7rem;
+    font-weight: 800;
+    color: var(--line-color);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    user-select: none;
+    margin-bottom: 0.25rem;
+    /* Gradient text on the code */
+    background: linear-gradient(135deg, #2f4154 0%, #30a9de 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .error-code-sub {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sec-text-color);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .error-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--post-heading-color);
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+  }
+
+  .error-desc {
+    font-size: 0.92rem;
+    color: var(--sec-text-color);
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  /* Home button */
+  .error-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 2rem;
+    background: var(--navbar-bg-color);
+    color: #fff;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all var(--transition);
+    box-shadow: var(--shadow-card);
+  }
+
+  .error-home-btn:hover {
+    background: var(--link-hover-color);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Quick links */
+  .error-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .error-links a {
+    font-size: 0.82rem;
+    color: var(--sec-text-color);
+    text-decoration: none;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line-color);
+    border-radius: 999px;
+    transition: all var(--transition-fast);
+  }
+
+  .error-links a:hover {
+    color: var(--link-hover-color);
+    border-color: var(--link-hover-color);
+    background: var(--link-hover-bg-color);
+  }
+
+  /* Fun terminal-style suggestion */
+  .error-terminal {
+    margin-top: 2.5rem;
+    background: #1e2a3a;
+    border-radius: var(--radius);
+    padding: 1rem 1.3rem;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: #a0b0c0;
+    line-height: 1.7;
+    box-shadow: var(--shadow-card);
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .error-terminal .prompt {
+    color: #30a9de;
+  }
+
+  .error-terminal .cmd {
+    color: #a0d0a0;
+  }
+
+  .error-terminal .output {
+    color: #e0c080;
+  }
+
+  @media (max-width: 575px) {
+    .error-code { font-size: 4.5rem; }
+    .error-icon { font-size: 3.5rem; }
+    .error-title { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+<div class="error-bg">
+  <div class="error-orb"></div>
+  <div class="error-orb"></div>
+  <div class="error-orb"></div>
+</div>
+
+<div class="error-page-wrapper">
+  <div class="error-content">
+    <div class="error-icon">🔧</div>
+    <div class="error-code">404</div>
+    <div class="error-code-sub">Tool Not Found</div>
+    <h1 class="error-title">这个工具还没被收录到榜单里</h1>
+    <p class="error-desc">
+      你访问的页面可能已被下架、链接失效，或者它本来就是 AI 幻觉编出来的。<br>
+      试试回到首页看看最新的工具推荐？
+    </p>
+    <a href="index.html" class="error-home-btn">
+      ← 回到首页
+    </a>
+
+    <div class="error-links">
+      <a href="reports/">📋 研究报告</a>
+      <a href="2026-06-19.html">📰 最新简报</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank">GitHub</a>
+    </div>
+
+    <div class="error-terminal">
+      <span class="prompt">$</span> <span class="cmd">agent find --url</span> /this-page-does-not-exist<br>
+      <span class="output">→ 搜索了 103 个仓库，0 个匹配</span><br>
+      <span class="output">→ Skills 生态中未发现此工具</span><br>
+      <span class="output">→ 建议：回到首页查看最新推荐</span><br>
+      <span class="prompt">$</span> <span class="cmd" style="animation: blink 1s step-end infinite;">█</span>
+    </div>
+
+    <style>
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+    </style>
+  </div>
+</div>
+</body>
+</html>
