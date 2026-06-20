@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek 10亿Token消耗事件调查报告</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:#f8fafc; color:#1e293b; line-height:1.7; padding:40px 20px; }
+.container { max-width:800px; margin:0 auto; }
+h1 { font-size:28px; margin-bottom:8px; color:#0f172a; }
+.meta { color:#64748b; font-size:14px; margin-bottom:32px; }
+.card { background:#fff; border-radius:12px; padding:28px; margin-bottom:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+.card h2 { font-size:18px; color:#d97706; margin-bottom:16px; border-left:3px solid #d97706; padding-left:12px; }
+.number { font-size:36px; font-weight:700; color:#0f172a; }
+.unit { font-size:16px; color:#64748b; margin-left:4px; }
+.stat-row { display:flex; gap:32px; margin:16px 0; flex-wrap:wrap; }
+.stat-item { flex:1; min-width:140px; }
+.label { font-size:13px; color:#94a3b8; text-transform:uppercase; letter-spacing:.5px; }
+.timeline { position:relative; padding-left:20px; }
+.timeline::before { content:''; position:absolute; left:6px; top:4px; bottom:4px; width:2px; background:#e2e8f0; }
+.timeline-item { margin-bottom:16px; position:relative; padding-left:16px; }
+.timeline-item::before { content:''; position:absolute; left:-17px; top:6px; width:10px; height:10px; border-radius:50%; background:#d97706; }
+.timeline-date { font-size:13px; color:#94a3b8; }
+.timeline-content { font-size:15px; }
+.highlight { background:#fef3c7; padding:2px 6px; border-radius:4px; font-weight:600; }
+.code { background:#1e293b; color:#e2e8f0; padding:16px; border-radius:8px; font-family:monospace; font-size:13px; overflow-x:auto; margin:12px 0; }
+.code .comment { color:#94a3b8; }
+.code .key { color:#f59e0b; }
+.code .val { color:#34d399; }
+.tag { display:inline-block; padding:2px 10px; border-radius:12px; font-size:12px; font-weight:600; margin-right:6px; }
+.tag-red { background:#fee2e2; color:#dc2626; }
+.tag-green { background:#dcfce7; color:#16a34a; }
+.action { background:#fef3c7; border:1px solid #f59e0b; border-radius:8px; padding:12px 16px; margin-top:16px; font-size:14px; }
+.action::before { content:"⚡ "; }
+ul { padding-left:20px; }
+li { margin-bottom:8px; }
+</style>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- Report Sub-nav -->
+<nav class="report-nav" style="background:var(--bg-surface);border-bottom:1px solid var(--border-subtle);padding:0 24px;position:sticky;top:0;z-index:100;font-family:var(--font-sans);box-shadow:var(--shadow-sm);">
+  <div style="max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:44px;font-size:13px;">
+    <div style="display:flex;gap:16px;">
+      <a href="index.html" style="color:var(--text-secondary);text-decoration:none;">← 报告目录</a>
+      <a href="../index.html" style="color:var(--text-secondary);text-decoration:none;">🏠 首页</a>
+    </div>
+    <span style="color:var(--text-tertiary);font-size:12px;">AI 调研中心</span>
+  </div>
+</nav>
+
+<div class="container">
+
+<h1>DeepSeek 10亿Token消耗事件调查报告</h1>
+<p class="meta">调查时间：2026-06-20 · 调查人：阿森（Axiom）</p>
+
+<div class="card">
+<h2>一、账单概况</h2>
+<div class="stat-row">
+<div class="stat-item">
+<div class="label">6月累计消费</div>
+<div class="number">¥5,980</div>
+</div>
+<div class="stat-item">
+<div class="label">Flash Token消耗</div>
+<div class="number">10<span class="unit">亿</span></div>
+</div>
+<div class="stat-item">
+<div class="label">Pro Token消耗</div>
+<div class="number">~2<span class="unit">亿</span></div>
+</div>
+<div class="stat-item">
+<div class="label">当前余额</div>
+<div class="number">¥969</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>二、根因</h2>
+<p><span class="tag tag-red">主因</span> <strong>Claude Code 与 Hermes 共用同一把 DeepSeek API Key，CC 在后台大量使用 deepseek-v4-flash 执行子代理任务，累计消耗 10 亿 token。</strong></p>
+
+<div style="margin-top:16px;">
+<p><strong>消耗链路：</strong></p>
+<div class="code">
+<span class="comment"># Claude Code 配置（~/.claude.json）</span>
+<span class="key">ANTHROPIC_BASE_URL</span>: <span class="val">"https://api.deepseek.com/anthropic"</span>
+<span class="key">ANTHROPIC_DEFAULT_HAIKU_MODEL</span>: <span class="val">"deepseek-v4-flash"</span>
+<span class="key">ANTHROPIC_SMALL_FAST_MODEL</span>: <span class="val">"deepseek-v4-flash"</span>
+<span class="key">ANTHROPIC_AUTH_TOKEN</span>: <span class="val">"sk-e7b...7c9c"</span> <span class="comment">← 阿森的key</span>
+</div>
+</div>
+
+<p>CC 每处理一个 MKS 任务，会在后台启动大量子代理：</p>
+<ul>
+<li><strong>读文件 → flash</strong>（每篇笔记一次）</li>
+<li><strong>分析内容 → flash</strong>（子代理并行处理）</li>
+<li><strong>生成 HTML → pro</strong>（主代理汇总）</li>
+</ul>
+<p style="margin-top:12px;">一个 300 篇的课程，flash 轻松消耗数千万 token。264 个 CC 会话跑了一个月，累计 10 亿。</p>
+</div>
+
+<div class="card">
+<h2>三、时间线</h2>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-date">5/23 – 5/25</div>
+<div class="timeline-content">CC 零星使用，3 个会话</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">5/26 – 6/7 · <span class="tag tag-red">峰值</span></div>
+<div class="timeline-content"><strong>吴军 MKS 系列：</strong>硅谷来信1/2/3、谷歌方法论、科技史纲、世界文明史、教育方法、逻辑思维训练——每天 10-40 个 CC 会话，占总消耗 60%+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">6/11 – 6/13</div>
+<div class="timeline-content"><strong>卓克 MKS 系列：</strong>科技参考基础版(317篇)、科学思维课(334篇)、科技参考3/4/5——数据源自 79MB SQLite，flash 消耗大</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">6/14 – 6/19</div>
+<div class="timeline-content">相对平静，少量零星会话</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-date">6/20</div>
+<div class="timeline-content">发现账单异常，启动调查</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>四、为何没及时发现</h2>
+<ul>
+<li><strong>CC 没有 token 预算限制</strong> —— 只关心"完成任务"，不关心花多少钱</li>
+<li><strong>CC 子代理没有超时熔断</strong> —— 死循环了没人知道，一个进程挂了 36 天无人察觉</li>
+<li><strong>CC 和 Hermes 没有隔离</strong> —— 共用一把 key，各跑各的，互不可见</li>
+<li><strong>没有消费监控</strong> —— DeepSeek 没有消费预警，月底看账单才发现</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>五、已落地的防范措施</h2>
+<table style="width:100%;border-collapse:collapse;margin-top:12px;">
+<tr style="border-bottom:1px solid #e2e8f0;">
+<th style="text-align:left;padding:10px 8px;font-size:13px;color:#64748b;">措施</th>
+<th style="text-align:left;padding:10px 8px;font-size:13px;color:#64748b;">频率</th>
+<th style="text-align:left;padding:10px 8px;font-size:13px;color:#64748b;">说明</th>
+</tr>
+<tr style="border-bottom:1px solid #e2e8f0;">
+<td style="padding:10px 8px;"><span class="tag tag-green">已上线</span> 进程巡检</td>
+<td style="padding:10px 8px;">每小时</td>
+<td style="padding:10px 8px;">超 3 小时的进程 → 飞书群告警</td>
+</tr>
+<tr style="border-bottom:1px solid #e2e8f0;">
+<td style="padding:10px 8px;"><span class="tag tag-green">已上线</span> 账单巡检</td>
+<td style="padding:10px 8px;">每天 10:00</td>
+<td style="padding:10px 8px;">日消费 > ¥50 → 飞书群告警</td>
+</tr>
+<tr style="border-bottom:1px solid #e2e8f0;">
+<td style="padding:10px 8px;"><span class="tag tag-green">已完成</span> CC key 更换</td>
+<td style="padding:10px 8px;">一次性</td>
+<td style="padding:10px 8px;">CC 已切换至新 key，不再与 Hermes 共用</td>
+</tr>
+<tr>
+<td style="padding:10px 8px;"><span class="tag tag-green">已完成</span> 僵尸进程清理</td>
+<td style="padding:10px 8px;">一次性</td>
+<td style="padding:10px 8px;">杀掉运行 36 天的 CC 进程 (PID 472997) 和今天的调查进程</td>
+</tr>
+</table>
+</div>
+
+<div class="card">
+<h2>六、后续建议</h2>
+<ol>
+<li><strong>CC 重度任务走独立 key</strong>，设置月消费上限</li>
+<li>评估是否将 CC 的 flash 模型换为更便宜的方案</li>
+<li>长期考虑在 Hermes 侧加一个"全局 token 预算"的概念</li>
+</ol>
+</div>
+
+<p style="text-align:center;color:#94a3b8;margin-top:40px;font-size:13px;">阿森 · Axiom 调查 · 2026.06.20</p>
+
+</div>
+</body>
+</html>
