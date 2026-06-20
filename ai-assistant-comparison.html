@@ -279,7 +279,7 @@
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
     <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" onclick="document.getElementById('navbarMenu').classList.toggle('show')" aria-label="菜单">
+    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">

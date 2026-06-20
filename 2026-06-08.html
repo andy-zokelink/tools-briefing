@@ -19,7 +19,7 @@
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
     <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" onclick="document.getElementById('navbarMenu').classList.toggle('show')" aria-label="菜单">
+    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">
@@ -278,7 +278,7 @@
 window.addEventListener('scroll',function(){var n=document.getElementById('navbar');if(n)n.classList.toggle('scrolled',window.scrollY>50);var s=document.getElementById('scrollTopBtn');if(s)s.classList.toggle('visible',window.scrollY>400)});
 
 // Close mobile menu on link click
-document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show')})});
+document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show');var t=document.getElementById('navbarToggler');if(t)t.classList.remove('active')})});
 </script>
 
 <script src="chat.js"></script>
