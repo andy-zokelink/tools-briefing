@@ -1,6 +1,7 @@
 // === 工具推荐 AI 助理 ===
 // API 代理地址 — Cloudflare Worker 转发到 SiliconFlow (DeepSeek-R1-Qwen3-8B)
 const API_URL = 'https://tools-briefing-ai.andy-132.workers.dev';
+const FETCH_TIMEOUT_MS = 20000;
 
 // UI State
 let isOpen = false;
@@ -76,23 +77,36 @@ async function sendMessage() {
   addMessage('user', text);
   messageHistory.push({ role: 'user', content: text });
 
-  // Trim history — keep only last 10 exchanges (20 messages) to avoid bloated requests
-  if (messageHistory.length > 20) {
-    messageHistory = messageHistory.slice(-20);
+  // Trim history — keep only last 6 exchanges (12 messages + keep first 2 for context)
+  if (messageHistory.length > 14) {
+    messageHistory = messageHistory.slice(0, 2).concat(messageHistory.slice(-12));
   }
 
   // Show typing
   showTyping();
 
+  // AbortController for timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(function() { controller.abort(); }, FETCH_TIMEOUT_MS);
+
   try {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: messageHistory })
+      body: JSON.stringify({ messages: messageHistory }),
+      signal: controller.signal
     });
 
+    clearTimeout(timeoutId);
+
     if (!response.ok) {
-      throw new Error(`API ${response.status}: ${response.statusText}`);
+      var errMsg = 'AI 服务返回错误 (' + response.status + ')';
+      // Try to read error detail from response body
+      try {
+        var errData = await response.json();
+        if (errData && errData.error) { errMsg = errData.error; }
+      } catch(e) { /* ignore parse errors */ }
+      throw new Error(errMsg);
     }
 
     const data = await response.json();
@@ -103,8 +117,12 @@ async function sendMessage() {
     messageHistory.push({ role: 'assistant', content: reply });
 
   } catch (err) {
+    clearTimeout(timeoutId);
     hideTyping();
-    addMessage('assistant', '抱歉，AI 服务暂时不可用。请稍后重试或查阅最新简报页面。');
+    var errText = err.name === 'AbortError'
+      ? '⏱ 请求超时（' + (FETCH_TIMEOUT_MS/1000) + '秒）。AI 服务响应较慢，请稍后重试。'
+      : '抱歉，AI 服务暂时不可用。\n\n' + err.message + '\n\n请稍后重试或查阅最新简报页面。';
+    addMessage('assistant', errText);
     console.error('Chat error:', err);
   }
 

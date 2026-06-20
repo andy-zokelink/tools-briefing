@@ -23,10 +23,11 @@ export default {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
     };
 
     if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: corsHeaders });
+      return new Response(null, { status: 204, headers: corsHeaders });
     }
 
     if (request.method !== 'POST') {
@@ -55,7 +56,7 @@ export default {
         body: JSON.stringify({
           model: MODEL,
           messages: trimmed,
-          max_tokens: 800,
+          max_tokens: 1024,
           temperature: 0.7,
         }),
       });
