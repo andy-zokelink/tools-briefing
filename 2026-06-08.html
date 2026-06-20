@@ -2,30 +2,38 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="LLM 上下文压缩 headroom 省 60-95% token，#1 Trending。harness 元技能自动生成 agent 团队与 skills。GitHub 正被 AI Agent 压垮——Claude Code 占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。">
-<title>第24期 · headroom、harness、Agent Skills 元技能时代 — 趁手工具推荐榜</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#05070a">
+<meta name="description" content="headroom 省 60-95% token 登顶 #1 Trending。harness 让 agent 为自己生成技能。GitHub 正被 AI Agent 压垮——Claude Code 单工具占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。">
+<meta property="og:title" content="第24期 · headroom · harness · Agent Skills 元技能时代 — 趁手工具推荐榜">
+<meta property="og:description" content="headroom 省 60-95% token 登顶 #1 Trending。harness 让 agent 为自己生成技能。GitHub 正被 AI Agent 压垮——Claude Code 单工具占全平台公开提交 4.5%。MCP 破万，Skills 进入工业化。">
+<meta property="og:type" content="article">
+<title>第24期 · headroom · harness · Agent Skills 元技能时代 — 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="stylesheet" href="styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
 
 <!-- Loading Bar -->
 <div class="loading-bar" id="loadingBar"></div>
 
-<!-- === Navbar === -->
-<nav class="navbar" id="navbar">
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
   <div class="navbar-container">
-    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">
       <a href="index.html">首页</a>
-      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
-      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
     </div>
   </div>
 </nav>
@@ -139,7 +147,7 @@
           </tbody>
         </table>
 
-        <h3 style="margin-top:1.5rem">Agent Skills 生态</h3>
+        <h3>Agent Skills 生态</h3>
         <table>
           <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
           <tbody>
@@ -176,7 +184,7 @@
         </div>
 
         <!-- ===== 深度阅读 05：试 ===== -->
-        <div class="card" style="margin-top:2rem">
+        <div class="card">
           <h3>💎 本周最值得试</h3>
           <p>在 Hermes 上装 <code>headroom</code> 的 MCP server 模式——挂到 MCP 配置里，所有工具输出自动压缩后再进 LLM。token 钱省多少不说，上下文窗口腾出来给真正重要的内容。</p>
           <pre><code>pip install headroom
@@ -185,7 +193,7 @@
 #   headroom:
 #     command: headroom
 #     args: ["serve"]</code></pre>
-          <p style="margin-top:1em">替代方案：试试 <code>harness</code> 让它分析你的日常工作流，自动生成一套 Hermes skill。</p>
+          <p>替代方案：试试 <code>harness</code> 让它分析你的日常工作流，自动生成一套 Hermes skill。</p>
         </div>
 
         <!-- ===== 数据统计 ===== -->
@@ -238,18 +246,29 @@
 
       </div>
     </article>
-
+      <nav class="post-nav">
+        <span></span>
+        <a href="2026-06-10.html" class="next">
+          <span class="nav-label">下一期 →</span>
+          <span class="nav-title">第25期</span>
+        </a>
+      </nav>
 </main>
 
+<!-- ════════════ FOOTER ════════════ -->
 <footer class="site-footer">
-  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
-  <p style="margin-top:0.3rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新</p>
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div style="margin-top:0.3rem;display:flex;justify-content:center;gap:0.6rem;font-size:0.76rem;">
+    <span>第24期简报</span><span>·</span>
+    <span>2026年6月8日</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · 每周一三五更新 · © 2026</div>
 </footer>
 
 <!-- Scroll to Top -->
-<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
 
-<!-- AI Chat Widget -->
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
 <div class="ai-chat-widget" id="aiChatWidget">
   <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
     <span style="line-height:1;">💬</span>
@@ -270,6 +289,8 @@
     </div>
   </div>
 </div>
+
+<script src="app.js"></script>
 <script src="chat.js"></script>
 </body>
 </html>

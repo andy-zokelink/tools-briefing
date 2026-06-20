@@ -2,11 +2,11 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#05070a">
 <title>AI 助手对比 · 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
 <link rel="stylesheet" href="styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   /* CSS variables now inherited from styles.css */
@@ -272,20 +272,25 @@
 </head>
 <body>
 
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
+
 <!-- Loading Bar -->
 <div class="loading-bar" id="loadingBar"></div>
 
-<!-- === Navbar === -->
-<nav class="navbar" id="navbar">
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
   <div class="navbar-container">
-    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">
       <a href="index.html">首页</a>
-      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
-      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
     </div>
   </div>
 </nav>
@@ -478,5 +483,39 @@ new Chart(document.getElementById('radarChart'), {
   }
 });
 </script>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div>AI 调研中心 · 项目审计文档</div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · © 2026</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
+
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="chat.js"></script>
 </body>
 </html>

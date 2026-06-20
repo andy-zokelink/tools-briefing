@@ -2,30 +2,38 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#05070a">
 <meta name="description" content="compass-skills（司南）将 Agent Skills 从单任务能力升级为个人工作流 OS，Skills 正从 function 走向 platform。agent-harness-generator 让创建 agent harness 像脚手架一样简单，Agent 基础设施进入标准化时代。NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全。">
+<meta property="og:title" content="第28期 · Skills 操作系统化 · Agent 基础设施工业化 — 趁手工具推荐榜">
+<meta property="og:description" content="compass-skills（司南）将 Agent Skills 从单任务能力升级为个人工作流 OS，Skills 正从 function 走向 platform。agent-harness-generator 让创建 agent harness 像脚手架一样简单，Agent 基础设施进入标准化时代。NVIDIA SkillSpector 以硬件巨头身份进场 Skills 安全。">
+<meta property="og:type" content="article">
 <title>第28期 · Skills 操作系统化 · Agent 基础设施工业化 — 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <link rel="stylesheet" href="styles.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
 
 <!-- Loading Bar -->
 <div class="loading-bar" id="loadingBar"></div>
 
-<!-- === Navbar === -->
-<nav class="navbar" id="navbar">
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
   <div class="navbar-container">
-    <a class="navbar-brand" href="index.html">🔧 趁手工具推荐榜</a>
-    <button class="navbar-toggler" id="navbarToggler" onclick="var m=document.getElementById('navbarMenu');m.classList.toggle('show');this.classList.toggle('active')" aria-label="菜单">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
       <span></span><span></span><span></span>
     </button>
     <div class="navbar-menu" id="navbarMenu">
       <a href="index.html">首页</a>
-      <a href="reports/">📋 研究报告 <span style="font-size:0.72rem;opacity:0.6">28</span></a>
-      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" class="external">GitHub</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
     </div>
   </div>
 </nav>
@@ -257,18 +265,32 @@ npx agent-harness-generator
         <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
       </div>
     </article>
-
+      <nav class="post-nav">
+        <a href="2026-06-15.html" class="prev">
+          <span class="nav-label">← 上一期</span>
+          <span class="nav-title">第27期</span>
+        </a>
+        <a href="2026-06-19.html" class="next">
+          <span class="nav-label">下一期 →</span>
+          <span class="nav-title">第29期</span>
+        </a>
+      </nav>
 </main>
 
+<!-- ════════════ FOOTER ════════════ -->
 <footer class="site-footer">
-  <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</p>
-  <p style="margin-top:0.3rem;font-size:0.72rem;opacity:0.5">Fluid Material Design · 每周一三五更新</p>
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div style="margin-top:0.3rem;display:flex;justify-content:center;gap:0.6rem;font-size:0.76rem;">
+    <span>第28期简报</span><span>·</span>
+    <span>2026年6月17日</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · 每周一三五更新 · © 2026</div>
 </footer>
 
 <!-- Scroll to Top -->
-<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
 
-<!-- AI Chat Widget -->
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
 <div class="ai-chat-widget" id="aiChatWidget">
   <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
     <span style="line-height:1;">💬</span>
@@ -289,6 +311,8 @@ npx agent-harness-generator
     </div>
   </div>
 </div>
+
+<script src="app.js"></script>
 <script src="chat.js"></script>
 </body>
 </html>
