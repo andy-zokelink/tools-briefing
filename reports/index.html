@@ -317,144 +317,6 @@
     letter-spacing: -0.01em;
   }
 
-  /* AI Assistant */
-  .ai-assistant {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    margin: 48px 0 40px;
-    overflow: hidden;
-  }
-
-  .ai-assistant .ai-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .ai-assistant .ai-header .ai-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #27a644;
-    flex-shrink: 0;
-  }
-
-  .ai-assistant .ai-header h3 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.01em;
-  }
-
-  .ai-assistant .ai-header p {
-    font-size: 12px;
-    color: var(--text-tertiary);
-  }
-
-  .ai-chat {
-    padding: 12px 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 100px;
-    background: var(--bg);
-  }
-
-  .ai-chat .msg {
-    max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .ai-chat .msg.user {
-    align-self: flex-end;
-    background: var(--text);
-    color: #fff;
-  }
-
-  .ai-chat .msg.bot {
-    align-self: flex-start;
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border);
-  }
-
-  .ai-chat .msg.bot .highlight {
-    color: var(--warm);
-    font-weight: 500;
-  }
-
-  .ai-chat .msg.bot .tag-result {
-    display: inline-block;
-    padding: 2px 8px;
-    margin: 2px;
-    border-radius: 4px;
-    background: var(--warm-light);
-    color: var(--warm);
-    font-size: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    border: 1px solid var(--warm-border);
-  }
-
-  .ai-chat .msg.bot .tag-result:hover {
-    background: var(--warm-light);
-    border-color: var(--warm);
-  }
-
-  .ai-input-area {
-    padding: 12px 20px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-    background: var(--bg);
-  }
-
-  .ai-input-area input {
-    flex: 1;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 8px 14px;
-    color: var(--text);
-    font-size: 13px;
-    outline: none;
-    font-family: inherit;
-  }
-
-  .ai-input-area input:focus {
-    border-color: var(--warm);
-  }
-
-  .ai-input-area input::placeholder {
-    color: var(--text-tertiary);
-  }
-
-  .ai-input-area button {
-    background: var(--text);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius);
-    padding: 8px 18px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
-    transition: opacity 0.15s;
-  }
-
-  .ai-input-area button:hover {
-    opacity: 0.8;
-  }
-
   /* Responsive */
   @media (max-width: 768px) {
     .reports-container {
@@ -843,29 +705,23 @@
         </div>
       </div>
 
-      <!-- AI Assistant -->
-      <div id="assistant">
-        <div class="ai-assistant">
-          <div class="ai-header">
-            <div class="ai-dot"></div>
-            <div>
-              <h3>AI 调研助手</h3>
-              <p>本地检索 · 快速定位报告 · 试试问「有哪些金融相关的报告？」</p>
+      <!-- AI Chat Widget (LLM) -->
+      <div class="ai-chat-widget">
+        <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+        <div class="ai-chat-panel" id="chatPanel">
+          <div class="ai-chat-header">
+            <span class="title">AI 助理</span>
+            <button class="close-btn" onclick="toggleChat()">✕</button>
+          </div>
+          <div class="ai-chat-messages" id="chatMessages">
+            <div class="ai-chat-msg assistant">
+              <div class="label">AI 助理</div>
+              你好！我是 AI 调研助理。可以问我关于站内 28 份报告、工具推荐、或 MCP/Skills 生态的问题。
             </div>
           </div>
-          <div class="ai-chat" id="chatWindow">
-            <div class="msg bot">
-              👋 你好！我是调研中心 AI 助手。<br>
-              你可以问我：<br>
-              · 「有哪些<span class="highlight">金融工具</span>相关的报告？」<br>
-              · 「<span class="highlight">云厂商 AI CLI</span> 怎么选？」<br>
-              · 「<span class="highlight">新程 Alpha</span> 是什么？」<br>
-              · 「<span class="highlight">龙虾盒子</span>有哪些竞品？」
-            </div>
-          </div>
-          <div class="ai-input-area">
-            <input type="text" id="chatInput" placeholder="问点什么…" onkeydown="if(event.key==='Enter')askAI()">
-            <button onclick="askAI()">发送</button>
+          <div class="ai-chat-input-row">
+            <input type="text" id="chatInput" placeholder="问点关于报告或工具的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
+            <button onclick="sendMessage()" id="sendBtn">发送</button>
           </div>
         </div>
       </div>
@@ -878,12 +734,9 @@
 </footer>
 
 <script>
-// Category toggle
 function toggleCategory(header) {
   header.parentElement.classList.toggle('collapsed');
 }
-
-// Filter reports
 function filterReports() {
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
   document.querySelectorAll('.cat-section').forEach(section => {
@@ -904,82 +757,7 @@ function filterReports() {
     }
   });
 }
-
-// AI Assistant
-const reportIndex = [
-  {t:"AI编程组合横向对比：Hermes vs Kimi Code CLI",c:"AI工具",k:"hermes kimi code cli 编程 会员 订阅 成本 工具链"},
-  {t:"Coze CLI 完整工具清单与点评",c:"AI工具",k:"coze 扣子 cli 工具 模型 插件 技能 云电脑 云手机 多模态"},
-  {t:"扣子Coze CLI深度调研：能力全景与实战案例",c:"AI工具",k:"coze 扣子 cli 工作流 agent world 实战 案例 视频 语音"},
-  {t:"22款AI编程Agent全谱系深度横评",c:"AI工具",k:"agent 编程 全谱系 横评 claude codex deepseek opencode hermes cline openclaw"},
-  {t:"5款CLI编程助手深度交叉对比",c:"AI工具",k:"cli 编程 助手 claude code codex kimi codebuddy trae 对比"},
-  {t:"项目AI助手对比：LLM助手 vs 本地搜索",c:"AI工具",k:"ai 助手 对比 llm 本地 搜索 chatjs deepseek worker 架构"},
-  {t:"基座大模型全景调研：面壁智能 + 国内外格局",c:"大模型",k:"基座 大模型 面壁 deepseek qwen kimi gpt claude gemini 格局 miniCPM"},
-  {t:"5款4B级小模型深度交叉对比",c:"大模型",k:"4b 小模型 minicpm phi qwen gemma 新程 alpha benchmark 对比"},
-  {t:"龙虾盒子（OpenClaw Box）市场全景调研报告",c:"AI硬件",k:"龙虾 openclaw edgeclaw box 边缘 ai 硬件 中科可控 nvidia 安全 漏洞"},
-  {t:"面壁智能硬件产品调研：松果派 & EdgeClaw Box",c:"AI硬件",k:"面壁 松果派 edgeclaw box 开发板 隐私 路由 jetson"},
-  {t:"6个开源AI金融工具横向对比",c:"金融工具",k:"开源 ai 金融 工具 对比 vibe-trading tradingagents dexter anthropics"},
-  {t:"Vibe-Trading深度调研报告",c:"金融工具",k:"vibe trading 量化 akshare 回测 a股 策略 自然语言"},
-  {t:"Vibe-Trading竞品横向对比",c:"金融工具",k:"vibe trading 竞品 alphabench composer openbb 量化"},
-  {t:"金融工具与A股数据源综合测评",c:"金融工具",k:"金融 a股 数据源 akshare tushare 测评"},
-  {t:"三大云厂商AI CLI交叉调研",c:"云服务",k:"云厂商 ai cli 百炼 cloudbase vecli 阿里 腾讯 火山"},
-  {t:"三大云厂商AI能力全景 vs 中科领创业务场景",c:"云服务",k:"云厂商 ai 中科领创 业务 生图 视频 语音 小程序"},
-  {t:"四家云AI CLI交叉调研",c:"云服务",k:"四家 云 ai cli 百炼 cloudbase vecli coze 扣子"},
-  {t:"Graphviz与同类绘图工具对比调研",c:"工具生态",k:"graphviz 绘图 mermaid plantuml d2 drawio excalidraw"},
-  {t:"新程 Alpha 竞品全景分析",c:"工具生态",k:"新程 alpha 竞品 群体智能 isara autogen"},
-  {t:"新程 Alpha 部署与使用指南",c:"工具生态",k:"新程 alpha 部署 团子 硬件"},
-  {t:"新程 Alpha 认知模型初探",c:"工具生态",k:"新程 alpha 认知 小冰 李笛 知识 解耦"},
-  {t:"趁手工具推荐榜 × Skills Watch（5期）",c:"工具生态",k:"趁手 工具 skills watch github trending mcp"},
-  {t:"工具兵器库周度采集",c:"工具生态",k:"工具 兵器库 42plugin 采集"},
-  {t:"品味AI每天简报",c:"工具生态",k:"品味 ai 简报 行业 产业"},
-  {t:"Qwen3-4B → 科学题库生成",c:"教育应用",k:"qwen3 4b 科学 题库 mks 教育 gguf"},
-  {t:"MiniCPM 3.0 → 知识检索增强",c:"教育应用",k:"minicpm rag 知识 检索 mks"},
-  {t:"Gemma 4 E2B → 科学图表理解",c:"教育应用",k:"gemma e2b 多模态 图表 mks 科学"},
-];
-
-function askAI() {
-  const input = document.getElementById('chatInput');
-  const q = input.value.trim();
-  if (!q) return;
-
-  const chat = document.getElementById('chatWindow');
-
-  const userMsg = document.createElement('div');
-  userMsg.className = 'msg user';
-  userMsg.textContent = q;
-  chat.appendChild(userMsg);
-
-  const botMsg = document.createElement('div');
-  botMsg.className = 'msg bot';
-
-  const ql = q.toLowerCase();
-  const matches = reportIndex.filter(r => {
-    const all = (r.t + ' ' + r.c + ' ' + r.k).toLowerCase();
-    const terms = ql.split(/\s+/);
-    return terms.some(t => all.includes(t));
-  }).slice(0, 5);
-
-  if (matches.length > 0) {
-    let html = `找到 <b>${matches.length}</b> 份相关报告：<br><br>`;
-    matches.forEach((r, i) => {
-      html += `<span class="tag-result" onclick="scrollToReport('${r.t.replace(/'/g,"\\'")}')">${i+1}. ${r.t.substring(0,40)}${r.t.length>40?'…':''}</span><br>`;
-      html += `<small style="color:var(--text-tertiary)">📂 ${r.c}</small><br><br>`;
-    });
-    html += `<small style="color:var(--text-tertiary)">💡 点击标签可跳转定位</small>`;
-    botMsg.innerHTML = html;
-  } else {
-    botMsg.innerHTML = `未找到直接匹配「${q}」的报告。<br><br>试试：<br>· 「金融」「量化」「云厂商」「龙虾」<br>· 「新程」「面壁」「Coze」「Vibe」<br>· 或用顶部的搜索框筛查整个目录`;
-  }
-
-  chat.appendChild(botMsg);
-  chat.scrollTop = chat.scrollHeight;
-  input.value = '';
-}
-
-function scrollToReport(title) {
-  document.getElementById('searchInput').value = title.substring(0, 20);
-  filterReports();
-  document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
-}
 </script>
+<script src="../chat.js"></script>
 </body>
 </html>
