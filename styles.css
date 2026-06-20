@@ -224,7 +224,10 @@ a:hover { color: var(--accent-dark); }
 
 /* ===== Banner (index page hero) ===== */
 .banner {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, #1a2a3a 100%);
+  background: 
+    linear-gradient(135deg, rgba(47,65,84,0.85) 0%, rgba(26,42,58,0.9) 100%),
+    url('banner.jpg') center/cover no-repeat;
+  background-color: var(--primary);
   padding: 3.5rem 1.5rem;
   text-align: center;
   position: relative;
