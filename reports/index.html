@@ -368,22 +368,23 @@
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 
 <!-- AI Chat Widget -->
-<div class="ai-chat-widget">
-  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
   <div class="ai-chat-panel" id="chatPanel">
     <div class="ai-chat-header">
-      <span class="title">AI 助理</span>
-      <button class="close-btn" onclick="toggleChat()">✕</button>
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
     </div>
-    <div class="ai-chat-messages" id="chatMessages">
-      <div class="ai-chat-msg assistant">
-        <div class="label">AI 助理</div>
-        你好！我是 AI 调研助理。可以问我关于站内 28 份报告、工具推荐、或 MCP/Skills 生态的问题。
-      </div>
-    </div>
-    <div class="ai-chat-input-row">
-      <input type="text" id="chatInput" placeholder="问点关于报告或工具的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
-      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
     </div>
   </div>
 </div>

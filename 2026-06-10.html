@@ -251,37 +251,26 @@ python mcts.py --config ~/.hermes/profiles/default/config.yaml</code></pre>
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="回到顶部">↑</button>
 
 <!-- AI Chat Widget -->
-<div class="ai-chat-widget">
-  <button class="ai-chat-btn" id="chatBtn" onclick="toggleChat()" title="AI 助理">🤖</button>
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
   <div class="ai-chat-panel" id="chatPanel">
     <div class="ai-chat-header">
-      <span class="title">AI 助理</span>
-      <button class="close-btn" onclick="toggleChat()">✕</button>
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
     </div>
-    <div class="ai-chat-messages" id="chatMessages">
-      <div class="ai-chat-msg assistant">
-        <div class="label">AI 助理</div>
-        你好！我是工具推荐助手。可以问我关于本期推荐的工具、MCP 生态趋势，或者帮你找适合你场景的开发工具。
-      </div>
-    </div>
-    <div class="ai-chat-input-row">
-      <input type="text" id="chatInput" placeholder="问点关于工具推荐的问题..." onkeydown="if(event.key==='Enter')sendMessage()">
-      <button onclick="sendMessage()" id="sendBtn">发送</button>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
     </div>
   </div>
 </div>
-
-<script>
-// Loading bar animation
-(function(){var b=document.getElementById('loadingBar');if(!b)return;var w=0;var t=setInterval(function(){if(w<85){w+=Math.random()*8+2;b.style.width=w+'%'}else{clearInterval(t)}},120);window.addEventListener('load',function(){b.style.width='100%';setTimeout(function(){b.style.opacity='0';setTimeout(function(){b.remove()},400)},200)})})();
-
-// Navbar scroll effect
-window.addEventListener('scroll',function(){var n=document.getElementById('navbar');if(n)n.classList.toggle('scrolled',window.scrollY>50);var s=document.getElementById('scrollTopBtn');if(s)s.classList.toggle('visible',window.scrollY>400)});
-
-// Close mobile menu on link click
-document.querySelectorAll('#navbarMenu a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('navbarMenu').classList.remove('show');var t=document.getElementById('navbarToggler');if(t)t.classList.remove('active')})});
-</script>
-
 <script src="chat.js"></script>
 </body>
 </html>
