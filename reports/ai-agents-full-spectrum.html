@@ -8,11 +8,11 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #08090a; --panel: #0f1011; --surface: #191a1b; --surface2: #222326;
-    --text: #f7f8f8; --text2: #d0d6e0; --text3: #8a8f98; --text4: #62666d;
-    --accent: #5e6ad2; --accent-bright: #7170ff; --green: #27a644;
-    --orange: #d2991d; --red: #f85149; --cyan: #39c5cf;
-    --border: rgba(255,255,255,0.08); --border-subtle: rgba(255,255,255,0.05);
+    --bg: #f8f9fb; --panel: #eef0f3; --surface: #ffffff; --surface2: #f4f5f8;
+    --text: #1a1d23; --text2: #5a6570; --text3: #8a9099; --text4: #8a9099;
+    --accent: #4f46e5; --accent-bright: #6366f1; --green: #16a34a;
+    --orange: #d97706; --red: #dc2626; --cyan: #0891b2;
+    --border: rgba(0,0,0,0.07); --border-subtle: rgba(0,0,0,0.04);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -22,12 +22,12 @@
     line-height: 1.6; overflow-x: hidden;
   }
   #particles { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0.55; }
-  #glow { position: fixed; z-index:0; pointer-events:none; width:600px; height:600px; border-radius:50%; background: radial-gradient(circle, rgba(113,112,255,0.07) 0%, transparent 70%); transform: translate(-50%,-50%); transition: left 0.8s ease-out, top 0.8s ease-out; }
+  #glow { position: fixed; z-index:0; pointer-events:none; width:600px; height:600px; border-radius:50%; background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%); transform: translate(-50%,-50%); transition: left 0.8s ease-out, top 0.8s ease-out; }
   .reveal { opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
   nav, .hero, .kpi-row, .sec, footer { position:relative; z-index:1; }
 
-  nav { position:sticky; top:0; z-index:100; background:rgba(15,16,17,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border-subtle); padding:0 24px; }
+  nav { position:sticky; top:0; z-index:100; background:rgba(248,249,251,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border-subtle); padding:0 24px; }
   nav .inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:20px; height:52px; }
   nav .logo { font-size:15px; font-weight:600; color:var(--text); white-space:nowrap; }
   nav .logo span { color:var(--accent-bright); }
@@ -35,7 +35,7 @@
   nav a:hover { color:var(--text); }
 
   .hero { max-width:1200px; margin:0 auto; padding:80px 24px 64px; text-align:center; }
-  .hero .badge { display:inline-block; background:rgba(94,106,210,0.12); color:var(--accent-bright); border:1px solid rgba(94,106,210,0.25); border-radius:999px; padding:4px 16px; font-size:12px; font-weight:500; margin-bottom:24px; }
+  .hero .badge { display:inline-block; background:rgba(79,70,229,0.10); color:var(--accent-bright); border:1px solid rgba(79,70,229,0.20); border-radius:999px; padding:4px 16px; font-size:12px; font-weight:500; margin-bottom:24px; }
   .hero h1 { font-size:clamp(2rem,5vw,3.2rem); font-weight:600; letter-spacing:-0.04em; color:var(--text); line-height:1.15; margin-bottom:16px; }
   .hero h1 span { color:var(--accent-bright); }
   .hero p { font-size:1.05rem; color:var(--text3); max-width:700px; margin:0 auto; }
@@ -53,7 +53,7 @@
   .sec .sub { font-size:13px; color:var(--text3); margin-bottom:28px; }
 
   .card { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; margin-bottom:12px; transition:border-color .2s; }
-  .card:hover { border-color:rgba(255,255,255,0.14); }
+  .card:hover { border-color:rgba(0,0,0,0.10); }
   .card h3 { font-size:15px; font-weight:600; color:var(--text); margin-bottom:10px; }
   .card p, .card li { font-size:13px; color:var(--text2); }
   .card li { padding:3px 0; }
@@ -75,21 +75,21 @@
 
   .acc { margin-bottom:8px; }
   .acc-hdr { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-size:14px; font-weight:600; color:var(--text); transition:border-color .15s; }
-  .acc-hdr:hover { border-color:rgba(255,255,255,0.15); }
+  .acc-hdr:hover { border-color:rgba(0,0,0,0.12); }
   .acc-hdr::after { content:"+"; font-size:16px; color:var(--text3); font-weight:400; }
   .acc.open .acc-hdr::after { content:"−"; }
   .acc-body { display:none; background:var(--surface); border:1px solid var(--border); border-top:none; border-radius:0 0 10px 10px; padding:20px; font-size:13px; color:var(--text2); }
   .acc.open .acc-body { display:block; }
 
-  .insight { background:rgba(94,106,210,0.06); border:1px solid rgba(94,106,210,0.18); border-radius:10px; padding:20px 24px; font-size:13px; margin-bottom:12px; }
+  .insight { background:rgba(79,70,229,0.06); border:1px solid rgba(79,70,229,0.15); border-radius:10px; padding:20px 24px; font-size:13px; margin-bottom:12px; }
   .insight strong { color:var(--accent-bright); }
 
   .tag { display:inline-block; padding:2px 8px; border-radius:999px; font-size:10px; font-weight:500; margin-right:4px; }
-  .tag.g { background:rgba(39,166,68,0.12); color:var(--green); border:1px solid rgba(39,166,68,0.2); }
-  .tag.p { background:rgba(94,106,210,0.12); color:var(--accent-bright); border:1px solid rgba(94,106,210,0.2); }
-  .tag.o { background:rgba(210,153,29,0.12); color:var(--orange); border:1px solid rgba(210,153,29,0.2); }
-  .tag.r { background:rgba(248,81,73,0.1); color:var(--red); border:1px solid rgba(248,81,73,0.18); }
-  .tag.c { background:rgba(57,197,207,0.12); color:var(--cyan); border:1px solid rgba(57,197,207,0.2); }
+  .tag.g { background:rgba(22,163,74,0.12); color:var(--green); border:1px solid rgba(22,163,74,0.20); }
+  .tag.p { background:rgba(79,70,229,0.10); color:var(--accent-bright); border:1px solid rgba(79,70,229,0.15); }
+  .tag.o { background:rgba(217,119,6,0.12); color:var(--orange); border:1px solid rgba(217,119,6,0.20); }
+  .tag.r { background:rgba(220,38,38,0.10); color:var(--red); border:1px solid rgba(220,38,38,0.15); }
+  .tag.c { background:rgba(8,145,178,0.12); color:var(--cyan); border:1px solid rgba(8,145,178,0.20); }
 
   .note { font-size:11px; color:var(--text4); margin-top:6px; }
   footer { text-align:center; padding:40px 24px; color:var(--text4); font-size:11px; border-top:1px solid var(--border-subtle); margin-top:64px; }
@@ -102,10 +102,10 @@ nav { top: 40px; }
 </style>
 </head>
 <body>
-<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
-  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
-  <span style="color:rgba(255,255,255,0.08)">|</span>
-  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,249,251,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">← 报告目录</a>
+  <span style="color:rgba(0,0,0,0.07)">|</span>
+  <a href="../index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">🏠 工具推荐榜首页</a>
 </div>
 
 
@@ -489,21 +489,21 @@ new Chart(document.getElementById('radarChart'),{
   data:{
     labels:['代码能力','模型灵活性','开源生态','中文支持','性价比','平台覆盖','社区活跃'],
     datasets:[
-      {label:'Claude Code',data:[10,3,4,4,4,9,10],borderColor:'#7170ff',backgroundColor:'rgba(113,112,255,0.1)',pointRadius:2},
-      {label:'Codex CLI',data:[8,4,9,5,8,8,9],borderColor:'#27a644',backgroundColor:'rgba(39,166,68,0.1)',pointRadius:2},
-      {label:'OpenCode',data:[8,10,10,6,9,9,10],borderColor:'#d2991d',backgroundColor:'rgba(210,153,29,0.1)',pointRadius:2},
-      {label:'DeepSeek-TUI',data:[8,5,9,8,10,7,8],borderColor:'#39c5cf',backgroundColor:'rgba(57,197,207,0.1)',pointRadius:2},
-      {label:'Cline',data:[7,9,9,5,8,6,9],borderColor:'#8a8f98',backgroundColor:'rgba(138,143,152,0.1)',pointRadius:2},
-      {label:'Hermes Agent',data:[6,10,10,8,9,10,10],borderColor:'#f85149',backgroundColor:'rgba(248,81,73,0.1)',pointRadius:2, borderDash:[4,4]},
+      {label:'Claude Code',data:[10,3,4,4,4,9,10],borderColor:'#6366f1',backgroundColor:'rgba(99,102,241,0.10)',pointRadius:2},
+      {label:'Codex CLI',data:[8,4,9,5,8,8,9],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,0.10)',pointRadius:2},
+      {label:'OpenCode',data:[8,10,10,6,9,9,10],borderColor:'#d97706',backgroundColor:'rgba(217,119,6,0.10)',pointRadius:2},
+      {label:'DeepSeek-TUI',data:[8,5,9,8,10,7,8],borderColor:'#0891b2',backgroundColor:'rgba(8,145,178,0.10)',pointRadius:2},
+      {label:'Cline',data:[7,9,9,5,8,6,9],borderColor:'#8a9099',backgroundColor:'rgba(138,144,153,0.10)',pointRadius:2},
+      {label:'Hermes Agent',data:[6,10,10,8,9,10,10],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,0.10)',pointRadius:2, borderDash:[4,4]},
     ]
   },
   options:{
     responsive:true,maintainAspectRatio:false,
     plugins:{
-      legend:{labels:{color:'#d0d6e0',font:{size:10},padding:12,usePointStyle:true}},
-      title:{display:true,text:'6款代表性工具 × 7维度雷达图',color:'#8a8f98',font:{size:12},padding:10}
+      legend:{labels:{color:'#5a6570',font:{size:10},padding:12,usePointStyle:true}},
+      title:{display:true,text:'6款代表性工具 × 7维度雷达图',color:'#8a9099',font:{size:12},padding:10}
     },
-    scales:{r:{beginAtZero:true,max:10,ticks:{stepSize:2,color:'#62666d',backdropColor:'transparent',font:{size:9}},grid:{color:'rgba(255,255,255,0.06)'},angleLines:{color:'rgba(255,255,255,0.06)'},pointLabels:{color:'#8a8f98',font:{size:10}}}}
+    scales:{r:{beginAtZero:true,max:10,ticks:{stepSize:2,color:'#8a9099',backdropColor:'transparent',font:{size:9}},grid:{color:'rgba(0,0,0,0.05)'},angleLines:{color:'rgba(0,0,0,0.05)'},pointLabels:{color:'#8a9099',font:{size:10}}}}
   }
 });
 
@@ -514,15 +514,15 @@ new Chart(document.getElementById('barChart'),{
     datasets:[{
       label:'GitHub Stars',
       data:[370,158,122,102,81.5,76.7,58.2,43,32.7,25.9,22.5,15],
-      backgroundColor:['rgba(57,197,207,0.7)','rgba(210,153,29,0.7)','rgba(113,112,255,0.7)','rgba(248,81,73,0.7)','rgba(39,166,68,0.7)','rgba(113,112,255,0.5)','rgba(138,143,152,0.7)','rgba(210,153,29,0.5)','rgba(57,197,207,0.5)','rgba(39,166,68,0.5)','rgba(248,81,73,0.5)','rgba(138,143,152,0.5)'],
-      borderColor:['#39c5cf','#d2991d','#7170ff','#f85149','#27a644','#7170ff','#8a8f98','#d2991d','#39c5cf','#27a644','#f85149','#8a8f98'],
+      backgroundColor:['rgba(8,145,178,0.40)','rgba(217,119,6,0.40)','rgba(99,102,241,0.40)','rgba(220,38,38,0.40)','rgba(22,163,74,0.40)','rgba(99,102,241,0.40)','rgba(138,144,153,0.40)','rgba(217,119,6,0.40)','rgba(8,145,178,0.40)','rgba(22,163,74,0.40)','rgba(220,38,38,0.40)','rgba(138,144,153,0.40)'],
+      borderColor:['#0891b2','#d97706','#6366f1','#dc2626','#16a34a','#6366f1','#8a9099','#d97706','#0891b2','#16a34a','#dc2626','#8a9099'],
       borderWidth:1,borderRadius:4
     }]
   },
   options:{
     responsive:true,maintainAspectRatio:false,indexAxis:'y',
-    plugins:{legend:{display:false},title:{display:true,text:'GitHub Stars 排行（×1000）',color:'#8a8f98',font:{size:12},padding:10}},
-    scales:{x:{ticks:{color:'#62666d',callback:function(v){return (v/1000).toFixed(0)+'K'}},grid:{color:'rgba(255,255,255,0.06)'}},y:{ticks:{color:'#8a8f98',font:{size:9}},grid:{display:false}}}
+    plugins:{legend:{display:false},title:{display:true,text:'GitHub Stars 排行（×1000）',color:'#8a9099',font:{size:12},padding:10}},
+    scales:{x:{ticks:{color:'#8a9099',callback:function(v){return (v/1000).toFixed(0)+'K'}},grid:{color:'rgba(0,0,0,0.05)'}},y:{ticks:{color:'#8a9099',font:{size:9}},grid:{display:false}}}
   }
 });
 
@@ -531,17 +531,17 @@ new Chart(document.getElementById('verdictChart'),{
   data:{
     labels:['代码质量','速度','模型自由','成本','隐私','易上手','企业合规'],
     datasets:[
-      {label:'Claude Code',data:[10,6,3,4,5,7,5],backgroundColor:'rgba(113,112,255,0.7)',borderRadius:3},
-      {label:'Codex CLI',data:[7,10,4,6,6,8,6],backgroundColor:'rgba(39,166,68,0.7)',borderRadius:3},
-      {label:'OpenCode',data:[7,8,10,9,9,7,6],backgroundColor:'rgba(210,153,29,0.7)',borderRadius:3},
-      {label:'DeepSeek-TUI',data:[7,7,5,10,6,6,5],backgroundColor:'rgba(57,197,207,0.7)',borderRadius:3},
-      {label:'CodeBuddy',data:[5,6,4,10,5,9,10],backgroundColor:'rgba(248,81,73,0.7)',borderRadius:3},
+      {label:'Claude Code',data:[10,6,3,4,5,7,5],backgroundColor:'rgba(99,102,241,0.40)',borderRadius:3},
+      {label:'Codex CLI',data:[7,10,4,6,6,8,6],backgroundColor:'rgba(22,163,74,0.40)',borderRadius:3},
+      {label:'OpenCode',data:[7,8,10,9,9,7,6],backgroundColor:'rgba(217,119,6,0.40)',borderRadius:3},
+      {label:'DeepSeek-TUI',data:[7,7,5,10,6,6,5],backgroundColor:'rgba(8,145,178,0.40)',borderRadius:3},
+      {label:'CodeBuddy',data:[5,6,4,10,5,9,10],backgroundColor:'rgba(220,38,38,0.40)',borderRadius:3},
     ]
   },
   options:{
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#d0d6e0',font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:'5款代表性工具 × 7场景维度评分',color:'#8a8f98',font:{size:12},padding:10}},
-    scales:{y:{beginAtZero:true,max:10,ticks:{color:'#62666d'},grid:{color:'rgba(255,255,255,0.06)'}},x:{ticks:{color:'#8a8f98',font:{size:10}},grid:{display:false}}}
+    plugins:{legend:{labels:{color:'#5a6570',font:{size:10},padding:12,usePointStyle:true}},title:{display:true,text:'5款代表性工具 × 7场景维度评分',color:'#8a9099',font:{size:12},padding:10}},
+    scales:{y:{beginAtZero:true,max:10,ticks:{color:'#8a9099'},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{color:'#8a9099',font:{size:10}},grid:{display:false}}}
   }
 });
 </script>

@@ -7,22 +7,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  :root{--bg:#08090a;--panel:#0f1011;--surface:#191a1b;--surface2:#222326;--text:#f7f8f8;--text2:#d0d6e0;--text3:#8a8f98;--text4:#62666d;--accent:#5e6ad2;--accent-bright:#7170ff;--green:#27a644;--orange:#d2991d;--red:#f85149;--border:rgba(255,255,255,0.08);--border-subtle:rgba(255,255,255,0.05)}
+  :root{--bg:#f8f9fb;--panel:#eef0f3;--surface:#ffffff;--surface2:#f4f5f8;--text:#1a1d23;--text2:#5a6570;--text3:#8a9099;--text4:#8a9099;--accent:#4f46e5;--accent-bright:#6366f1;--green:#16a34a;--orange:#d97706;--red:#dc2626;--border:rgba(0,0,0,0.07);--border-subtle:rgba(0,0,0,0.04)}
   *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
   body{background:var(--bg);color:var(--text2);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-feature-settings:'cv01','ss03';line-height:1.6;overflow-x:hidden}
   #particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.55}
-  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(113,112,255,.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
+  #glow{position:fixed;z-index:0;pointer-events:none;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,0.06) 0%,transparent 70%);transform:translate(-50%,-50%);transition:left .8s ease-out,top .8s ease-out}
   .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
   .reveal.visible{opacity:1;transform:translateY(0)}
   nav,.hero,.kpi-row,.sec,footer{position:relative;z-index:1}
-  nav{position:sticky;top:0;z-index:100;background:rgba(15,16,17,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
+  nav{position:sticky;top:0;z-index:100;background:rgba(248,249,251,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:0 24px}
   nav .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
   nav .logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.2px}
   nav .logo span{color:var(--accent-bright)}
   nav a{font-size:13px;font-weight:500;color:var(--text3);text-decoration:none;transition:color .15s}
   nav a:hover{color:var(--text)}
   .hero{max-width:1100px;margin:0 auto;padding:64px 24px 40px;text-align:center}
-  .hero .badge{display:inline-block;background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.25);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
+  .hero .badge{display:inline-block;background:rgba(79,70,229,0.10);color:var(--accent-bright);border:1px solid rgba(79,70,229,0.20);border-radius:999px;padding:4px 16px;font-size:12px;font-weight:500;margin-bottom:16px}
   .hero h1{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.04em;color:var(--text);line-height:1.15;margin-bottom:10px}
   .hero p{font-size:.95rem;color:var(--text3);max-width:600px;margin:0 auto}
   .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;max-width:1100px;margin:0 auto 56px;padding:0 24px}
@@ -45,12 +45,12 @@
   .tbl .hi{color:var(--accent-bright);font-weight:600}.tbl .gr{color:var(--green);font-weight:600}.tbl .lo{color:var(--text4)}
   .acc{margin-bottom:12px}
   .acc-hdr{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:var(--text)}
-  .acc-hdr:hover{border-color:rgba(255,255,255,.15)}
+  .acc-hdr:hover{border-color:rgba(0,0,0,0.12)}
   .acc-hdr::after{content:"+";font-size:15px;color:var(--text3)}
   .acc.open .acc-hdr::after{content:"−"}
   .acc-body{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:18px 22px;font-size:13px;color:var(--text2)}
   .acc.open .acc-body{display:block}
-  .insight{background:rgba(94,106,210,.06);border:1px solid rgba(94,106,210,.18);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
+  .insight{background:rgba(79,70,229,0.06);border:1px solid rgba(79,70,229,0.15);border-radius:10px;padding:18px 22px;font-size:13px;margin-bottom:12px}
   .insight strong{color:var(--accent-bright)}
   .chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:12px;min-height:280px;position:relative}
   .chart-wrap canvas{max-height:380px;width:100%!important;height:auto!important}
@@ -58,15 +58,15 @@
   @media(max-width:768px){.chart-row{grid-template-columns:1fr}}
   .pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
   .pill{padding:4px 12px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .15s;background:transparent}
-  .pill:hover{background:rgba(94,106,210,.1);color:var(--accent-bright);border-color:rgba(94,106,210,.3)}
+  .pill:hover{background:rgba(79,70,229,0.10);color:var(--accent-bright);border-color:rgba(79,70,229,0.25)}
   .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:500;margin-right:4px}
-  .tag.g{background:rgba(39,166,68,.12);color:var(--green);border:1px solid rgba(39,166,68,.2)}
-  .tag.p{background:rgba(94,106,210,.12);color:var(--accent-bright);border:1px solid rgba(94,106,210,.2)}
-  .tag.o{background:rgba(210,153,29,.12);color:var(--orange);border:1px solid rgba(210,153,29,.2)}
+  .tag.g{background:rgba(22,163,74,0.12);color:var(--green);border:1px solid rgba(22,163,74,0.20)}
+  .tag.p{background:rgba(79,70,229,0.10);color:var(--accent-bright);border:1px solid rgba(79,70,229,0.15)}
+  .tag.o{background:rgba(217,119,6,0.12);color:var(--orange);border:1px solid rgba(217,119,6,0.20)}
   strong{color:var(--text)}code{background:var(--panel);padding:2px 5px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent-bright)}
   a{color:var(--accent-bright);text-decoration:none}
   hr{border:none;border-top:1px solid var(--border-subtle);margin:24px 0}
-  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(94,106,210,.05);border-radius:0 6px 6px 0;font-size:13px}
+  blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:10px 0;color:var(--text3);background:rgba(79,70,229,0.05);border-radius:0 6px 6px 0;font-size:13px}
   footer{text-align:center;padding:40px 24px;color:var(--text4);font-size:11px;border-top:1px solid var(--border-subtle);margin-top:64px}
   footer a{color:var(--text3)}.note{font-size:11px;color:var(--text4);margin-top:4px}
   ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:999px}
@@ -90,10 +90,10 @@ nav { top: 40px; }
 </nav>
 
 
-<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
-  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
-  <span style="color:rgba(255,255,255,0.08)">|</span>
-  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,249,251,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">← 报告目录</a>
+  <span style="color:rgba(0,0,0,0.07)">|</span>
+  <a href="../index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">🏠 工具推荐榜首页</a>
 </div>
 
 <canvas id="particles"></canvas><div id="glow"></div>
@@ -652,6 +652,6 @@ nav { top: 40px; }
 // Accordion
 document.querySelectorAll('.acc-hdr').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
 </script>
-<script>new Chart(document.getElementById("chart_fdc7e461"),{type:"bar",data:{labels:["**Doubao-pro-25", "**Doubao-pro-32", "**Doubao-pro-12", "**Doubao-lite-3", "**DeepSeek-R1**", "**DeepSeek-V3**", "**DeepSeek-V3.2", "**Qwen-Max**", "**Qwen-Plus**", "**GLM-4**", "**GLM-4.5/4.6/4", "**GLM-5**", "**Kimi-K2**", "**Kimi-K2.5**", "**MiniMax-M2.5*", "**Moonshot-v1-3"],datasets:[{label:"能力特点",data:[128.0, 32.0, 128.0, 32.0, 0, 671.0, 3.0, 0, 0, 0, 0, 2026.0, 1.0, 0, 10.0, 0],backgroundColor:["#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c", "#7170ff", "#27a644", "#d2991d", "#f85149", "#39c5cf", "#8a8f98", "#e07b4c", "#6bcd5c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"能力特点 对比",color:"#8a8f98",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a8f98",font:{size:10}},grid:{color:"rgba(255,255,255,0.05)"}},x:{ticks:{color:"#8a8f98",font:{size:9}},grid:{display:false}}}}});</script>
+<script>new Chart(document.getElementById("chart_fdc7e461"),{type:"bar",data:{labels:["**Doubao-pro-25", "**Doubao-pro-32", "**Doubao-pro-12", "**Doubao-lite-3", "**DeepSeek-R1**", "**DeepSeek-V3**", "**DeepSeek-V3.2", "**Qwen-Max**", "**Qwen-Plus**", "**GLM-4**", "**GLM-4.5/4.6/4", "**GLM-5**", "**Kimi-K2**", "**Kimi-K2.5**", "**MiniMax-M2.5*", "**Moonshot-v1-3"],datasets:[{label:"能力特点",data:[128.0, 32.0, 128.0, 32.0, 0, 671.0, 3.0, 0, 0, 0, 0, 2026.0, 1.0, 0, 10.0, 0],backgroundColor:["#6366f1", "#16a34a", "#d97706", "#dc2626", "#0891b2", "#8a9099", "#e07b4c", "#6bcd5c", "#6366f1", "#16a34a", "#d97706", "#dc2626", "#0891b2", "#8a9099", "#e07b4c", "#6bcd5c"],borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},title:{display:true,text:"能力特点 对比",color:"#8a9099",font:{size:12},padding:10}},scales:{y:{ticks:{color:"#8a9099",font:{size:10}},grid:{color:"rgba(0,0,0,0.04)"}},x:{ticks:{color:"#8a9099",font:{size:9}},grid:{display:false}}}}});</script>
 </body>
 </html>

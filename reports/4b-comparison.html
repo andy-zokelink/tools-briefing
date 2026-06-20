@@ -8,21 +8,21 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
-    --bg: #08090a;
-    --panel: #0f1011;
-    --surface: #191a1b;
-    --surface2: #222326;
-    --text: #f7f8f8;
-    --text2: #d0d6e0;
-    --text3: #8a8f98;
-    --text4: #62666d;
-    --accent: #5e6ad2;
-    --accent-bright: #7170ff;
-    --green: #27a644;
-    --orange: #d2991d;
-    --red: #f85149;
-    --border: rgba(255,255,255,0.08);
-    --border-subtle: rgba(255,255,255,0.05);
+    --bg: #f8f9fb;
+    --panel: #eef0f3;
+    --surface: #ffffff;
+    --surface2: #f4f5f8;
+    --text: #1a1d23;
+    --text2: #5a6570;
+    --text3: #8a9099;
+    --text4: #8a9099;
+    --accent: #4f46e5;
+    --accent-bright: #6366f1;
+    --green: #16a34a;
+    --orange: #d97706;
+    --red: #dc2626;
+    --border: rgba(0,0,0,0.07);
+    --border-subtle: rgba(0,0,0,0.04);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -45,7 +45,7 @@
     position: fixed; z-index: 0; pointer-events: none;
     width: 600px; height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(113,112,255,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
     transform: translate(-50%, -50%);
     transition: left 0.8s ease-out, top 0.8s ease-out;
   }
@@ -63,7 +63,7 @@
   /* Nav */
   nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(15,16,17,0.92);
+    background: rgba(248,249,251,0.92);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-subtle);
     padding: 0 24px;
@@ -93,9 +93,9 @@
   }
   .hero .badge {
     display: inline-block;
-    background: rgba(94,106,210,0.12);
+    background: rgba(79,70,229,0.10);
     color: var(--accent-bright);
-    border: 1px solid rgba(94,106,210,0.25);
+    border: 1px solid rgba(79,70,229,0.20);
     border-radius: 999px; padding: 4px 16px;
     font-size: 12px; font-weight: 500;
     margin-bottom: 24px;
@@ -208,7 +208,7 @@
     align-items: center; font-size: 15px; font-weight: 600;
     color: var(--text); transition: border-color .15s;
   }
-  .acc-hdr:hover { border-color: rgba(255,255,255,0.15); }
+  .acc-hdr:hover { border-color: rgba(0,0,0,0.12); }
   .acc-hdr::after { content: "+"; font-size: 18px; color: var(--text3); font-weight: 400; transition: transform .2s; }
   .acc.open .acc-hdr::after { content: "−"; }
   .acc-body {
@@ -221,8 +221,8 @@
 
   /* Insight box */
   .insight {
-    background: rgba(94,106,210,0.06);
-    border: 1px solid rgba(94,106,210,0.18);
+    background: rgba(79,70,229,0.06);
+    border: 1px solid rgba(79,70,229,0.15);
     border-radius: 10px; padding: 24px 28px;
     font-size: 14px;
   }
@@ -233,10 +233,10 @@
     display: inline-block; padding: 2px 10px; border-radius: 999px;
     font-size: 11px; font-weight: 500; margin-right: 6px;
   }
-  .tag.g { background: rgba(39,166,68,0.12); color: var(--green); border: 1px solid rgba(39,166,68,0.2); }
-  .tag.p { background: rgba(94,106,210,0.12); color: var(--accent-bright); border: 1px solid rgba(94,106,210,0.2); }
-  .tag.o { background: rgba(210,153,29,0.12); color: var(--orange); border: 1px solid rgba(210,153,29,0.2); }
-  .tag.r { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.18); }
+  .tag.g { background: rgba(22,163,74,0.12); color: var(--green); border: 1px solid rgba(22,163,74,0.20); }
+  .tag.p { background: rgba(79,70,229,0.10); color: var(--accent-bright); border: 1px solid rgba(79,70,229,0.15); }
+  .tag.o { background: rgba(217,119,6,0.12); color: var(--orange); border: 1px solid rgba(217,119,6,0.20); }
+  .tag.r { background: rgba(220,38,38,0.10); color: var(--red); border: 1px solid rgba(220,38,38,0.15); }
 
   /* Section nav pills */
   .pills {
@@ -248,8 +248,8 @@
     cursor: pointer; transition: all .15s; background: transparent;
   }
   .pill:hover, .pill.active {
-    background: rgba(94,106,210,0.1); color: var(--accent-bright);
-    border-color: rgba(94,106,210,0.3);
+    background: rgba(79,70,229,0.10); color: var(--accent-bright);
+    border-color: rgba(79,70,229,0.25);
   }
 
   /* Tooltip-style note */
@@ -283,10 +283,10 @@ nav { top: 40px; }
 </nav>
 
 
-<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,16,17,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
-  <a href="index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">← 报告目录</a>
-  <span style="color:rgba(255,255,255,0.08)">|</span>
-  <a href="../index.html" style="color:#8a8f98;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#d0d6e0'" onmouseout="this.style.color='#8a8f98'">🏠 工具推荐榜首页</a>
+<div class="top-banner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,249,251,0.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);padding:0 24px;height:40px;display:flex;align-items:center;gap:20px;font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;">
+  <a href="index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">← 报告目录</a>
+  <span style="color:rgba(0,0,0,0.07)">|</span>
+  <a href="../index.html" style="color:#8a9099;text-decoration:none;font-weight:500;transition:color .15s;" onmouseover="this.style.color='#5a6570'" onmouseout="this.style.color='#8a9099'">🏠 工具推荐榜首页</a>
 </div>
 
 
@@ -640,25 +640,25 @@ new Chart(document.getElementById('radarChart'), {
   data: {
     labels: ['通用能力', '中文能力', '代码能力', '上下文', '多模态', '部署轻量', '推理速度', '成熟度', '开源可验'],
     datasets: [
-      { label:'Qwen3-4B', data:[9.0,9.5,9.0,5.5,0,6.5,6.0,8.0,10], borderColor:'#7170ff', backgroundColor:'rgba(113,112,255,0.1)', pointRadius:2 },
-      { label:'MiniCPM 3.0', data:[8.0,9.0,7.5,5.0,0,8.0,6.0,8.5,10], borderColor:'#27a644', backgroundColor:'rgba(39,166,68,0.1)', pointRadius:2 },
-      { label:'Gemma 4 E2B', data:[6.5,5.0,6.0,9.0,10,10,10,7.0,10], borderColor:'#d2991d', backgroundColor:'rgba(210,153,29,0.1)', pointRadius:2 },
-      { label:'Phi-3.5', data:[7.5,2.0,7.0,10,0,7.5,6.0,8.0,10], borderColor:'#8a8f98', backgroundColor:'rgba(138,143,152,0.1)', pointRadius:2 },
-      { label:'新程 Alpha', data:[0,5.0,0,0,0,5.0,5.0,2.0,0], borderColor:'#f85149', backgroundColor:'rgba(248,81,73,0.1)', pointRadius:2, borderDash:[4,4] },
+      { label:'Qwen3-4B', data:[9.0,9.5,9.0,5.5,0,6.5,6.0,8.0,10], borderColor:'#6366f1', backgroundColor:'rgba(99,102,241,0.10)', pointRadius:2 },
+      { label:'MiniCPM 3.0', data:[8.0,9.0,7.5,5.0,0,8.0,6.0,8.5,10], borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,0.10)', pointRadius:2 },
+      { label:'Gemma 4 E2B', data:[6.5,5.0,6.0,9.0,10,10,10,7.0,10], borderColor:'#d97706', backgroundColor:'rgba(217,119,6,0.10)', pointRadius:2 },
+      { label:'Phi-3.5', data:[7.5,2.0,7.0,10,0,7.5,6.0,8.0,10], borderColor:'#8a9099', backgroundColor:'rgba(138,144,153,0.10)', pointRadius:2 },
+      { label:'新程 Alpha', data:[0,5.0,0,0,0,5.0,5.0,2.0,0], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,0.10)', pointRadius:2, borderDash:[4,4] },
     ]
   },
   options: {
     responsive: true,
     plugins: {
-      legend: { labels: { color:'#d0d6e0', font:{size:11}, padding:16, usePointStyle:true } },
-      title: { display:true, text:'多维度雷达图（基于调研数据综合评分）', color:'#8a8f98', font:{size:13}, padding:12 }
+      legend: { labels: { color:'#5a6570', font:{size:11}, padding:16, usePointStyle:true } },
+      title: { display:true, text:'多维度雷达图（基于调研数据综合评分）', color:'#8a9099', font:{size:13}, padding:12 }
     },
     scales: {
       r: {
-        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#62666d', backdropColor:'transparent', font:{size:10} },
-        grid: { color:'rgba(255,255,255,0.06)' },
-        angleLines: { color:'rgba(255,255,255,0.06)' },
-        pointLabels: { color:'#8a8f98', font:{size:11} }
+        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#8a9099', backdropColor:'transparent', font:{size:10} },
+        grid: { color:'rgba(0,0,0,0.05)' },
+        angleLines: { color:'rgba(0,0,0,0.05)' },
+        pointLabels: { color:'#8a9099', font:{size:11} }
       }
     }
   }
@@ -672,7 +672,7 @@ new Chart(document.getElementById('barChart'), {
     datasets: [{
       label: 'MMLU 得分 (%)',
       data: [83.7, 69.0, 68.0, 68.2, 65.6],
-      backgroundColor: ['#7170ff', '#8a8f98', '#27a644', '#d2991d', '#62666d'],
+      backgroundColor: ['#6366f1', '#8a9099', '#16a34a', '#d97706', '#8a9099'],
       borderRadius: 4, borderSkipped: false,
     }]
   },
@@ -680,11 +680,11 @@ new Chart(document.getElementById('barChart'), {
     responsive: true,
     plugins: {
       legend: { display:false },
-      title: { display:true, text:'MMLU 得分对比（越高越好）', color:'#8a8f98', font:{size:13}, padding:12 }
+      title: { display:true, text:'MMLU 得分对比（越高越好）', color:'#8a9099', font:{size:13}, padding:12 }
     },
     scales: {
-      y: { beginAtZero:false, min:60, max:90, ticks: { color:'#8a8f98', font:{size:11} }, grid: { color:'rgba(255,255,255,0.05)' } },
-      x: { ticks: { color:'#8a8f98', font:{size:10} }, grid: { display:false } }
+      y: { beginAtZero:false, min:60, max:90, ticks: { color:'#8a9099', font:{size:11} }, grid: { color:'rgba(0,0,0,0.04)' } },
+      x: { ticks: { color:'#8a9099', font:{size:10} }, grid: { display:false } }
     }
   }
 });
@@ -695,24 +695,24 @@ new Chart(document.getElementById('radarVerdict'), {
   data: {
     labels: ['通用能力', '中文能力', '代码', '上下文', '多模态', '部署轻量', '推理速度', '工具/Agent', '开源可验', '成熟度'],
     datasets: [
-      { label:'Qwen3-4B', data:[9,9.5,9,5.5,0,6.5,6,8.5,10,8], borderColor:'#7170ff', backgroundColor:'rgba(113,112,255,0.12)', pointRadius:2 },
-      { label:'Gemma 4 E2B', data:[6.5,5,6,9,10,10,10,5,10,7], borderColor:'#d2991d', backgroundColor:'rgba(210,153,29,0.12)', pointRadius:2 },
-      { label:'MiniCPM 3.0', data:[8,9,7.5,5,0,8,6,9,10,8.5], borderColor:'#27a644', backgroundColor:'rgba(39,166,68,0.12)', pointRadius:2 },
-      { label:'Phi-3.5', data:[7.5,2,7,10,0,7.5,6,5,10,8], borderColor:'#8a8f98', backgroundColor:'rgba(138,143,152,0.12)', pointRadius:2 },
+      { label:'Qwen3-4B', data:[9,9.5,9,5.5,0,6.5,6,8.5,10,8], borderColor:'#6366f1', backgroundColor:'rgba(99,102,241,0.10)', pointRadius:2 },
+      { label:'Gemma 4 E2B', data:[6.5,5,6,9,10,10,10,5,10,7], borderColor:'#d97706', backgroundColor:'rgba(217,119,6,0.12)', pointRadius:2 },
+      { label:'MiniCPM 3.0', data:[8,9,7.5,5,0,8,6,9,10,8.5], borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,0.12)', pointRadius:2 },
+      { label:'Phi-3.5', data:[7.5,2,7,10,0,7.5,6,5,10,8], borderColor:'#8a9099', backgroundColor:'rgba(138,144,153,0.12)', pointRadius:2 },
     ]
   },
   options: {
     responsive: true,
     plugins: {
-      legend: { labels: { color:'#d0d6e0', font:{size:11}, padding:16, usePointStyle:true } },
-      title: { display:true, text:'开源四模型综合评分雷达图', color:'#8a8f98', font:{size:13}, padding:12 }
+      legend: { labels: { color:'#5a6570', font:{size:11}, padding:16, usePointStyle:true } },
+      title: { display:true, text:'开源四模型综合评分雷达图', color:'#8a9099', font:{size:13}, padding:12 }
     },
     scales: {
       r: {
-        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#62666d', backdropColor:'transparent', font:{size:10} },
-        grid: { color:'rgba(255,255,255,0.06)' },
-        angleLines: { color:'rgba(255,255,255,0.06)' },
-        pointLabels: { color:'#8a8f98', font:{size:11} }
+        beginAtZero: true, max:10, ticks: { stepSize:2, color:'#8a9099', backdropColor:'transparent', font:{size:10} },
+        grid: { color:'rgba(0,0,0,0.05)' },
+        angleLines: { color:'rgba(0,0,0,0.05)' },
+        pointLabels: { color:'#8a9099', font:{size:11} }
       }
     }
   }
