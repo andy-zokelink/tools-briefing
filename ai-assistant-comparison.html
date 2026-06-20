@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 助手对比 · 趁手工具推荐榜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f7f6f3;
+    --bg-warm: #fef9f0;
+    --text: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-tertiary: #9b9b9b;
+    --border: #e8e7e4;
+    --warm: #b97509;
+    --warm-light: #fdf3e0;
+    --warm-border: #f0d9a8;
+    --accent: #5e6ad2;
+    --accent-light: rgba(94,106,210,0.08);
+    --green: #27a644;
+    --radius: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    padding: 2rem;
+  }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .header .badge {
+    display: inline-block;
+    background: var(--warm-light);
+    color: var(--warm);
+    border: 1px solid var(--warm-border);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .header h1 span { color: var(--warm); }
+  .header p { color: var(--text-tertiary); font-size: 14px; }
+
+  /* Two Column Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .card-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-header .icon {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .card-header .icon.llm { background: var(--accent-light); }
+  .card-header .icon.local { background: var(--bg-secondary); }
+  .card-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .card-header .sub { font-size: 12px; color: var(--text-tertiary); }
+  .card-body { padding: 20px 24px; }
+
+  .card-body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .card-body table td {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .card-body table td:first-child {
+    color: var(--text-tertiary);
+    width: 80px;
+    font-size: 12px;
+  }
+  .card-body table td:last-child {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .card-body table tr:last-child td { border-bottom: none; }
+
+  .tag-yes {
+    display: inline-block;
+    background: rgba(39,166,68,0.1);
+    color: var(--green);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-no {
+    display: inline-block;
+    background: var(--bg-secondary);
+    color: var(--text-tertiary);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .tag-partial {
+    display: inline-block;
+    background: var(--warm-light);
+    color: var(--warm);
+    padding: 1px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  /* Radar Chart */
+  .chart-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px 20px;
+    margin-bottom: 36px;
+  }
+  .chart-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .chart-wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Architecture Diagram */
+  .arch-section {
+    margin-bottom: 36px;
+  }
+  .arch-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 700px) { .arch-grid { grid-template-columns: 1fr; } }
+
+  .arch-box {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    background: var(--bg);
+  }
+  .arch-box h4 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+  }
+
+  .flow { display: flex; flex-direction: column; gap: 10px; }
+  .flow-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .flow-node.browser { background: var(--bg-secondary); border: 1px solid var(--border); }
+  .flow-node.cloud { background: var(--accent-light); border: 1px solid rgba(94,106,210,0.2); color: var(--accent); }
+  .flow-node.api { background: var(--warm-light); border: 1px solid var(--warm-border); color: var(--warm); }
+  .flow-node.local { background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); }
+  .flow-arrow {
+    text-align: center;
+    color: var(--text-tertiary);
+    font-size: 16px;
+    line-height: 1;
+  }
+  .flow-node .node-icon { font-size: 14px; flex-shrink: 0; }
+  .flow-node .node-label { flex: 1; }
+
+  /* Code footprint */
+  .footprint {
+    margin-bottom: 36px;
+  }
+  .footprint h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .bar-group { display: flex; flex-direction: column; gap: 10px; max-width: 480px; }
+  .bar-item { display: flex; align-items: center; gap: 12px; }
+  .bar-label {
+    width: 140px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 22px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .bar-fill.llm-bar { background: var(--accent); }
+  .bar-fill.local-bar { background: var(--text-tertiary); }
+
+  /* Verdict */
+  .verdict {
+    background: var(--warm-light);
+    border: 1px solid var(--warm-border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 36px;
+  }
+  .verdict .v-icon { font-size: 24px; flex-shrink: 0; }
+  .verdict h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .verdict p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  .back-link {
+    display: inline-block;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    text-decoration: none;
+    margin-top: 8px;
+  }
+  .back-link:hover { color: var(--warm); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="badge">项目审计</div>
+    <h1>两个 AI <span>助手</span> 对比</h1>
+    <p>tools-briefing 项目内共存的两个聊天组件，技术栈和能力完全不同</p>
+  </div>
+
+  <!-- Side by side cards -->
+  <div class="cards">
+    <!-- Card 1: LLM -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon llm">🤖</div>
+        <div>
+          <h3>简报区 LLM 助手</h3>
+          <div class="sub">chat.js + Cloudflare Worker</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table>
+          <tr><td>部署页面</td><td>7 页（首页+6期简报）</td></tr>
+          <tr><td>后端</td><td><span class="tag-yes">DeepSeek LLM</span></td></tr>
+          <tr><td>多轮对话</td><td><span class="tag-yes">✓ 支持</span></td></tr>
+          <tr><td>知识范围</td><td>系统提示词（固定知识库）</td></tr>
+          <tr><td>UI 位置</td><td>右下角浮动按钮</td></tr>
+          <tr><td>代码量</td><td>217 行（chat.js + worker.js）</td></tr>
+          <tr><td>维护</td><td>独立 JS 文件，一改全站生效</td></tr>
+          <tr><td>费用</td><td>DeepSeek API 按量（有成本）</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Card 2: Local -->
+    <div class="card">
+      <div class="card-header">
+        <div class="icon local">🔍</div>
+        <div>
+          <h3>研究报告搜索助手</h3>
+          <div class="sub">reports/index.html 内联</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table>
+          <tr><td>部署页面</td><td>1 页（reports/index.html）</td></tr>
+          <tr><td>后端</td><td><span class="tag-no">无（纯前端）</span></td></tr>
+          <tr><td>多轮对话</td><td><span class="tag-no">✗ 不支持</span></td></tr>
+          <tr><td>知识范围</td><td>28 份报告标题+关键词数组</td></tr>
+          <tr><td>UI 位置</td><td>页面底部嵌入块</td></tr>
+          <tr><td>代码量</td><td>~70 行（内联在 HTML 里）</td></tr>
+          <tr><td>维护</td><td>数据写死在 HTML，更新需改代码</td></tr>
+          <tr><td>费用</td><td>零成本</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Radar Chart -->
+  <div class="chart-section">
+    <h3>📊 能力雷达图</h3>
+    <div class="chart-wrap">
+      <canvas id="radarChart" height="380"></canvas>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="arch-section">
+    <h3>🔧 架构对比</h3>
+    <div class="arch-grid">
+      <div class="arch-box">
+        <h4>① 简报区 LLM 助手 — 请求链路</h4>
+        <div class="flow">
+          <div class="flow-node browser"><span class="node-icon">🖥️</span><span class="node-label">用户输入 → chat.js</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node cloud"><span class="node-icon">☁️</span><span class="node-label">Cloudflare Worker 代理</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node api"><span class="node-icon">🧠</span><span class="node-label">DeepSeek API /chat/completions</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node browser"><span class="node-icon">💬</span><span class="node-label">流式返回 → 渲染气泡</span></div>
+        </div>
+      </div>
+      <div class="arch-box">
+        <h4>② 研究报告搜索助手 — 请求链路</h4>
+        <div class="flow">
+          <div class="flow-node browser"><span class="node-icon">🖥️</span><span class="node-label">用户输入 → askAI()</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node local"><span class="node-icon">📋</span><span class="node-label">reportIndex 数组关键词匹配</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node local"><span class="node-icon">📊</span><span class="node-label">返回匹配报告列表（≤5条）</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node browser"><span class="node-icon">💬</span><span class="node-label">渲染结果 → 点击跳转定位</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Footprint -->
+  <div class="footprint">
+    <h3>📏 代码体量</h3>
+    <div class="bar-group">
+      <div class="bar-item">
+        <div class="bar-label">LLM 助手 chat.js</div>
+        <div class="bar-track"><div class="bar-fill llm-bar" style="width:100%">128 行</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">LLM Worker</div>
+        <div class="bar-track"><div class="bar-fill llm-bar" style="width:70%">89 行</div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">搜索助手内联 JS</div>
+        <div class="bar-track"><div class="bar-fill local-bar" style="width:55%">~70 行</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verdict -->
+  <div class="verdict">
+    <div class="v-icon">💡</div>
+    <div>
+      <h4>关键差异：一个有脑子，一个只是"搜一下"</h4>
+      <p>① 简报区助手是真正的 LLM 对话机器人——能理解上下文、自由回答、跨话题聊天；② 研究报告助手只是把 28 条数据写死在 JS 数组里做关键词匹配，本质是带聊天气泡外皮的搜索框。两者的代码互不共享，如果要改 UI 或换后端，<strong>要改两处</strong>。</p>
+    </div>
+  </div>
+
+  <a href="javascript:history.back()" class="back-link">← 返回</a>
+
+</div>
+
+<script>
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['对话能力', '知识广度', '响应智能', '上下文理解', '可维护性', '零成本'],
+    datasets: [{
+      label: '简报区 LLM 助手',
+      data: [95, 70, 90, 90, 85, 10],
+      borderColor: '#5e6ad2',
+      backgroundColor: 'rgba(94,106,210,0.08)',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: '#5e6ad2',
+    }, {
+      label: '研究报告搜索助手',
+      data: [15, 25, 10, 5, 30, 95],
+      borderColor: '#9b9b9b',
+      backgroundColor: 'rgba(155,155,155,0.06)',
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: '#9b9b9b',
+      borderDash: [4, 3],
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+          padding: 20,
+          font: { family: 'Inter', size: 12 },
+          color: '#6b6b6b',
+        }
+      }
+    },
+    scales: {
+      r: {
+        beginAtZero: true,
+        max: 100,
+        ticks: {
+          stepSize: 20,
+          backdropColor: 'transparent',
+          font: { size: 10 },
+          color: '#9b9b9b',
+        },
+        grid: { color: '#e8e7e4' },
+        angleLines: { color: '#e8e7e4' },
+        pointLabels: {
+          font: { family: 'Inter', size: 11, weight: '500' },
+          color: '#1a1a1a',
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
