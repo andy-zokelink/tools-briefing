@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#05070a">
+<meta name="description" content="skillhub（iflytek）、Observal、mcp-gateway-registry 三个企业级 Agent Skills 注册表同期出现——Skills 从个人工具走向企业治理。Google DiffusionGemma 用扩散模型做文本生成，4x 加速。AI 编码工具出现质量反思潮：Ito、Command Center、Mira 集体转向「代码可靠性」。">
+<meta property="og:title" content="第30期 · Skills 企业化 · AI 编码质量反思 — 趁手工具推荐榜">
+<meta property="og:description" content="skillhub（iflytek）、Observal、mcp-gateway-registry 三个企业级 Agent Skills 注册表同期出现——Skills 从个人工具走向企业治理。Google DiffusionGemma 用扩散模型做文本生成，4x 加速。AI 编码工具出现质量反思潮：Ito、Command Center、Mira 集体转向「代码可靠性」。">
+<meta property="og:type" content="article">
+<title>第30期 · Skills 企业化 · AI 编码质量反思 — 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Skills 企业化 · AI 编码质量反思</h1>
+
+      <div class="article-meta">
+        <span>第30期</span>
+        <span class="dot"></span>
+        <span>2026年6月21日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">Agent Skills 从个人工具走向企业治理——skillhub、Observal、mcp-gateway-registry 三个企业级注册表同期出现，Skills 生态正在经历从"游击队"到"正规军"的转变。同时 AI 编码工具出现「质量反思」潮——Ito、Command Center、Mira 集体以「代码可靠性」为卖点，标志着 AI 编码工具的发展重心开始从"写更多"转向"写更好"。</div>
+        <p>本期两大信号交织：① Agent Skills 治理层爆发——科大讯飞 skillhub、BlazeUp Observal、agentic-community gateway-registry 同时出现在 MCP 生态采集数据中，全部提供 RBAC + 审计日志 + 企业部署方案，Skills 不再是开发者的个人玩具；② 代码质量工具密集涌现——在 Claude Code 占 GitHub 公开提交 4.5% 的背景下，Ito（跑代码的 review）、Command Center（质量优先 IDE）、Mira（自托管 reviewer）、git-lrc（提交级微审查）、CommitGate（提交前安全扫描）形成了完整的"AI 代码质量 pipeline"雏形。侧翼观察：Google DiffusionGemma 用扩散模型替代自回归做文本生成（4x 加速），可能是 LLM 架构的下一个突破方向。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">613</div><div class="bn-desc">本周采集工具条目</div></div>
+        <div class="bignum"><div class="bn-val">22</div><div class="bn-desc">新增条目（跨 5 数据源）</div></div>
+        <div class="bignum"><div class="bn-val">3</div><div class="bn-desc">企业级 Skills 注册表</div></div>
+        <div class="bignum"><div class="bn-val">5+</div><div class="bn-desc">代码质量新工具</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Skills 从游击队走向正规军</strong> — skillhub（iflytek）、Observal、mcp-gateway-registry 三个企业级 agent skill 注册表本期同时出现。全部提供 RBAC 权限控制、审计日志、版本管理、Docker/K8s 部署——Skills 不再是开发者的个人玩具，企业治理需求正在催生新品类。</p></div>
+          <div class="takeaway"><p><strong>AI 编码工具出现「质量反思」潮</strong> — Ito（跑代码的 review）、Command Center（质量优先 IDE）、Mira（自托管 AI reviewer）、git-lrc（提交级微审查）、CommitGate（提交前安全扫描）密集涌现。在 Claude Code 占 GitHub 公开提交 4.5% 的背景下，代码质量从个体抱怨变成系统风险。</p></div>
+          <div class="takeaway"><p><strong>Google DiffusionGemma 突破 LLM 架构</strong> — 用扩散模型替代自回归做文本生成，4x 加速。327 HN points——这可能是 Transformer 之后最大的架构创新信号。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：Skills 企业化 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>Agent Skills 治理层爆发——skillhub、Observal、gateway-registry 同期出现</h2>
+            <p>本期 MCP 生态采集数据中出现了一个清晰的信号：多个企业级 agent skill 注册表/治理平台同时上线。skillhub（科大讯飞）、Observal（BlazeUp-AI）、mcp-gateway-registry（agentic-community）三者虽然面向不同市场，但产品形态高度一致——RBAC 权限控制、审计日志、版本管理、Docker/Kubernetes 自托管部署。</p>
+
+            <div class="card">
+              <h3>三款产品对比</h3>
+              <table class="info-table">
+                <tr><td><a href="https://github.com/iflytek/skillhub">skillhub</a></td><td>科大讯飞 · ⭐3,527 · 519 下载</td><td>企业自托管 skill registry，RBAC + 审计日志 + Docker/K8s 部署</td></tr>
+                <tr><td><a href="https://github.com/BlazeUp-AI/Observal">Observal</a></td><td>BlazeUp-AI · ⭐2,107 · 451 下载</td><td>本地 registry + 分析平台，定义 scope 后管理 Skills/MCPs/Agents</td></tr>
+                <tr><td><a href="https://github.com/agentic-community/mcp-gateway-registry">mcp-gateway-registry</a></td><td>agentic-community · ⭐721 · 195 下载</td><td>企业 MCP Gateway + Registry，OAuth + Keycloak/Entra 集成</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>当一个组织有 100 个 agent 在跑、每个 agent 加载 20 个 skills 时，没有集中治理是灾难性的——你不知道哪个 skill 有安全漏洞、哪个 skill 版本过时、哪个 skill 在过量消耗 token。这三个产品的出现标志着 Skills 生态从"开发者个人工具箱"向"企业 IT 资产"的转变。</p>
+
+            <p><strong>与 MCP 基础设施化的协同：</strong></p>
+            <ul>
+              <li><strong>MCP 层</strong>（协议标准化）：Google 合维护 Go SDK，Microsoft 合维护 C# SDK，Unreal Engine 5.8 原生 MCP server。解决"怎么连"的问题。</li>
+              <li><strong>Registry 层</strong>（治理标准化）：skillhub + Observal + gateway-registry。解决"怎么管"的问题。</li>
+              <li><strong>协同效应</strong>：MCP 标准化连接 → Registry 标准化治理 → 企业采购"官方认证 skills" → agent 能力商品化</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 这是一个结构性转变——不只是一个新工具，而是一个新品类的诞生。如果你在管理多个 agent 或 plan to scale agent usage，现在就可以关注 skillhub 的企业部署方案。MCP gateway registry 的 OAuth/Keycloak 集成意味着它可以挂到现有企业 SSO 上，降低 adoption 门槛。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：代码质量反思 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>AI 编码工具的「质量反思」——从"写更多"转向"写更好"</h2>
+            <p>在前几周"ponytail 3 天 15K 星"式的病毒传播之后，本周涌现了一批明确以「代码质量」为核心卖点的 AI 工具。这不是巧合——当 Claude Code 单工具占 GitHub 全平台公开提交的 4.5%，当 HN 热帖讨论"低技能攻击者用 Claude+Codex 攻破 14 家公司"，行业开始正视一个被忽视的问题：AI 写代码很快，但这些代码真的好吗？</p>
+
+            <div class="card">
+              <h3>质量工具矩阵</h3>
+              <table class="info-table">
+                <tr><td><a href="https://www.ito.ai">Ito</a></td><td>HN 10pts</td><td>代码审查 + 实际运行验证（截屏、录视频、记日志）</td></tr>
+                <tr><td><a href="https://www.cc.dev/">Command Center</a></td><td>HN 69pts</td><td>以质量而非速度为核心卖点的 AI 编码环境</td></tr>
+                <tr><td><a href="https://github.com/miracodeai/mira">Mira</a></td><td>HN 15pts</td><td>开源自托管 AI code reviewer，BYOK</td></tr>
+                <tr><td><a href="https://github.com/HexmosTech/git-lrc">git-lrc</a></td><td>HN 9pts</td><td>每次 git commit 触发免费微审查</td></tr>
+                <tr><td><a href="https://github.com/ductrl/CommitGate">CommitGate</a></td><td>HN 4pts</td><td>提交前自动扫描安全漏洞</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么是现在：</strong>AI 编码工具的 adoption curve 正在进入一个新阶段——早期用户追求"快"，规模用户关注"可靠"。当 agent 生成的代码占总代码量的比例从 5% 增长到 20%+ 时，质量问题的严重性呈指数级增长。本周的这波工具潮反映的是市场对 AI 代码质量的真实焦虑。</p>
+
+            <p><strong>与前几期的呼应：</strong></p>
+            <ul>
+              <li>第29期：headroom + context-mode 聚焦 token 效率——解决"agent 花多少钱"的问题</li>
+              <li>本期：Ito + Command Center + Mira 聚焦代码质量——解决"agent 写的代码值不值"的问题</li>
+              <li>两者共同构成 agent 工程的完整拼图：<strong>效率 × 质量 = 真正的 ROI</strong></li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>⚡ 这些工具目前还比较早期——Ito 只有 10 HN points，Mira 刚开始开源，Command Center 还在 beta。但方向精准：在下半年，AI 编码工具的核心竞争将从"谁能写更多代码"转向"谁能写更可靠的代码"。如果你在用 AI 生成生产代码，关注这个赛道。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/openclaw/openclaw">openclaw</a></td><td>⭐379,836</td><td>AI Agent 框架持续领跑，社区生态最活跃</td></tr>
+            <tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td>⭐235,119</td><td>Agent Skills 框架生态领跑者</td></tr>
+            <tr><td><a href="https://github.com/affaan-m/ECC">ECC</a></td><td>⭐219,385</td><td>Agent Skills 框架赛道新势力</td></tr>
+            <tr><td><a href="https://github.com/NousResearch/hermes-agent">hermes-agent</a></td><td>⭐199,094</td><td>Nous Research Agent CLI，持续增长</td></tr>
+            <tr><td><a href="https://github.com/ultraworkers/claw-code">claw-code</a></td><td>⭐194,123</td><td>ultraworkers AI 编码工具，高活跃度</td></tr>
+            <tr><td><a href="https://github.com/anomalyco/opencode">opencode</a></td><td>⭐177,047</td><td>anomalyco 的 AI Coding CLI</td></tr>
+            <tr><td><a href="https://github.com/anthropics/skills">anthropics/skills</a></td><td>⭐153,565</td><td>Anthropic 官方 Skills 仓库，行业标杆</td></tr>
+            <tr><td><a href="https://github.com/firecrawl/firecrawl">firecrawl</a></td><td>⭐136,372</td><td>Web 爬虫转 LLM-ready 数据，工具链关键组件</td></tr>
+            <tr><td><a href="https://github.com/anthropics/claude-code">claude-code</a></td><td>⭐133,631</td><td>Anthropic 官方 AI Coding CLI</td></tr>
+            <tr><td><a href="https://github.com/google-gemini/gemini-cli">gemini-cli</a></td><td>⭐105,476</td><td>Google Gemini CLI，增长迅猛</td></tr>
+            <tr><td><a href="https://github.com/browser-use/browser-use">browser-use</a></td><td>⭐99,960</td><td>AI 浏览器自动化，逼近 100K 里程碑</td></tr>
+            <tr><td><a href="https://github.com/github/spec-kit">spec-kit</a></td><td>⭐114,632</td><td>GitHub 官方 spec-driven 开发工具</td></tr>
+            <tr><td><a href="https://github.com/Shubhamsaboo/awesome-llm-apps">awesome-llm-apps</a></td><td>⭐115,258</td><td>LLM 应用合集，开发者常用参考</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Agent Skills 企业化</td><td>skillhub + Observal + gateway-registry 三款企业级注册表同期出现，全部带 RBAC + 审计</td><td>🔥</td></tr>
+            <tr><td>MCP 官方 SDK 矩阵扩展</td><td>Google 合维护 Go SDK，Microsoft 合维护 C# SDK，Unreal 5.8 原生 MCP</td><td>🔥</td></tr>
+            <tr><td>AI 编码质量工具潮</td><td>Ito + Command Center + Mira + git-lrc + CommitGate 形成质量 pipeline 雏形</td><td>⚡</td></tr>
+            <tr><td>42plugin 生态扩张</td><td>从 24→420 plugins，学术写作/文档生成/数据分析三足鼎立</td><td>⚡</td></tr>
+            <tr><td>WebMCP 概念诞生</td><td>Persona.js 提出原生 WebMCP 标准——Agent 通过 MCP 直连 Web UI</td><td>⚡</td></tr>
+            <tr><td>代码安全焦虑升温</td><td>Microsoft OSS 被黑(561pts) + GitHub CI 被滥用 + ArgusRed 渗透模型</td><td>⚡</td></tr>
+            <tr><td>Home Assistant 本地化</td><td>Selora：Qwen3 1.7B 跑在 Home Assistant 上的本地智能家居模型</td><td>❄️</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>superpowers</td><td>⭐235,119，Agent Skills 框架领跑</td><td>🔥</td></tr>
+            <tr><td>openclaw</td><td>⭐379,836，AI Agent 框架龙头</td><td>🔥</td></tr>
+            <tr><td>headroom</td><td>⭐38,185，Token 压缩方案标杆（第29期重点推荐）</td><td>🔥</td></tr>
+            <tr><td>anthropics/skills</td><td>⭐153,565，Anthropic 官方 Skills 仓库</td><td>🔥</td></tr>
+            <tr><td>gemini-cli</td><td>⭐105,476，Google Gemini CLI 持续增长</td><td>⚡</td></tr>
+            <tr><td>browser-use</td><td>⭐99,960，浏览器自动化逼近 100K</td><td>⚡</td></tr>
+            <tr><td>SkillSpector</td><td>⭐8,231，NVIDIA Agent Skills 安全扫描器</td><td>⚡</td></tr>
+            <tr><td>compass-skills（司南）</td><td>⭐336，中文首个 Agent Skills 任务总控（第28期重点推荐）</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>Agent Skills 从游击队走向正规军——治理层成为新品类</h3>
+          <p>skillhub（科大讯飞）、Observal（BlazeUp-AI）、mcp-gateway-registry（agentic-community）三个企业级 agent skill 注册表本周同期出现在 MCP 生态采集数据中。这不是巧合——当 Agent Skills 的数量从几十个增长到几百上千个、当使用场景从个人开发者扩展到企业团队，集中治理的需求是必然的。</p>
+          <p><strong>传导链：</strong>MCP 标准化连接 → Registry 标准化治理 → 企业采购"官方认证 skills" → agent 能力商品化 → 新的 SaaS 品类诞生。skillhub 背后的科大讯飞和 gateway-registry 的 Keycloak/Entra 集成说明，中国和海外企业都在跟进这个方向。</p>
+          <p><strong>下半年预判：</strong>会出现带 SLA 承诺、安全审计、合规审查的"企业 Skills 市场"。与 MCP 官方 SDK + registry 形成上下游协同——MCP 负责连接协议，skill registry 负责治理管控。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>AI 编码工具的重心转移——从"写更多"到"写更好"</h3>
+          <p>Ito、Command Center、Mira、git-lrc、CommitGate——本周密集出现了一批以「代码质量」为核心卖点的 AI 工具。这标志着 AI 编码工具发展的重要转折：在"让 AI 写更多代码"的时代之后，行业开始正视"这些代码到底好不好"的问题。</p>
+          <p><strong>为什么现在是拐点：</strong>Claude Code 单工具占 GitHub 公开提交的 4.5%，这个数字还在增长。当 AI 生成的代码从"辅助"变成"主力"时，代码质量的边际影响被急剧放大——一个 bug 在 5% AI 代码中是个体问题，在 30% AI 代码中是系统风险。</p>
+          <p><strong>下半年预判：</strong>AI 编码工具将从"生成器"向"质量平台"演进——代码生成 → 自动测试 → AI review → 安全扫描 → 合并，形成一个完整的 "AI Code Quality Pipeline"。GitHub Actions 和 Git hooks 会成为这些工具的天然集成点。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>给 Agent 构建 Web 界面——Persona.js：</strong></p>
+          <pre><code>git clone https://github.com/becomevocal/persona.js
+# vanilla JS, MIT 协议, 原生 WebMCP
+# 一个下午能跑起来一个 agent 驱动的网页</code></pre>
+
+          <p><strong>给 AI 代码加质量检查——git-lrc：</strong></p>
+          <pre><code>pip install git-lrc
+# 配到 git hooks, 每次 commit 自动触发免费微审查
+# 不需要配置 API key, 开箱即用</code></pre>
+
+          <p><strong>关注：</strong>如果你在管理多个 agent 或团队使用 AI 工具，关注 <a href="https://github.com/iflytek/skillhub">skillhub</a>——企业级 agent skill 注册表正在成为一个新品类，早关注早布局。如果关注 LLM 架构前沿，读 <a href="https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/">Google DiffusionGemma 博客</a>——扩散模型做文本生成可能是 Transformer 之后最大的架构创新。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">613</div><div class="bn-desc">本周采集条目（tool_warehouse.db）</div></div>
+          <div class="bignum"><div class="bn-val">22</div><div class="bn-desc">新增条目（跨 5 数据源）</div></div>
+          <div class="bignum"><div class="bn-val">43</div><div class="bn-desc">HN stories</div></div>
+          <div class="bignum"><div class="bn-val">0</div><div class="bn-desc">Metaso（兜底跳过）</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>采集日期</th><th>条目</th><th>新增</th></tr></thead>
+          <tbody>
+            <tr><td>42plugin 全量</td><td>采集脚本</td><td>06-21</td><td>420</td><td>+1</td></tr>
+            <tr><td>GitHub Trending</td><td>7 queries API</td><td>06-21</td><td>50</td><td>0</td></tr>
+            <tr><td>Hacker News</td><td>6 queries Algolia</td><td>06-21</td><td>43</td><td>+7</td></tr>
+            <tr><td>MCP/Skills 生态</td><td>7 queries API</td><td>06-21</td><td>50</td><td>+5</td></tr>
+            <tr><td>Product Hunt 代理</td><td>6 queries API+HN</td><td>06-21</td><td>50</td><td>+9</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ 数据来源：tool_warehouse.db（20:00 刚刷新）。Metaso 本期未调用（cron 模式下不稳定 + 数据新鲜度足够）。GitHub API 匿名限额在 MCP 和 PH 脚本后半段触发（403），部分 agent framework 查询挂零但不影响 HN Algolia 侧产出。总体数据覆盖度正常。</blockquote>
+
+      </div>
+
+      <div class="article-footer">
+        <p>🏷️ #工具推荐榜 #SkillsWatch #2026Week25</p>
+        <p>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 自动生成 · <a href="index.html">所有简报 →</a></p>
+      </div>
+    </article>
+      <nav class="post-nav">
+        <a href="2026-06-19.html" class="prev">
+          <span class="nav-label">← 上一期</span>
+          <span class="nav-title">第29期 · Token 压缩工业化 · MCP 成为基础设施</span>
+        </a>
+        <span></span>
+      </nav>
+</main>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div style="margin-top:0.3rem;display:flex;justify-content:center;gap:0.6rem;font-size:0.76rem;">
+    <span>第30期简报</span><span>·</span>
+    <span>2026年6月21日</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · 每周日更新 · © 2026</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
+
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>
