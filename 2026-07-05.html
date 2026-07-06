@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#05070a">
+<meta name="description" content="MCP 协议迎来最大变革——2026-07-28 RC 发布，无状态化改写部署模式。Safari MCP Server 官方发布，Platform Skills 矩阵扩展至 6 家。Agent 基础设施品类爆发：网关+测试+协作三层同时在建。">
+<meta property="og:title" content="第32期 · MCP 无状态变革 · Agent 基础设施潮 — 趁手工具推荐榜">
+<meta property="og:description" content="MCP 协议迎来最大变革——2026-07-28 RC 发布，无状态化改写部署模式。Safari MCP Server 官方发布，Platform Skills 矩阵扩展至 6 家。Agent 基础设施品类爆发：网关+测试+协作三层同时在建。">
+<meta property="og:type" content="article">
+<title>第32期 · MCP 无状态变革 · Agent 基础设施潮 — 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>MCP 无状态变革 · Agent 基础设施潮</h1>
+
+      <div class="article-meta">
+        <span>第32期</span>
+        <span class="dot"></span>
+        <span>2026年7月5日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">MCP 协议本周迎来自发布以来最大的变革——2026-07-28 Release Candidate 锁定，协议层彻底无状态化，6 大 Breaking Changes 同时抵达。这标志着 MCP 从"实验性协议"正式进入"基础设施化"阶段——78% 企业 AI 团队已在生产中使用 MCP，9400+ 公开服务器，9700 万月 SDK 下载。与此同时，Agent 基础设施品类本周集中爆发：OmniRoute（多模型网关）、TryCase（agent 测试沙盒）、CircleChat（agent 协作）、BrowserAct（agent 浏览器）——网关、测试、协作、浏览器四层同时在建。</div>
+        <p>本期三大信号：① MCP 2026-07-28 RC 发布——无状态化将根本性简化 MCP 部署架构，7 月 28 日前所有生产 MCP 服务器需要迁移，这是 MCP 生态 2026 年最大事件；② Safari MCP Server 官方发布——WebKit 下场，agent 驱动浏览器有了平台级方案，这是继 VS Code、GitHub 之后又一个主流工具的官方 MCP 集成；③ Platform Skills 矩阵扩容——Vercel 和 Cloudflare 加入官方 Agent Skills 仓库行列，从 4 家扩展到 6 家，前端部署和边缘计算场景被补齐。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">614</div><div class="bn-desc">本周采集工具条目</div></div>
+        <div class="bignum"><div class="bn-val">76</div><div class="bn-desc">新增条目（跨 5 数据源）</div></div>
+        <div class="bignum"><div class="bn-val">6</div><div class="bn-desc">Platform Skills 仓库</div></div>
+        <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">重点推荐工具</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>MCP 协议最大变革——2026-07-28 RC 发布</strong> — 协议层彻底无状态化，不再需要 session handshake，每个请求自包含。6 大 Breaking Changes 同时抵达，7 月 28 日正式发布。这意味着 MCP 服务器可以像普通 HTTP 服务一样部署——不需要 sticky session 路由和共享 session store。78% 企业 AI 团队已在生产使用 MCP，此次变革将加速 MCP 从"协议"到"基础设施"的转化。</p></div>
+          <div class="takeaway"><p><strong>Agent 基础设施品类集体爆发</strong> — OmniRoute（231+ 模型提供商单端点路由）、TryCase（agent 一次性测试环境）、CircleChat（agent 多对多协作 Slack）、BrowserAct（agent 专用浏览器层）本周同时出现在 GitHub Trending 和 Product Hunt。这些不是"agent 版 X"，而是专门为 agent 设计的原生基础设施——网关、测试、协作、浏览器四层同时在建。</p></div>
+          <div class="takeaway"><p><strong>Platform Skills 矩阵扩容至 6 家</strong> — Vercel 和 Cloudflare 本周发布官方 Agent Skills 仓库，加入微软/Google/Anthropic/Vercel 的矩阵。Vercel skills 覆盖前端部署 + edge functions，Cloudflare skills 覆盖 Workers + 边缘计算。前端和边缘两个关键领域首次有了官方 skills 覆盖。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：MCP 无状态变革 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>MCP 2026-07-28 RC——Agent 基础设施的"无状态"拐点</h2>
+            <p>5 月 21 日，MCP 团队锁定 2026-07-28 Release Candidate——这是 MCP 自 2024 年 11 月发布以来最大的一次协议修订。6 大 Breaking Changes 同时抵达，7 月 28 日最终规范发布，所有生产 MCP 服务器需要在此之前完成迁移。</p>
+
+            <div class="card">
+              <h3>六大 Breaking Changes</h3>
+              <table class="info-table">
+                <tr><td><strong>1. Session 移除</strong></td><td>协议层不再有 session 概念</td><td>客户端元数据、能力、协议版本现在通过每个请求的 <code>_meta</code> 字段携带。不再需要 session handshake 和 session store。</td></tr>
+                <tr><td><strong>2. 新 HTTP 请求头</strong></td><td><code>Mcp-Method</code> + <code>Mcp-Name</code></td><td>Streamable HTTP 传输现在要求这两个头。服务器必须在请求头和 body 不一致时拒绝。</td></tr>
+                <tr><td><strong>3. Extensions 框架</strong></td><td>MCP Apps + Tasks</td><td>官方扩展框架使得第三方可以实现 MCP Apps 和 Tasks，而不需要修改核心协议。</td></tr>
+                <tr><td><strong>4. Tasks 扩展</strong></td><td>重新设计的任务系统</td><td>支持长时间运行的任务、进度报告、取消操作——agent 不只调 tool，还能跟踪任务状态。</td></tr>
+                <tr><td><strong>5. 授权加固</strong></td><td>更强的权限边界</td><td>OAuth 2.1 + PKCE 成为推荐授权方式。授权流程与协议核心解耦。</td></tr>
+                <tr><td><strong>6. 正式弃用策略</strong></td><td>版本化弃用</td><td>MCP 现在有正式的弃用政策——旧功能不会突然消失，但有明确的退役时间线。</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么是拐点：</strong>MCP 正在从"实验性协议"变成"无聊但可靠的基础设施层"。之前 MCP 部署需要 sticky session 路由 + 共享 session store + 复杂的网关配置，无状态化后只需要 round-robin 负载均衡——部署复杂度骤降。结合 78% 企业 AI 团队已在生产使用 MCP、9400+ 公开服务器、9700 万月 SDK 下载的数据来看，MCP 已经跨过了从"早期采用"到"主流部署"的鸿沟。</p>
+
+            <p><strong>7 月 28 日的意义：</strong>这不是"MCP 2.0"——官方称之为"最大修订"而不是版本号跳跃。但实际影响比版本号变化更大：无状态化将根本性改变 MCP 的部署模式、运维模型、以及生态系统的发展方向。对 MCP 服务器维护者来说，接下来的 3-4 周是关键的迁移窗口期。</p>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 如果你维护 MCP 服务器，现在就需要读 RC 并制定迁移计划。无状态化的好处是真实且巨大的——部署简化意味着更多组织能低门槛接入 MCP。如果你在评估 MCP 生态，这次变革消除了 MCP 部署复杂度的最大痛点。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：Agent 基础设施潮 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>Agent 基础设施品类爆发——网关、测试、协作、浏览器四层同时在建</h2>
+            <p>本周 GitHub Trending 和 Product Hunt 集中出现了多个 Agent 基础设施品类。这些不是传统工具的"agent 版包装"，而是专门为 AI agent 设计的原生基础设施——它们在解决 agent 特有的问题：模型路由、沙盒测试、多对多协作、浏览器交互。</p>
+
+            <div class="card">
+              <h3>Agent 基础设施四层架构</h3>
+              <table class="info-table">
+                <tr><td><strong>网关层</strong></td><td><a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a></td><td>231+ 模型提供商单端点路由，含 token 压缩 + 自动 fallback，+387 stars/day</td></tr>
+                <tr><td><strong>测试/沙盒层</strong></td><td><a href="https://www.producthunt.com/products/trycase">TryCase</a></td><td>AI Coding Agent 一次性测试环境——给 agent 一个沙盒跑代码验证后再提交。PH 170+ votes</td></tr>
+                <tr><td></td><td><a href="https://www.producthunt.com/products/termi-protocol">Termi Protocol</a></td><td>实时 3D 可视化 AI coding agent 的构建过程。PH 170+ votes</td></tr>
+                <tr><td><strong>协作层</strong></td><td><a href="https://www.producthunt.com/products/circlechat">CircleChat</a></td><td>给 AI agent 一个 Slack + 任务板 + manager——单 agent 到多 agent 协作</td></tr>
+                <tr><td></td><td><a href="https://www.producthunt.com/products/n71">N71</a></td><td>跨 agent 共享上下文，防止信息孤岛</td></tr>
+                <tr><td><strong>浏览器层</strong></td><td><a href="https://webkit.org/blog/18136/introducing-the-safari-mcp-server-for-web-developers/">Safari MCP Server</a></td><td>WebKit 官方出品，agent 驱动 Safari 浏览器。HN 269 points</td></tr>
+                <tr><td></td><td><a href="https://www.producthunt.com/products/browseract">BrowserAct</a></td><td>agent 专用浏览器自动化——过验证页、填表单、上传文件、登录态操作</td></tr>
+              </table>
+            </div>
+
+            <p><strong>为什么是现在：</strong>当 agent 从"偶尔用一下"变成"基础设施上运行的持续性工作负载"时，agent 网关、agent 测试、agent 协作就变成了独立的品类机会。TryCase 解决的是真实痛点——给 AI 代码一个沙盒测试，验证通过后再合并，这是 agent 代码安全的基础设施。CircleChat 解决的是另一个真实痛点——多 agent 协作时，人类需要一个观察和管理层。</p>
+
+            <p><strong>从单 agent 到多 agent 基础设施：</strong></p>
+            <ul>
+              <li><strong>网关层</strong>（OmniRoute）：路由到最优模型——"不管用哪个 agent，都自动选最好的模型和 provider"</li>
+              <li><strong>沙盒层</strong>（TryCase/Termi Protocol）：安全测试——"agent 写的代码先跑在沙盒里，通过再合并"</li>
+              <li><strong>协作层</strong>（CircleChat/N71）：多 agent 管理——"一个 Slack 频道里管理多个 agents 的对话和进度"</li>
+              <li><strong>浏览器层</strong>（Safari MCP/BrowserAct）：原生浏览器交互——"agent 不再用 hacky 的方式驱动浏览器"</li>
+            </ul>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 四层架构的出现标志着 Agent 从"工具"走向"平台"。下半年的竞争不是"谁做了更好的 agent"，而是"谁建了更好的 agent 基础设施"。如果你在做 agent 产品或重度使用 agent，这四层都需要纳入基础设施评估。
+            </blockquote>
+
+            <blockquote>
+              <strong>补充判标：</strong>⚡ Product Hunt 7 月 2-5 日集中了 TryCase、CircleChat、MentionDrop MCP、Termi Protocol、DocsAlot、BrowserAct 等多个 agent 基础设施工具——这不是巧合，是品类正在形成的信号。但大部分工具还很早期（<200 votes），成熟度需要持续跟踪。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars/变动</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a></td><td>+387/day</td><td>免费 AI 网关，231+ 提供商单端点路由，token 压缩 + 自动 fallback</td></tr>
+            <tr><td><a href="https://github.com/deepreinforce-ai/Ornith-1">Ornith-1.0</a></td><td>HN 261 pts</td><td>自改进开源 agentic coding 模型，SWE-Bench 验证</td></tr>
+            <tr><td><a href="https://github.com/Panniantong/Agent-Reach">Agent-Reach</a></td><td>+1339/day</td><td>AI agent 零 API 费读取 Twitter/Reddit/YouTube/GitHub</td></tr>
+            <tr><td><a href="https://github.com/vercel-labs/skills">vercel-labs/skills</a></td><td>+184/day</td><td>Vercel 官方 Agent Skills，npx 一键安装</td></tr>
+            <tr><td><a href="https://github.com/cloudflare/skills">cloudflare/skills</a></td><td>+14/day</td><td>Cloudflare 官方 Agent Skills，教 agent CF 构建</td></tr>
+            <tr><td><a href="https://github.com/humanlayer/12-factor-agents">12-factor-agents</a></td><td>+166/day</td><td>生产级 agent 构建原则指南，系统化方法论</td></tr>
+            <tr><td><a href="https://github.com/google/agents-cli">google/agents-cli</a></td><td>+445/day</td><td>Google Cloud agent 创建/评估/部署 CLI</td></tr>
+            <tr><td><a href="https://github.com/browser-use/video-use">browser-use/video-use</a></td><td>+721/day</td><td>用 coding agent 编辑视频——agent 从"写代码"延伸进"做内容"</td></tr>
+            <tr><td><a href="https://github.com/xbtlin/ai-berkshire">ai-berkshire</a></td><td>+969/day</td><td>多 agent 价值投资研究框架，Claude Code + Codex 对抗分析</td></tr>
+            <tr><td><a href="https://github.com/practical-tutorials/project-based-learning">project-based-learning</a></td><td>⭐272K</td><td>策划的项目式教程列表（本周新入库）</td></tr>
+            <tr><td><a href="https://github.com/koala73/worldmonitor">worldmonitor</a></td><td>⭐61.4K</td><td>实时全球情报仪表盘，AI 新闻聚合 + 地缘监控</td></tr>
+            <tr><td><a href="https://github.com/Pimzino/spec-workflow-mcp">spec-workflow-mcp</a></td><td>⭐4.2K</td><td>结构化 spec 驱动开发，实时 web dashboard + VS Code 扩展</td></tr>
+            <tr><td><a href="https://github.com/flythenimbus/bramble">Bramble</a></td><td>HN 142 pts</td><td>Local-first 密码管理器，P2P 跨设备同步</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>MCP 2026-07-28 RC 发布</td><td>协议层无状态化 + Extensions 框架 + 授权加固，6 Breaking Changes，7 月 28 日正式发布</td><td>🔥</td></tr>
+            <tr><td>MCP 企业化里程碑</td><td>78% 企业 AI 团队在生产使用 MCP，9400+ 公开服务器，9700 万月 SDK 下载</td><td>🔥</td></tr>
+            <tr><td>Safari MCP Server 发布</td><td>WebKit 官方出品，agent 驱动 Safari 浏览器，HN 269 points</td><td>🔥</td></tr>
+            <tr><td>Vercel + Cloudflare Skills 上线</td><td>Platform Skills 矩阵从 4 家（MS/Google/Anthropic/Vercel）扩展至 6 家，前端+边缘计算被补齐</td><td>🔥</td></tr>
+            <tr><td>Agent 基础设施四层成型</td><td>网关（OmniRoute）+ 测试（TryCase）+ 协作（CircleChat）+ 浏览器（Safari MCP/BrowserAct）同时在建</td><td>🔥</td></tr>
+            <tr><td>Agent Skills 质量治理深化</td><td>SkillsMP ~190 万 skills · Snyk 36% prompt injection · SkillsBench 6.2/12</td><td>⚡</td></tr>
+            <tr><td>Ornith-1.0 开源</td><td>DeepReinforce 发布自改进 agentic coding 模型，SWE-Bench 验证</td><td>⚡</td></tr>
+            <tr><td>Manufact MCP Cloud (YC S25)</td><td>MCP 云服务，集中管理和部署 MCP servers，HN 108 points</td><td>⚡</td></tr>
+            <tr><td>GitHub Copilot 突破 2000 万用户</td><td>AI 编码工具从小众走向主流，Copilot 成为最大装机量 AI 编码助手</td><td>⚡</td></tr>
+            <tr><td>Senior SWE-Bench 发布</td><td>Snorkel AI 评估 agent 作为高级工程师的基准，HN 183 points</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>项目</th><th>状态</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>openclaw</td><td>⭐379K · AI Agent 框架龙头（持续追踪）</td><td>🔥</td></tr>
+            <tr><td>superpowers</td><td>⭐246K · Agent Skills 框架领跑（226K→246K）</td><td>🔥</td></tr>
+            <tr><td>hermes-agent</td><td>⭐199K · Nous Research CLI</td><td>🔥</td></tr>
+            <tr><td>anthropics/skills</td><td>⭐153K · Anthropic 官方 Skills</td><td>🔥</td></tr>
+            <tr><td>gemini-cli</td><td>⭐105K · Google Gemini CLI 持续增长</td><td>⚡</td></tr>
+            <tr><td>browser-use</td><td>⭐99.9K · 浏览器自动化逼近 100K 里程碑</td><td>⚡</td></tr>
+            <tr><td>opencode</td><td>⭐177K · 开源终端编码 agent</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>MCP 进入"基础设施化"阶段——无状态协议改写部署模式</h3>
+          <p>MCP 2026-07-28 RC 是 MCP 从"协议"到"基础设施"的关键转折点。无状态化意味着 MCP 服务器可以像普通 HTTP 服务一样部署——不需要 sticky session、不需要共享 session store、不需要复杂的网关配置。之前需要 Redis session store + L7 负载均衡的 MCP 部署，现在可以在 round-robin 负载均衡后面直接跑。结合 78% 企业 AI 团队已在生产使用 MCP 的数据，MCP 正在从"实验性协议"变成"无聊但可靠的基础设施层"——就像 HTTP 和 TCP 一样。</p>
+          <p><strong>传导链：</strong>无状态协议 → 部署简化 → 企业采纳加速 → MCP 网关/安全/治理品类爆发 → MCP 从可选变成默认。接下来的 3-4 周（7 月 28 日前）是 MCP 服务器大规模迁移的窗口期。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>Agent 基础设施品类从零到一——网关、测试、协作、浏览器四层同时在建</h3>
+          <p>本周 GitHub Trending + Product Hunt 集中出现了多个 Agent 基础设施品类：OmniRoute（网关层）、TryCase + Termi Protocol（测试/沙盒层）、CircleChat + N71（协作层）、Safari MCP Server + BrowserAct（浏览器层）。这不是巧合——当 agent 从"偶尔用一下"变成"基础设施上运行的持续性工作负载"时，agent 网关、agent 测试、agent 协作都变成了独立的品类机会。TryCase 解决"agent 写的代码先验证再合并"，CircleChat 解决"多 agent 协作需要管理面"，BrowserAct 解决"agent 需要一个真正的浏览器而不是模拟"——每个都在解决一个 agent 特有的基础设施问题。</p>
+          <p><strong>传导链：</strong>Agent 使用频率↑ → 需要专门的网关/测试/协作/浏览器层 → Agent 基础设施品类从零到一。下半年的竞争不是"谁做了更好的 agent"，而是"谁建了更好的 agent 基础设施"。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>给 MCP 服务器维护者：读 2026-07-28 RC 并开始迁移规划</strong></p>
+          <pre><code># 从 modelcontextprotocol.io 获取最新 RC spec
+# 重点验证：
+# 1. Session 移除后 _meta 字段是否正常工作
+# 2. Mcp-Method / Mcp-Name 请求头是否正确设置
+# 3. OAuth 2.1 + PKCE 授权流程是否兼容</code></pre>
+          <p>理由：7 月 28 日最终 spec 发布，现在开始用 RC 做兼容测试是最稳妥的策略。等到正式发布再迁移会很赶。无状态化的好处是真实且巨大的——部署简化意味着更多组织能低门槛接入 MCP。</p>
+
+          <p><strong>给 web 开发者：接入 Safari MCP Server</strong></p>
+          <p>WebKit 官方发布的 MCP 服务器，agent 驱动浏览器有了平台级方案。性能和兼容性都是原生级别，不需要第三方工具。</p>
+
+          <p><strong>关注 vercel-labs/skills 和 cloudflare/skills</strong></p>
+          <p>Platform Skills 矩阵从 4 家扩展到 6 家。Vercel skills 覆盖前端部署和 edge functions，Cloudflare skills 覆盖 Workers 和边缘计算——这两个领域之前缺乏官方 skills 覆盖，现在被补齐了。如果你想用 agent 做前端/边缘计算开发，这是本周最重要的生态变化。</p>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">614</div><div class="bn-desc">本周采集条目（tool_warehouse.db）</div></div>
+          <div class="bignum"><div class="bn-val">76</div><div class="bn-desc">新增条目（跨 5 数据源）</div></div>
+          <div class="bignum"><div class="bn-val">44</div><div class="bn-desc">HN stories</div></div>
+          <div class="bignum"><div class="bn-val">4</div><div class="bn-desc">补充搜索（web_search）</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>采集日期</th><th>条目</th><th>新增</th></tr></thead>
+          <tbody>
+            <tr><td>42plugin 全量</td><td>采集脚本</td><td>07-05</td><td>420</td><td>+6</td></tr>
+            <tr><td>GitHub Trending</td><td>7 queries API</td><td>07-05</td><td>50</td><td>+1</td></tr>
+            <tr><td>Hacker News</td><td>6 queries Algolia</td><td>07-05</td><td>44</td><td>+27</td></tr>
+            <tr><td>MCP/Skills 生态</td><td>7 queries API</td><td>07-05</td><td>50</td><td>+2</td></tr>
+            <tr><td>Product Hunt 代理</td><td>6 queries API+HN</td><td>07-05</td><td>50</td><td>+40</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ 数据来源：tool_warehouse.db（20:00 刚刷新，主数据源）+ Web Search × 4（补充 GitHub Trending 周度、Product Hunt 7 月、MCP 生态动态、Agent Skills 生态）。42plugin 6 个新条目偏写作/PPT 类工具。GitHub Trending 仅 1 个新条目（project-based-learning），7 组关键词的高星项目变化不大。Product Hunt 代理 40 个新条目来自 HN Show HN 为主。Metaso 本期未调用（cron 模式下跳过 MCP 调用，直接使用 web_search）。整体数据覆盖度：完整。</blockquote>
+
+      </div></article>
+      <nav class="post-nav">
+        <a href="2026-06-28.html" class="prev">
+          <span class="nav-label">← 上一期</span>
+          <span class="nav-title">第31期 · Agent 上下文优化 · Skills 生态成人化</span>
+        </a>
+        <span></span>
+      </nav>
+</main>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div style="margin-top:0.3rem;display:flex;justify-content:center;gap:0.6rem;font-size:0.76rem;">
+    <span>第32期简报</span><span>·</span>
+    <span>2026年7月5日</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · 每周日更新 · © 2026</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
+
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>
