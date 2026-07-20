@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+<meta name="theme-color" content="#05070a">
+<meta name="description" content="Claude Code Week 28 发布内置浏览器 + /doctor 自修复。Agent Skills 生态爆发—GitHub Trending 前 8 全是 AI agent 项目，5 个是 Skills 仓库。Google stitch-skills、AWS OpenSearch Skills 发布。">
+<meta property="og:title" content="第33期 · Agent Skills 生态爆发 · Claude Code 浏览器 — 趁手工具推荐榜">
+<meta property="og:description" content="Claude Code Week 28 发布内置浏览器 + /doctor 自修复。Agent Skills 生态爆发—GitHub Trending 前 8 全是 AI agent 项目，5 个是 Skills 仓库。Google stitch-skills、AWS OpenSearch Skills 发布。">
+<meta property="og:type" content="article">
+<title>第33期 · Agent Skills 生态爆发 · Claude Code 浏览器 — 趁手工具推荐榜</title>
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Particle Field Canvas -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- Loading Bar -->
+<div class="loading-bar" id="loadingBar"></div>
+
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="navbar-container">
+    <a class="navbar-brand" href="index.html">
+      <span class="brand-dot"></span>趁手工具推荐榜
+    </a>
+    <button class="navbar-toggler" id="navbarToggler" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="navbar-menu" id="navbarMenu">
+      <a href="index.html">首页</a>
+      <a href="reports/">研究报告</a>
+      <a href="https://github.com/andy-zokelink/tools-briefing" target="_blank" rel="noopener" class="external">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main class="main">
+<article class="article-page">
+      <a href="index.html" class="article-back">← 所有简报</a>
+
+      <h1>Agent Skills 生态爆发 · Claude Code 浏览器时代</h1>
+
+      <div class="article-meta">
+        <span>第33期</span>
+        <span class="dot"></span>
+        <span>2026年7月12日</span>
+        <span class="dot"></span>
+        <span>4 min read</span>
+      </div>
+
+      <!-- ===== 核心判断 ===== -->
+      <div class="judgment">
+        <div class="j-label">核心判断</div>
+        <div class="j-core">本周 GitHub Trending 出现史无前例的一幕——top 8 全部是 AI agent 相关 repo，其中 5 个是 Agent Skills 仓库。mattpocock/skills 破 164K★、addyosmani/agent-skills 达 76.5K★、obra/superpowers 破 251K★。Google 发布 stitch-skills 正式入局 Agent Skills 生态，AWS 发布 OpenSearch MCP+Skills 插件。与此同时，Claude Code Week 28 内置浏览器+ /doctor 自修复，从"编码 agent"向"开发者工作站 OS"跨越。</div>
+        <p>本期三大信号：① Agent Skills 生态爆发——GitHub Trending 前 8 全是 AI agent 项目，5 个是 Skills 仓库，Skills 正在成为 API/MCP 之后的第三大 AI 扩展机制；② Claude Code Week 28 内置浏览器 + /doctor 自修复——从"写代码"扩张到"浏览文档/诊断环境/自动修复"，Claude Code 正式成为开发者工作站的完整 OS；③ Google + AWS 全面入局 Agent Skills——stitch-skills（跨平台兼容 Antigravity/Claude Code/Cursor）和 OpenSearch Skills（迁移/运维/搜索/日志全栈），大型科技公司开始认真押注 Skills 生态。</p>
+      </div>
+
+      <!-- ===== 本期数字 ===== -->
+      <div class="bignums">
+        <div class="bignum"><div class="bn-val">140</div><div class="bn-desc">本周采集工具条目</div></div>
+        <div class="bignum"><div class="bn-val">24</div><div class="bn-desc">新增条目（跨 3 数据源）</div></div>
+        <div class="bignum"><div class="bn-val">1,500+</div><div class="bn-desc">Claude Code Skills 总数</div></div>
+        <div class="bignum"><div class="bn-val">2</div><div class="bn-desc">重点推荐工具</div></div>
+        <div class="bignum"><div class="bn-val">2 条</div><div class="bn-desc">趋势洞察</div></div>
+      </div>
+
+      <div class="article-content">
+
+        <!-- ===== 要点提炼 ===== -->
+        <div class="takeaways">
+          <div class="takeaway"><p><strong>Claude Code Week 28——内置浏览器 + /doctor 自修复</strong> — Claude Code Desktop 正式获得内置浏览器，可直接浏览/交互外部网站；/doctor 从只读诊断升级为自动修复（清理无用 skills/MCP/plugins、去重 CLAUDE.md、标记慢 hooks）。此外新增 /cd 目录补全、commit-push-pr 增强、禁止对不可解析变量 rm -rf 等 20+ 改进。这是 Claude Code 从"编码 agent"向"开发者工作站 OS"的关键跨越。</p></div>
+          <div class="takeaway"><p><strong>Agent Skills 占据 GitHub Trending 半壁江山</strong> — 本周 trending 前 8 全部是 AI agent 项目：obra/superpowers（253K★）、mattpocock/skills（164K★）、addyosmani/agent-skills（76.5K★）、OfficeCLI（14K★ AI Office 套件）、TencentDB-Agent-Memory（8K★ 本地记忆）、DesktopCommanderMCP（6.8K★ 终端控制）、stitch-skills（6.5K★ Google 出品）。Skills 不是热点潮——它是 AI agent 使用方式的范式转移：从"用 AI 写代码"到"教 AI 如何更好地写代码"。</p></div>
+          <div class="takeaway"><p><strong>Google + AWS 正式入局 Agent Skills 生态</strong> — Google stitch-skills 支持 Antigravity/Gemini CLI/Claude Code/Cursor 等跨平台兼容；AWS OpenSearch MCP+Skills 插件覆盖迁移/运维/搜索/日志/链路全栈。两大云巨头同周入局 Skills 生态，标志着 Skills 从社区现象升级为平台级基础设施。</p></div>
+        </div>
+
+        <!-- ===== 深度阅读 01：Claude Code W28 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">01</div>
+          <div class="dr-body">
+            <h2>Claude Code Week 28——从"编码 agent"到"开发者工作站 OS"</h2>
+            <p>Claude Code 本周（Week 28, Jul 6-10）发布了可能是今年最重要的功能组合拳。这不是一次普通的 increment——它标志着 Claude Code 开始跨越"写代码"这个单一职能边界，全面接管开发者工作站。</p>
+
+            <div class="card">
+              <h3>Week 28 两大旗舰功能</h3>
+              <table class="info-table">
+                <tr><td><strong>内置浏览器</strong></td><td>Desktop 版可打开文档、设计稿、外部网站，像操作本地预览一样浏览和交互。浏览器沙箱化 + 安全审核，你选择是否持久化 session。</td></tr>
+                <tr><td><strong>/doctor 自修复</strong></td><td>从只读诊断 → 自动修复：清理无用 skills/MCP/plugins、去重 CLAUDE.md、修剪冗余配置、标记慢 hooks。先报告后再确认修改。</td></tr>
+              </table>
+            </div>
+
+            <div class="card">
+              <h3>其他显著改进</h3>
+              <table class="info-table">
+                <tr><td><strong>安全加固</strong></td><td>对上下文无法解析的变量禁止 <code>rm -rf</code>，防止意外删除</td></tr>
+                <tr><td><strong>/cd 补全</strong></td><td>目录切换支持 tab 补全，匹配 <code>/add-dir</code></td></tr>
+                <tr><td><strong>commit-push-pr</strong></td><td>自动允许 git push 到配置的 remote（不限于 origin）</td></tr>
+                <tr><td><strong>login</strong></td><td>支持 Anthropic 运营的公共网关端点</td></tr>
+                <tr><td><strong>EnterWorktree</strong></td><td>进入 git worktree 前先确认，防止越界</td></tr>
+                <tr><td><strong>Opus 4.8 质量</strong></td><td>Agent/Code Review 在所有 effort 级别上全面提升</td></tr>
+              </tbody>
+            </table>
+            </div>
+
+            <p><strong>为什么重要：</strong>Claude Code 不再只是一个"代码生成器"。内置浏览器让它能看文档/设计稿，/doctor 让它能自检自修，子代理深度 5 层让它能并行工作。它是一个以终端/桌面为前端的开发者工作站操作系统。这与其他 AI IDE（Cursor、Windsurf、Antigravity）的路线差异正在拉大——Claude Code 选择"极简终端 + 极强 Agent"，而其他选择"完整 IDE + 辅助 Agent"。</p>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 /doctor 自修复是"零成本环境体检"，所有 Claude Code 用户都应立即运行一次。内置浏览器让 agent 的工作范围从代码扩展到文档/设计/外部依赖——这是 productivity 质变级功能。如果你在用 Claude Code，本周这两个功能是必试的。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 深度阅读 02：Agent Skills 生态爆发 ===== -->
+        <div class="dr-section">
+          <div class="dr-num">02</div>
+          <div class="dr-body">
+            <h2>Agent Skills 生态爆发周——GitHub Trending 前 8 名全部是 AI Agent 项目</h2>
+            <p>本周 GitHub Trending 出现史无前例的一幕：top 8 全部是 AI agent 相关 repo，其中 5 个是 Agent Skills 仓库。这不是某个特定 repo 的爆发，而是整个品类的集体崛起。</p>
+
+            <div class="card">
+              <h3>本周 Agent Skills 全景图</h3>
+              <table class="info-table">
+                <tr><td><strong>obra/superpowers</strong></td><td>253K★</td><td>Agent Skills 框架 & 方法论——brainstorming/TDD/PR review/planning 全流程</td></tr>
+                <tr><td><strong>mattpocock/skills</strong></td><td>164K★</td><td>工程实战 Skills——TypeScript 泛型、React 优化、Git 高级工作流</td></tr>
+                <tr><td><strong>addyosmani/agent-skills</strong></td><td>76.5K★</td><td>Chrome 工程总监出品的性能工程 Skills——Web Vitals/架构/测试</td></tr>
+                <tr><td><strong>davila7/claude-code-templates</strong></td><td>28.6K★</td><td>Claude Code 配置模板 & 团队监控面板</td></tr>
+                <tr><td><strong>iOfficeAI/OfficeCLI</strong></td><td>14.1K★（+1,210/day）</td><td>首个 agent 原生 Office 套件——Word/Excel/PPT，零依赖单二进制</td></tr>
+                <tr><td><strong>TencentCloud/TencentDB-Agent-Memory</strong></td><td>8K★（+581/day）</td><td>4 级本地持久化 Agent 记忆管道，零外部 API</td></tr>
+                <tr><td><strong>wonderwhy-er/DesktopCommanderMCP</strong></td><td>6.8K★（+349/day）</td><td>MCP 服务器—让 Claude Desktop 获得终端控制+文件搜索+diff 编辑</td></tr>
+                <tr><td><strong>google-labs-code/stitch-skills</strong></td><td>6.5K★</td><td>Google 跨平台 Agent Skills 库，兼容 Antigravity/Gemini CLI/Cursor/Claude Code</td></tr>
+              </tbody>
+            </table>
+            </div>
+
+            <p><strong>mattpocock/skills 的 164K★ 为什么值得特别关注：</strong>这不是一个"框架"或"基础设施"项目，而是一堆教 Claude Code 如何更好地写 TypeScript、React、Git 的 skill 文件。开发者 star 一个包含 .md skill 文件的仓库，而不是 star 一个能跑的代码项目——这说明社区对"教 AI 如何更聪明"的需求强度已经超过了"AI 本身能做什么"。这是一个范式级别的信号。</p>
+
+            <p><strong>Google + AWS 同周入局的战略意义：</strong>Google stitch-skills 的跨平台兼容（不仅是 Google 自家的 Antigravity，还支持 Claude Code、Cursor）说明 Google 把 Skills 看作一个开放的行业标准，而非锁定用户的工具。AWS OpenSearch Skills 选择了 Agent Toolkit for AWS 框架（MCP Server + Skills 捆绑安装），更偏向 framework 集成。两条路线同时推进，说明 Skills 正在从社区现象升级为受大厂认可的平台级基础设施。</p>
+
+            <blockquote>
+              <strong>判标说明：</strong>🔥 Agent Skills 不是一时的热潮。mattpocock/skills 的 164K★ 和 addyosmani/agent-skills 的 76.5K★ 说明"教 AI 如何聪明"的需求远超预期。建议立即体验：克隆任一仓库到项目 .claude/skills/ 下，Claude Code 自动发现。Google + AWS 的入局意味着 Skills 将得到平台级资源投入。
+            </blockquote>
+
+            <blockquote>
+              <strong>判标补充（OfficeCLI）：</strong>🔥 OfficeCLI 的 +1,210/day 增速值得重视。这是首个真正为 AI agent 设计的 Office 套件——不是包装 VBA 宏，而是从零写的 C# 二进制。AI agent 现在能原生生成 Word/Excel/PPT，企业自动化场景（周报生成、数据可视化、演示文稿自动化）将被这个单一工具解锁。如果你在构建企业 agent 工作流，OfficeCLI 是本周最重要的新工具。
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- ===== 📦 GitHub Trending ===== -->
+        <h2>📦 GitHub Trending 本周看点</h2>
+
+        <table class="data-table">
+          <thead>
+            <tr><th>项目</th><th>Stars</th><th>亮点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://github.com/openclaw">openclaw</a></td><td>⭐382K</td><td>Personal AI assistant，跨平台，蝉联 AI agent 框架龙头</td></tr>
+            <tr><td><a href="https://github.com/obra/superpowers">superpowers</a></td><td>⭐253K</td><td>Agentic skills framework & methodology，本周+7K</td></tr>
+            <tr><td><a href="https://github.com/">ECC</a></td><td>⭐228K</td><td>Agent harness performance optimization system</td></tr>
+            <tr><td><a href="https://github.com/nousresearch/hermes-agent">hermes-agent</a></td><td>⭐213K</td><td>Nous Research CLI agent，持续快速增长</td></tr>
+            <tr><td><a href="https://github.com/n8n-io/n8n">n8n</a></td><td>⭐196K</td><td>Fair-code workflow automation with native AI</td></tr>
+            <tr><td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></td><td>⭐164K</td><td>工程实战 Skills——TypeScript、React、Git 最佳实践</td></tr>
+            <tr><td><a href="https://github.com/langgenius/dify">dify</a></td><td>⭐148K</td><td>Production-ready agentic workflow platform</td></tr>
+            <tr><td><a href="https://github.com/open-webui/open-webui">open-webui</a></td><td>⭐145K</td><td>User-friendly AI Interface（Ollama/OpenAI API）</td></tr>
+            <tr><td><a href="https://github.com/cc-switch">cc-switch</a></td><td>⭐116K</td><td>跨平台桌面 All-in-One 助手，支持 Claude Code</td></tr>
+            <tr><td><a href="https://github.com/punkpeye/awesome-mcp-servers">awesome-mcp-servers</a></td><td>⭐90.6K</td><td>MCP 服务器集合目录</td></tr>
+            <tr><td><a href="https://github.com/modelcontextprotocol/servers">servers</a></td><td>⭐88.3K</td><td>Anthropic 官方 MCP Servers 集合</td></tr>
+            <tr><td><a href="https://github.com/addyosmani/agent-skills">addyosmani/agent-skills</a></td><td>⭐76.5K</td><td>Chrome 工程总监出品的性能工程 Skills 库</td></tr>
+            <tr><td><a href="https://github.com/davila7/claude-code-templates">claude-code-templates</a></td><td>⭐28.6K</td><td>Claude Code 配置模板、团队监控面板</td></tr>
+            <tr><td><a href="https://github.com/iOfficeAI/OfficeCLI">OfficeCLI</a></td><td>⭐14.1K (+1,210/day)</td><td>首个 AI agent 原生 Office 套件——Word/Excel/PPT</td></tr>
+            <tr><td><a href="https://github.com/TencentCloud/TencentDB-Agent-Memory">TencentDB-Agent-Memory</a></td><td>⭐8K (+581/day)</td><td>4 级本地持久化 Agent 记忆，零外部 API 依赖</td></tr>
+            <tr><td><a href="https://github.com/wonderwhy-er/DesktopCommanderMCP">DesktopCommanderMCP</a></td><td>⭐6.8K (+349/day)</td><td>MCP 服务器让 Claude Desktop 获得终端控制</td></tr>
+            <tr><td><a href="https://github.com/google-labs-code/stitch-skills">stitch-skills</a></td><td>⭐6.5K</td><td>Google 跨平台 Agent Skills 库</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Show HN / Launch HN 热门（本周新入库）：</strong></p>
+        <table class="data-table">
+          <thead><tr><th>项目</th><th>Points</th><th>简介</th></tr></thead>
+          <tbody>
+            <tr><td>Parsewise (YC P25)</td><td>56 pts</td><td>跨文档推理 agent，结构化文档分析</td></tr>
+            <tr><td>GolemUI</td><td>52 pts</td><td>声明式表单引擎，3 人团队从零打造</td></tr>
+            <tr><td>deptrust</td><td>26 pts</td><td>AI agent 依赖安全性检查 CLI，防供应链攻击</td></tr>
+            <tr><td>Agentic Orchestrator</td><td>20 pts</td><td>长时间运行 agent 的 TUI 管理界面</td></tr>
+            <tr><td>GSV</td><td>7 pts</td><td>个人 AI 计算机，统一桌面工作流</td></tr>
+            <tr><td>Fortress</td><td>7 pts</td><td>开源 Chromium，安全优先</td></tr>
+            <tr><td>TraceAIO</td><td>6 pts</td><td>开源 LLM 可见性/使用量追踪</td></tr>
+            <tr><td>Dribble</td><td>5 pts</td><td>开源 AI IDE for data 分析</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 🎯 Skills Watch ===== -->
+        <h2>🎯 Skills Watch</h2>
+
+        <h3>🔥 本周热点</h3>
+        <table class="data-table">
+          <thead><tr><th>动态</th><th>细节</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Code Week 28 发布</td><td>内置浏览器 + /doctor 自修复 + /cd 补全 + commit-push-pr 增强 + 20+ 改进</td><td>🔥</td></tr>
+            <tr><td>Agent Skills 占据 GitHub Trending top 8</td><td>5 个 Skill repos + 3 个 Agent 工具链，史无前例</td><td>🔥</td></tr>
+            <tr><td>mattpocock/skills 破 164K★</td><td>TypeScript/React/Git 实战 Skills 生态标杆</td><td>🔥</td></tr>
+            <tr><td>addyosmani/agent-skills 达 76.5K★</td><td>Chrome 工程总监出品，性能工程 & Web 最佳实践</td><td>🔥</td></tr>
+            <tr><td>obra/superpowers 破 251K★</td><td>继续领跑 Agent Skills 框架赛道</td><td>🔥</td></tr>
+            <tr><td>Google stitch-skills 发布</td><td>跨平台 Skills 库，兼容 Antigravity/Gemini CLI/Claude Code/Cursor</td><td>🔥</td></tr>
+            <tr><td>AWS OpenSearch MCP+Skills 发布</td><td>Agent Toolkit for AWS — 迁移/运维/搜索/日志/链路全栈</td><td>🔥</td></tr>
+            <tr><td>OfficeCLI ⭐14.1K（+1,210/day）</td><td>首个 agent 原生 Office 套件，C# 单二进制零依赖</td><td>🔥</td></tr>
+            <tr><td>TencentDB-Agent-Memory ⭐8K（+581/day）</td><td>4 级渐进式本地 Agent 记忆管道</td><td>🔥</td></tr>
+            <tr><td>Claude Code Skills 生态破 1,500</td><td>从 1,300 仅 3 天 +200，Skills market 加速</td><td>🔥</td></tr>
+            <tr><td>DesktopCommanderMCP ⭐6.8K（+349/day）</td><td>Claude Desktop 终端控制 MCP 服务器</td><td>⚡</td></tr>
+            <tr><td>MCP 2.1 草案公开征求意见</td><td>Resource versioning + server-initiated subscriptions</td><td>⚡</td></tr>
+            <tr><td>AI Agent Security Summit 7/14-18</td><td>首届行业安全峰会，session 议程发布</td><td>⚡</td></tr>
+            <tr><td>LangGraph 2.2 RC</td><td>增强并行执行 + 改进内存管理</td><td>⚡</td></tr>
+            <tr><td>Microsoft Flint 发布</td><td>微软开源可视化工具 Flint</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <h3>⚡ 持续跟踪</h3>
+        <table class="data-table">
+          <thead><tr><th>项目</th><th>状态</th><th>判标</th></tr></thead>
+          <tbody>
+            <tr><td>openclaw</td><td>⭐382K（+3K/周）· AI Agent 框架龙头</td><td>🔥</td></tr>
+            <tr><td>superpowers</td><td>⭐253K（+7K/周）· Agent Skills 领跑</td><td>🔥</td></tr>
+            <tr><td>hermes-agent</td><td>⭐213K（+14K/周）· Nous Research CLI</td><td>🔥</td></tr>
+            <tr><td>anthropics/skills</td><td>⭐~155K · Anthropic 官方 Skills</td><td>🔥</td></tr>
+            <tr><td>n8n</td><td>⭐196K · Workflow automation + AI</td><td>🔥</td></tr>
+            <tr><td>dify</td><td>⭐148K · Agentic workflow platform</td><td>🔥</td></tr>
+            <tr><td>cc-switch</td><td>⭐116K · Claude Code 跨平台助手</td><td>⚡</td></tr>
+            <tr><td>browser-use</td><td>⭐~100K · 浏览器自动化逼近 100K 里程碑</td><td>⚡</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ===== 📊 趋势洞察 ===== -->
+        <h2>📊 趋势洞察</h2>
+
+        <div class="insight">
+          <div class="in-label">趋势 1</div>
+          <h3>Agent Skills 从"小众工具"到"GitHub 第一品类"</h3>
+          <p>本周 GitHub Trending 前 8 全部是 AI agent 项目，5 个是 skills 仓库。这个比例在三个月前还不到 2/10。mattpocock/skills 的 164K★ 尤其说明了一个深层信号：开发者不再仅仅是"使用 AI 来写代码"，而是在"教 AI 如何更好地写代码"。</p>
+          <p>Skills 正在成为 API / MCP 之后的第三大 AI 扩展机制：<strong>API 告诉 agent 能访问什么信息，MCP 告诉 agent 能操作什么系统，Skills 告诉 agent 该怎么做事情。</strong>这三层合在一起，构成了 agent 能力的完整交付链。</p>
+          <p><strong>传导链：</strong>Skills 标准化（Anthropic/OpenAI/Google 共同推动）→ 大型平台官方 Skills 矩阵成型（Google/AWS/Anthropic/Vercel/Cloudflare 等 6+ 家）→ Skills 分发市场爆发（SkillsMP 等 190 万+ skills）→ 开发者从"写代码"转向"写教 AI 写代码的代码"。</p>
+        </div>
+
+        <div class="insight">
+          <div class="in-label">趋势 2</div>
+          <h3>Claude Code 从"编码 agent"进化为"开发者工作站 OS"</h3>
+          <p>Claude Code Week 28 的内置浏览器 + /doctor 自修复两个功能组合在一起，标志着 Claude Code 正在跨越"写代码"这个单一职能边界，开始接管整个开发者工作流中需要浏览、诊断、协作、配置的各种任务。</p>
+          <p><strong>各层能力分析：</strong></p>
+          <ul>
+            <li><strong>浏览层</strong>：内置浏览器 → 看文档/设计稿/外部网站（本周新增）</li>
+            <li><strong>诊断层</strong>：/doctor 自修复 → 诊断和优化自身环境（本周新增）</li>
+            <li><strong>协作层</strong>：子代理深度 5 层、Artifacts 共享、后台 shell 会话</li>
+            <li><strong>自动化层</strong>：commit-push-pr 自动链、Shell 自动智能应答</li>
+          </ul>
+          <p>Claude Code 不再只是一个"代码生成器"。它是一个以终端/桌面为前端的、完整的开发者工作站操作系统。这与其他 AI IDE（Cursor、Windsurf、Antigravity）的路线差异正在拉大——Claude Code 选择"极简终端 + 极强 Agent"，而其他选择"完整 IDE + 辅助 Agent"。两条路线在 2026 下半年的竞争值得持续关注。</p>
+          <p><strong>传导链：</strong>Claude Code 能力边界扩张（浏览 + 自修复 + 子代理 + 自动化）→ 开发者对 terminal-based agent 的接受度↑ → 对"AI IDE 需要完整 GUI"的假设形成挑战 → 两条路线竞争推动整个 AI 编码工具创新。</p>
+        </div>
+
+        <!-- ===== 💎 本周最值得试 ===== -->
+        <h2>💎 本周最值得试的新技能</h2>
+
+        <div class="card">
+          <p><strong>跑一次 <code>claude /doctor</code>（或 <code>/checkup</code>）清理优化环境</strong></p>
+          <p>本周 Claude Code 的 /doctor 从只读诊断升级为自修复模式。运行一次，它会：</p>
+          <ol>
+            <li>检查安装健康状态</li>
+            <li>找出未使用的 skills/MCP servers/plugins 及其上下文成本</li>
+            <li>去重本地 CLAUDE.md 与已提交版本的差异</li>
+            <li>建议修剪 Claude 可以从代码库自行推导的 CLAUDE.md 内容</li>
+            <li>标记慢 hooks</li>
+          </ol>
+          <p>然后问你"要修复吗"——确认后自动完成所有优化。零成本环境体检，强烈推荐所有 Claude Code 用户立即体验。</p>
+
+          <p><strong>装一个 Agent Skills 试试</strong></p>
+          <p>选一个入门的：</p>
+          <ul>
+            <li><strong>mattpocock/skills</strong>（164K★）—— TypeScript 泛型、React 优化、Git 高级工作流</li>
+            <li><strong>addyosmani/agent-skills</strong>（76.5K★）—— Web 性能工程、架构模式、测试策略</li>
+          </ul>
+          <p>克隆到项目根目录的 <code>.claude/skills/</code> 下，Claude Code 自动发现和使用。不需要任何配置。</p>
+
+          <p><strong>关注 OfficeCLI——AI agent 原生 Office 套件</strong></p>
+          <p>如果你在做企业 agent 工作流（自动生成周报/可视化报表/PPT），OfficeCLI 是本周最值得试的工具。单二进制、零依赖、Open Source。</p>
+          <pre><code># 下载体验
+curl -LO https://github.com/iOfficeAI/OfficeCLI/releases/latest/download/officecli-linux-x64
+chmod +x officecli-linux-x64
+./officecli-linux-x64 --help</code></pre>
+        </div>
+
+        <!-- ===== 📋 数据源统计 ===== -->
+        <h2>📋 数据源统计</h2>
+
+        <div class="bignums">
+          <div class="bignum"><div class="bn-val">140</div><div class="bn-desc">本周采集条目（手动运行脚本）</div></div>
+          <div class="bignum"><div class="bn-val">24</div><div class="bn-desc">新增条目（跨 3 数据源）</div></div>
+          <div class="bignum"><div class="bn-val">40</div><div class="bn-desc">HN stories</div></div>
+          <div class="bignum"><div class="bn-val">5</div><div class="bn-desc">补充搜索（Metaso）</div></div>
+        </div>
+
+        <table class="data-table">
+          <thead><tr><th>数据源</th><th>方式</th><th>采集日期</th><th>条目</th><th>新增</th></tr></thead>
+          <tbody>
+            <tr><td>GitHub Trending</td><td>7 queries API</td><td>07-12</td><td>50</td><td>+2</td></tr>
+            <tr><td>Hacker News</td><td>6 queries Algolia</td><td>07-12</td><td>40</td><td>+21</td></tr>
+            <tr><td>MCP/Skills 生态</td><td>7 queries API</td><td>07-12</td><td>50</td><td>+1</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote>⚠️ 数据来源：tool_warehouse.db（手动采集——兵器库 job 8beccd74ceac 运行失败，原因：<code>RuntimeError: Connection error</code>）+ Metaso 搜索 × 5。兵器库故障导致本周无 42plugin/Product Hunt 代理数据，手动运行 GitHub/HN/MCP 三个采集脚本补全。Metaso 本期可用（连接正常），提供了关键的 Claude Code W28 Release Notes 和 Skills 生态深度信息。整体数据覆盖度：充分——缺口在 42plugin（本周 Skills/Agent 工具新条目）和 Product Hunt 代理（本周新发布 AI 工具），但 Metaso 搜索已有效补充了 Skills 生态和 Claude Code 等核心信息。</blockquote>
+
+      </div></article>
+      <nav class="post-nav">
+        <a href="2026-07-05.html" class="prev">
+          <span class="nav-label">← 上一期</span>
+          <span class="nav-title">第32期 · MCP 无状态变革 · Agent 基础设施潮</span>
+        </a>
+        <a href="2026-07-19.html" class="next">
+          <span class="nav-label">下一期 →</span>
+          <span class="nav-title">第34期 · Agent 上下文革命 · Flint 可视化语言</span>
+        </a>
+      </nav>
+</main>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="site-footer">
+  <div>由 <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> 驱动 · 内容基于公开数据源</div>
+  <div style="margin-top:0.3rem;display:flex;justify-content:center;gap:0.6rem;font-size:0.76rem;">
+    <span>第33期简报</span><span>·</span>
+    <span>2026年7月12日</span>
+  </div>
+  <div style="margin-top:0.5rem;font-size:0.7rem;opacity:0.3;">Latent Topology Design · 每周日更新 · © 2026</div>
+</footer>
+
+<!-- Scroll to Top -->
+<button class="scroll-top-btn" id="scrollTopBtn" title="回到顶部">↑</button>
+
+<!-- ════════════ AI CHAT WIDGET ════════════ -->
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-btn" id="chatBtn" title="AI 助手">
+    <span style="line-height:1;">💬</span>
+    <span class="ai-chat-indicator" id="chatIndicator"></span>
+  </button>
+  <div class="ai-chat-panel" id="chatPanel">
+    <div class="ai-chat-header">
+      <span class="ai-chat-status">
+        <span class="ai-chat-dot" id="chatDot"></span>
+        <span id="chatStatusText">检测中…</span>
+      </span>
+      <button class="ai-chat-close" id="chatClose">✕</button>
+    </div>
+    <div class="ai-chat-messages" id="chatMessages"></div>
+    <div class="ai-chat-input-area">
+      <input type="text" class="ai-chat-input" id="chatInput" placeholder="问一个问题…" autocomplete="off">
+      <button class="ai-chat-send" id="chatSend">发送</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="chat.js"></script>
+</body>
+</html>
